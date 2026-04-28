@@ -1,0 +1,17 @@
+age_group,substance,percent
+14–17,Smoking (daily),0.9
+14–17,Vaping (current),9.7
+18–24,Smoking (daily),5.9
+18–24,Vaping (current),20.6
+25–29,Smoking (daily),7.3
+25–29,Vaping (current),13.9
+30–39,Smoking (daily),8.8
+30–39,Vaping (current),9.1
+40–49,Smoking (daily),10.8
+40–49,Vaping (current),5.0
+50–59,Smoking (daily),12.1
+50–59,Vaping (current),3.2
+60–69,Smoking (daily),10.4
+60–69,Vaping (current),1.6
+70+,Smoking (daily),4.9
+70+,Vaping (current),0.4

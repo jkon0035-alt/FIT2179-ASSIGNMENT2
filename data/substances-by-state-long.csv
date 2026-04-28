@@ -1,0 +1,25 @@
+state,state_full,substance,percent
+NSW,New South Wales,Smoking,7.5
+NSW,New South Wales,Vaping,7.9
+NSW,New South Wales,Drugs,17.5
+Vic,Victoria,Smoking,7.6
+Vic,Victoria,Vaping,7.0
+Vic,Victoria,Drugs,17.6
+Qld,Queensland,Smoking,10.5
+Qld,Queensland,Vaping,6.9
+Qld,Queensland,Drugs,18.4
+WA,Western Australia,Smoking,7.7
+WA,Western Australia,Vaping,6.9
+WA,Western Australia,Drugs,20.1
+SA,South Australia,Smoking,9.0
+SA,South Australia,Vaping,4.9
+SA,South Australia,Drugs,17.0
+Tas,Tasmania,Smoking,11.3
+Tas,Tasmania,Vaping,3.7
+Tas,Tasmania,Drugs,16.4
+ACT,Australian Capital Territory,Smoking,4.8
+ACT,Australian Capital Territory,Vaping,5.7
+ACT,Australian Capital Territory,Drugs,14.1
+NT,Northern Territory,Smoking,13.1
+NT,Northern Territory,Vaping,6.6
+NT,Northern Territory,Drugs,25.2
