@@ -1,43 +1,21 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "How Australia's Smoking Status Has Changed Over Time",
-    "subtitle": "Proportion of Australians aged 14+, 2001–2023",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": "container",
-  "height": 400,
-  "data": {"url": "data/smoking-trend.csv"},
-  "mark": {"type": "area", "opacity": 0.8},
-  "encoding": {
-    "x": {
-      "field": "year",
-      "type": "ordinal",
-      "title": "Year",
-      "axis": {"labelAngle": 0}
-    },
-    "y": {
-      "field": "percent",
-      "type": "quantitative",
-      "stack": "normalize",
-      "title": "Proportion (%)",
-      "axis": {"format": ".0%"}
-    },
-    "color": {
-      "field": "category",
-      "type": "nominal",
-      "title": "Smoking status",
-      "scale": {
-        "domain": ["Smoke daily","Currently smoke","Smoked previously","Never smoked"],
-        "range": ["#993C1D","#D85A30","#B4B2A9","#1D9E75"]
-      }
-    },
-    "tooltip": [
-      {"field": "year", "type": "ordinal", "title": "Year"},
-      {"field": "category", "type": "nominal", "title": "Status"},
-      {"field": "percent", "type": "quantitative", "title": "%", "format": ".1f"}
-    ]
-  }
+"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+"title": { 
+  "text": "How Australia's Smoking has Changed Over Time",
+  "subtitle": "Proportion of Australians aged 14+ (2001 - 2023)",
+  "fontSize": 18,
+  "subtitlefontSize": 15,
+  "anchor": "start"
+  
+"data": {
+"url": "data/smoking-trend.csv"
+},
+"mark": {
+  "type": "area", 
+  "opacity": 0.8
+},
+"encoding": {
+"x": { "field": "year", "type": "ordinal", "title": "Year" },
+"y": { "field": "percent", "type": "qualitative", "title": "Proportion (%)", "axis": {"format": .0%}
+}
 }
