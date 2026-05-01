@@ -7,15 +7,28 @@
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-  
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .chart-container {
+      width: 100%;
+      margin-bottom: 3rem;
+    }
+  </style>
 </head>
 <body>
+
   <h1>Smoke, Vape, Use</h1>
-  <p>Australia's shifting substance habits — tobacco, vaping, and illicit drugs.</p>
+  <p>Australia's shifting substance habits — tobacco, vaping and illicit drugs.</p>
+
   <h2>Chapter 1 — The Last Generation of Smokers?</h2>
+
   <div class="chart-container" id="chart1"></div>
-  <script>
-    vegaEmbed('#chart1', 'chart/chart1.json');
-  </script>
+  <script>vegaEmbed('#chart1', 'charts/chart1.json');</script>
+
 </body>
 </html>
