@@ -6,6 +6,8 @@
     "fontSize": 15,
     "subtitleFontSize": 12,
     "anchor": "start"
+    "color": "#333333",
+    "subtitleColor": "#666666"
   },
   "width": "container",
   "height": 400,
@@ -30,9 +32,16 @@
       "type": "nominal",
       "title": "Smoking status",
       "scale": {
-        "domain": ["Smoke Daily", "Currently Smoke", "Smoked previously", "Never Smoked"],
-        "range": ["#993C1D","#D85A30","#B4B2A9","#1D9E75"]
+        "domain": ["Never Smoked", "Smoked previously", "Currently Smoke", "Smoke Daily"],
+        "range": ["#1D9E75","#B4B2A9","#E8956D","#993C1D"]
       }
+    },
+    "order": {
+      "field": "category",
+      "sort": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"]
+    },
+    "legend": {
+      "orient": "right", "titleFontSize": 12, "labelFontSize": 11
     },
     "tooltip": [
       {"field": "year", "type": "ordinal", "title": "Year"},
