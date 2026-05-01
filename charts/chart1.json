@@ -9,7 +9,7 @@
   },
   "width": "container",
   "height": 400,
-  "data": {"url": "data/smoking-trend.csv"},
+  "data": {"url":  "https://raw.githubusercontent.com/jkon0035-alt.github.io/FIT2179-ASSIGNMENT2//main/data/smoking-trend.csv"},
   "mark": {"type": "area", "opacity": 0.8},
   "encoding": {
     "x": {
@@ -30,7 +30,7 @@
       "type": "nominal",
       "title": "Smoking status",
       "scale": {
-        "domain": ["Smoke daily","Currently smoke","Smoked previously","Never smoked"],
+        "domain": ["Smoke daily", "Currently smoke", "Smoked previously", "Never smoked"],
         "range": ["#993C1D","#D85A30","#B4B2A9","#1D9E75"]
       }
     },
