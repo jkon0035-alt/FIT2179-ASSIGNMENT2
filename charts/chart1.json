@@ -6,8 +6,6 @@
     "fontSize": 15,
     "subtitleFontSize": 12,
     "anchor": "start"
-    "color": "#333333",
-    "subtitleColor": "#666666"
   },
   "width": "container",
   "height": 400,
@@ -38,7 +36,7 @@
     },
     "order": {
       "field": "category",
-      "sort": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"]
+      "sort": ["Smoke Daily","Currently Smoke","Smoked previously","Never Smoked"]
     },
     "legend": {
       "orient": "right", "titleFontSize": 12, "labelFontSize": 11
