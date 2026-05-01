@@ -4,9 +4,11 @@
   "text": "How Australia's Smoking has Changed Over Time",
   "subtitle": "Proportion of Australians aged 14+ (2001 - 2023)",
   "fontSize": 18,
-  "subtitlefontSize": 15,
+  "subtitleFontSize": 15,
   "anchor": "start"
-  
+},
+"width": "container",
+"height": 400,
 "data": {
 "url": "data/smoking-trend.csv"
 },
@@ -15,7 +17,13 @@
   "opacity": 0.8
 },
 "encoding": {
-"x": { "field": "year", "type": "ordinal", "title": "Year" },
-"y": { "field": "percent", "type": "qualitative", "title": "Proportion (%)", "axis": {"format": .0%}
-}
+  "x": { "field": "year", "type": "ordinal", "title": "Year" },
+  "y": { "field": "percent", "type": "quantitative", "title": "Proportion (%)", "axis": {"format": ".0%"},
+  "color": { "field": "category", "type": "nominal", "title": "Smoking Status", 
+    "scale":{
+       "domain": ["Smoke daily", "Currently smoke", "Smoked previously", "Never smoked"],
+        "range": ["#993C1D","#D85A30","#B4B2A9","#1D9E75"]
+      }
+    }
+  }
 }
