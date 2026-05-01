@@ -30,7 +30,7 @@
       "type": "nominal",
       "title": "Smoking status",
       "scale": {
-        "domain": ["Smoke daily", "Currently smoke", "Smoked previously", "Never smoked"],
+        "domain": ["Smoke Daily", "Currently Smoke", "Smoked previously", "Never Smoked"],
         "range": ["#993C1D","#D85A30","#B4B2A9","#1D9E75"]
       }
     },
