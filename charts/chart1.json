@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "How Australia's Smoking Status Has Changed Over Time",
-    "subtitle": "Proportion of Australians aged 14+, 2001–2023",
+    "subtitle": "Proportion of Australians aged 14+, (2001–2023)",
     "fontSize": 15,
     "subtitleFontSize": 12,
     "anchor": "start"
