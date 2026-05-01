@@ -38,9 +38,6 @@
       "field": "category",
       "sort": ["Smoke Daily","Currently Smoke","Smoked previously","Never Smoked"]
     },
-    "legend": {
-      "orient": "right", "titleFontSize": 12, "labelFontSize": 11
-    },
     "tooltip": [
       {"field": "year", "type": "ordinal", "title": "Year"},
       {"field": "category", "type": "nominal", "title": "Status"},
