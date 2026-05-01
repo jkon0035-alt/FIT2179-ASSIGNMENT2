@@ -18,7 +18,7 @@
 },
 "encoding": {
   "x": { "field": "year", "type": "ordinal", "title": "Year" },
-  "y": { "field": "percent", "type": "quantitative", "title": "Proportion (%)", "axis": {"format": ".0%"},
+  "y": { "field": "percent", "type": "quantitative", "title": "Proportion (%)", "axis": {"format": ".0%"}},
   "color": { "field": "category", "type": "nominal", "title": "Smoking Status", 
     "scale":{
        "domain": ["Smoke daily", "Currently smoke", "Smoked previously", "Never smoked"],
