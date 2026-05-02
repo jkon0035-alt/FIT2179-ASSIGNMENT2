@@ -23,7 +23,8 @@
       "type": "quantitative",
       "stack": "normalize",
       "title": "Proportion (%)",
-      "axis": {"format": ".0%"}
+      "axis": {"format": ".0%"},
+      "sort": null
     },
     "color": {
       "field": "category",
@@ -32,9 +33,9 @@
       "scale": {
         "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
         "range": ["#1D9E75","#B4B2A9","#E8956D","#993C1D"]
-      }
+      },
     "sort": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"]
-    },
+    }
     "tooltip": [
       {"field": "year", "type": "ordinal", "title": "Year"},
       {"field": "category", "type": "nominal", "title": "Status"},
