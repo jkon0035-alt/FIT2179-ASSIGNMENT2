@@ -30,13 +30,9 @@
       "type": "nominal",
       "title": "Smoking status",
       "scale": {
-        "domain": ["Never Smoked", "Smoked previously", "Currently Smoke", "Smoke Daily"],
+        "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
         "range": ["#1D9E75","#B4B2A9","#E8956D","#993C1D"]
       }
-    },
-    "order": {
-      "field": "category",
-      "sort": ["Smoke Daily","Currently Smoke","Smoked previously","Never Smoked"]
     },
     "tooltip": [
       {"field": "year", "type": "ordinal", "title": "Year"},
