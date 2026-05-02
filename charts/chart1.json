@@ -9,9 +9,10 @@
   },
   "width": "container",
   "height": 400,
-  "data": {"url":"data/smoking-trend.csv"},
+  "data": {"url": "data/smoking-trend.csv"},
   "transform": [
-    {"calculate": "datum.category === 'Smoke Daily' ? 1 : datum.category === 'Currently Smoke' ? 2 : datum.category === 'Smoked Previously' ? 3 : 4",
+    {
+      "calculate": "datum.category === 'Smoke Daily' ? 1 : datum.category === 'Currently Smoke' ? 2 : datum.category === 'Smoked Previously' ? 3 : 4",
       "as": "stack_order"
     }
   ],
@@ -28,8 +29,7 @@
       "type": "quantitative",
       "stack": "normalize",
       "title": "Proportion (%)",
-      "axis": {"format": ".0%"},
-      "sort": null
+      "axis": {"format": ".0%"}
     },
     "color": {
       "field": "category",
@@ -37,9 +37,13 @@
       "title": "Smoking status",
       "scale": {
         "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
-        "range": ["#1D9E75","#B4B2A9","#E8956D","#993C1D"] 
-      },
-      "order": {"field": "stack_order","type": "quantitative"},
+        "range": ["#993C1D","#E8956D","#B4B2A9","#1D9E75"]
+      }
+    },
+    "order": {
+      "field": "stack_order",
+      "type": "quantitative"
+    },
     "tooltip": [
       {"field": "year", "type": "ordinal", "title": "Year"},
       {"field": "category", "type": "nominal", "title": "Status"},
