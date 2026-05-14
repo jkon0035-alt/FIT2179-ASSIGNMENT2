@@ -1,0 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "How Australia's Smoking Status Has Changed Over Time",
+    "subtitle": "Proportion of Australians aged 14+, (2001–2023)",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-types.csv"
+  },
+
+"layer": [
+  {
+    "mark": "rule",
+    "encoding": {
+      "y": {"field": "drug", "type": "ordinal", "title": "Drug Type", "sort": "-x"},
+      "x": {"field": "recent_use_percent", "type": "quantitative", "title": "Recent Use (%)"},
+      "x2": {"value": 0}
+    }
+  },
+  {
+    "mark": {"type": "point", "filled": true, "size": 120},
+      "encoding": {
+        "y": {"field": "drug", "type": "ordinal", "sort": "-x"},
+        "x": {"field": "recent_use_percent", "type": "quantitative"},
+        "color": {"field": "drug", "type": "nominal", "legend": null},
+        "tooltip": [
+          {"field": "drug", "type": "nominal", "title": "Drug"},
+          {"field": "recent_use_percent", "type": "quantitative", "title": "Recent Use (%)", "format": ".1f"}
+        ]
+    }
+  }
+]
+  }

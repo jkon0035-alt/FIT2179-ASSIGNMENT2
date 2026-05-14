@@ -1,0 +1,50 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The Further From a City, The More You Smoke",
+    "subtitle": "Substance use by remoteness area, 2022–23",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "transform": [{"filter": "datum.properties.NAME === 'Australia'"}],
+      "mark": {"type": "geoshape", "fill": "#e8e8e8", "stroke": "white"}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/remoteness.csv"
+      },
+      "mark": {"type": "circle", "opacity": 0.8},
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "size": {
+          "field": "smoking_percent",
+          "type": "quantitative",
+          "title": "Smoking Rate (%)",
+          "scale": {"range": [100, 2000]}
+        },
+        "color": {
+          "field": "drug_percent",
+          "type": "quantitative",
+          "title": "Drug Use (%)",
+          "scale": {"scheme": "oranges"}
+        },
+        "tooltip": [
+          {"field": "remoteness", "type": "nominal", "title": "Area"},
+          {"field": "smoking_percent", "type": "quantitative", "title": "Smoking Rate (%)", "format": ".1f"},
+          {"field": "drug_percent", "type": "quantitative", "title": "Drug Use (%)", "format": ".1f"}
+        ]
+      }
+    }
+  ]
+}

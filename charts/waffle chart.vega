@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Out of 100 Australians...",
+    "subtitle": "How many are affected by each substance, 2022–23",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 400,
+  "height": 400,
+  "data": {"sequence": {"start": 0, "stop": 100, "as": "id"}},
+  "transform": [
+    {"calculate": "datum.id % 10", "as": "col"},
+    {"calculate": "floor(datum.id / 10)", "as": "row"},
+    {
+      "calculate": "datum.id < 8 ? 'Smokes Daily (8%)' : datum.id < 15 ? 'Vapes (7%)' : datum.id < 32 ? 'Uses Illicit Drugs (17%)' : 'Unaffected'",
+      "as": "category"
+    }
+  ],
+  "mark": {"type": "square", "size": 350},
+  "encoding": {
+    "x": {"field": "col", "type": "ordinal", "axis": null},
+    "y": {"field": "row", "type": "ordinal", "axis": null, "sort": "descending"},
+    "color": {
+      "field": "category",
+      "type": "nominal",
+      "title": "Category",
+      "scale": {
+        "domain": ["Smokes Daily (8%)", "Vapes (7%)", "Uses Illicit Drugs (17%)", "Unaffected"],
+        "range": ["#D85A30", "#885B9B", "#378ADD", "#E8E8E8"]
+      }
+    },
+    "tooltip": [{"field": "category", "type": "nominal", "title": "Category"}]
+  }
+}

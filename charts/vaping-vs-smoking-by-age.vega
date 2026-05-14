@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Who Smokes In Australia?",
+    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-vs-smoking-by-age.csv"
+  },
+
+  "mark": {"type": "bar"},
+  "encoding": {
+    "y": {
+      "field": "age_group",
+      "type": "ordinal",
+      "title": "Age Group",
+      "sort": ["14–17","18–24","25–29","30–39","40–49","50–59","60–69","70+"]
+    },
+    "x": {
+      "field": "percent",
+      "type": "quantitative",
+      "title": "← Smoking   |   Vaping →",
+      
+      "axis": {"labelExpr": "abs(datum.value)"}
+    },
+    "color": {
+      "field": "substance",
+      "type": "nominal",
+      "title": "Substance",
+      "scale": {
+        "domain": ["Smoking (daily)", "Vaping (current)"],
+        "range": ["#D85A30", "#885B9B"]
+      }
+    },
+    "tooltip": [
+      {"field": "age_group", "type": "ordinal", "title": "Age Group"},
+      {"field": "substance", "type": "nominal", "title": "Substance"},
+      {"field": "percent", "type": "quantitative", "title": "Rate (%)", "format": ".1f"}
+    ]
+  }
+}

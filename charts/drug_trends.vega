@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Who Smokes In Australia?",
+    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-trends.csv"
+  },
+
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {"labelAngle": 0}
+    },
+    "y": {
+      "field": "recent_use_percent",
+      "type": "quantitative",
+      "title": "Drug Types",
+      "axis": {"format": ".1f"}
+    },
+    "color": {
+      "field": "drug",
+      "type": "nominal",
+      "title": "Drug Types",
+      "scale": {
+        "domain": ["Cannabis","Ecstasy", "Cocaine"],
+        "range": ["#378ADD","#D85A30","#885B9B"]
+      }
+    },
+
+   "tooltip": [
+      {"field": "year", "type": "ordinal", "title": "Year"},
+      {"field": "drug", "type": "nominal", "title": "Drug Type"},
+      {"field": "recent_use_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+    ]
+  }
+}

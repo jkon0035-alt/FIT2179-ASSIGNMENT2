@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Which States Vape the Most?",
+    "subtitle": "Current vaping rate by state and territory, 2022–23",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-by-state.csv"
+            },
+            "key": "state_full",
+            "fields": ["vaping_percent"]
+          }
+        },
+        {"filter": "datum.vaping_percent != null"}
+      ],
+      "mark": {"type": "geoshape", "stroke": "white"},
+      "encoding": {
+        "color": {
+          "field": "vaping_percent",
+          "type": "quantitative",
+          "title": "Vaping Rate (%)",
+          "scale": {"scheme": "purples"}
+        },
+        "tooltip": [
+          {"field": "properties.NAME", "type": "nominal", "title": "State"},
+          {"field": "vaping_percent", "type": "quantitative", "title": "Vaping Rate (%)", "format": ".1f"}
+        ]
+      }
+    }
+  ]
+}

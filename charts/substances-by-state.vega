@@ -1,0 +1,53 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Substance Use Across Australia's States",
+    "subtitle": "Smoking, vaping and drug use by state, 2022–23",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/substances-by-state-long.csv"
+  },
+  "facet": {
+    "field": "state",
+    "type": "nominal",
+    "title": "State"
+  },
+  "spec": {
+    "width": 150,
+    "height": 150,
+
+    "mark": {"type": "bar"},
+    "encoding": {
+      "x": {
+        "field": "substance",
+        "type": "nominal",
+        "title": null,
+        "axis": {"labelAngle": -30}
+      },
+      "y": {
+        "field": "percent",
+        "type": "quantitative",
+        "title": "Rate (%)",
+        "scale": {
+          "domain": [0, 30]
+        }
+      },
+      "color": {
+        "field": "substance",
+        "type": "nominal",
+        "scale": {
+          "domain": ["Smoking", "Vaping", "Drugs"],
+          "range": ["#D85A30", "#885B9B", "#378ADD"]
+        }
+      },
+      "tooltip": [
+        {"field": "state", "type": "nominal", "title": "State"},
+        {"field": "substance", "type": "nominal", "title": "Substance"},
+        {"field": "percent", "type": "quantitative", "title": "Rate (%)", "format": ".1f"}
+      ]
+    }
+  }
+}

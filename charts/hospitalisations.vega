@@ -1,0 +1,45 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "How Australia's Smoking Status Has Changed Over Time",
+    "subtitle": "Proportion of Australians aged 14+, (2001–2023)",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"
+  },
+
+  "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
+  "encoding": {
+    "x": {
+      "field": "drug_group",
+      "type": "nominal",
+      "title": "Substance",
+      "sort": "-y",
+      "axis": {"labelAngle": -30}
+    },
+    "y": {
+      "field": "hospitalisations",
+      "type": "quantitative",
+      "title": "Number of Hospitalisations"
+
+    },
+    "color": {
+      "field": "drug_group",
+      "type": "nominal",
+      "title": "Drug Types",
+      "scale": {
+        "scheme": "tableau20"
+      }
+    },
+
+    "tooltip": [
+      {"field": "drug_group", "type": "nominal", "title": "Drug Group"},
+      {"field": "hospitalisations", "type": "quantitative", "title": "Hospitalisations", "format": ","}
+    ]
+  }
+}

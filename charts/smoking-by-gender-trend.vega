@@ -1,0 +1,50 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Who Smokes In Australia?",
+    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
+  },
+
+  "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {"labelAngle": 0}
+    },
+    "y": {
+      "field": "daily_smoking_percent",
+      "type": "quantitative",
+      "title": "Daily Smoking (%)",
+      "axis": {"format": ".1f"}
+    },
+    "xOffset": {
+      "field": "gender",
+      "sort": ["Male","Female"]
+    },
+    "color": {
+      "field": "gender",
+      "type": "nominal",
+      "title": "Gender",
+      "scale": {
+        "domain": ["Male","Female"],
+        "range": ["#2E86AB", "#E84855"]
+      }
+    },
+
+   "tooltip": [
+      {"field": "year", "type": "ordinal", "title": "Year"},
+      {"field": "gender", "type": "nominal", "title": "Gender"},
+      {"field": "daily_smoking_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+    ]
+  }
+}
