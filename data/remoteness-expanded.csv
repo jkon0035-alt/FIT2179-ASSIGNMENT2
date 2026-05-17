@@ -1,0 +1,27 @@
+location,state,remoteness,smoking_percent,drug_percent,latitude,longitude
+Sydney,NSW,Major Cities,7.0,18.4,-33.87,151.21
+Melbourne,Vic,Major Cities,7.0,18.4,-37.81,144.96
+Brisbane,Qld,Major Cities,7.0,18.4,-27.47,153.02
+Perth,WA,Major Cities,7.0,18.4,-31.95,115.86
+Adelaide,SA,Major Cities,7.0,18.4,-34.93,138.60
+Canberra,ACT,Major Cities,7.0,18.4,-35.28,149.13
+Gold Coast,Qld,Major Cities,7.0,18.4,-28.02,153.41
+Newcastle,NSW,Inner Regional,10.5,15.2,-32.93,151.78
+Geelong,Vic,Inner Regional,10.5,15.2,-38.15,144.35
+Ballarat,Vic,Inner Regional,10.5,15.2,-37.56,143.85
+Launceston,Tas,Inner Regional,10.5,15.2,-41.44,147.14
+Townsville,Qld,Inner Regional,10.5,15.2,-19.26,146.81
+Cairns,Qld,Inner Regional,10.5,15.2,-16.92,145.77
+Toowoomba,Qld,Inner Regional,10.5,15.2,-27.56,151.95
+Dubbo,NSW,Outer Regional,11.4,18.7,-32.26,148.61
+Mackay,Qld,Outer Regional,11.4,18.7,-21.15,149.18
+Rockhampton,Qld,Outer Regional,11.4,18.7,-23.38,150.51
+Wagga Wagga,NSW,Outer Regional,11.4,18.7,-35.12,147.37
+Mt Gambier,SA,Outer Regional,11.4,18.7,-37.83,140.78
+Kalgoorlie,WA,Outer Regional,11.4,18.7,-30.75,121.47
+Bundaberg,Qld,Outer Regional,11.4,18.7,-24.87,152.35
+Alice Springs,NT,Remote/Very Remote,20.4,20.6,-23.70,133.88
+Broome,WA,Remote/Very Remote,20.4,20.6,-17.96,122.24
+Katherine,NT,Remote/Very Remote,20.4,20.6,-14.47,132.27
+Broken Hill,NSW,Remote/Very Remote,20.4,20.6,-31.95,141.45
+Mount Isa,Qld,Remote/Very Remote,20.4,20.6,-20.73,139.50
