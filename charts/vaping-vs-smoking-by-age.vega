@@ -48,7 +48,7 @@
       "title": "Substance",
       "scale": {
         "domain": ["Smoking (daily)", "Vaping (current)"],
-        "range": ["#5E503F", "#C6AC8F"]
+        "range": ["#5E503F", "#6A6F6F"]
       }
     },
     "opacity":{
