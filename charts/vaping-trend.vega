@@ -7,7 +7,7 @@
     "subtitleFontSize": 12,
     "anchor": "start"
   },
-  "width": 600,
+  "width": "container",
   "height": 400,
   "data": {
   "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"
