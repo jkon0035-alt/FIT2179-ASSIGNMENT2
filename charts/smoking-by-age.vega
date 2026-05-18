@@ -62,5 +62,9 @@
       {"field": "gender", "type": "nominal", "title": "Gender"},
       {"field": "percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
     ]
+  },
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
   }
 }
