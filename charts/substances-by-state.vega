@@ -10,38 +10,56 @@
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/substances-by-state-long.csv"
   },
+  "params": [
+    {
+      "name": "e",
+      "select": {
+        "type": "point",
+        "fields": ["state"]
+      }
+    }
+  ],
   "facet": {
-    "field": "state",
+    "field": "substance",
     "type": "nominal",
-    "title": "State"
+    "title": null,
+    "header": {
+      "labelFontSize": 14,
+      "labelFontWeight": "bold",
+      "labelColor": "#1a1a2e",
+      "labelOrient": "top"
+    }
   },
   "spec": {
-    "width": 150,
-    "height": 150,
-
-    "mark": {"type": "bar"},
+    "width": 280,
+    "height": 250,
+    "mark": {"type": "bar", "cornerRadius": 3},
     "encoding": {
-      "x": {
-        "field": "substance",
-        "type": "nominal",
-        "title": null,
-        "axis": {"labelAngle": -30}
-      },
       "y": {
+        "field": "state",
+        "type": "nominal",
+        "title": null
+      },
+      "x": {
         "field": "percent",
         "type": "quantitative",
         "title": "Rate (%)",
-        "scale": {
-          "domain": [0, 30]
-        }
+        "scale": {"domain": [0, 30]}
       },
       "color": {
         "field": "substance",
         "type": "nominal",
         "scale": {
           "domain": ["Smoking", "Vaping", "Drugs"],
-          "range": ["#D85A30", "#885B9B", "#378ADD"]
+          "range": ["#035E7B","#002E2C", "#A2A77F"]
         }
+      },
+      "opacity": {
+        "condition": {
+          "param": "e",
+          "value": 1
+        },
+        "value": 0.2
       },
       "tooltip": [
         {"field": "state", "type": "nominal", "title": "State"},
@@ -49,5 +67,14 @@
         {"field": "percent", "type": "quantitative", "title": "Rate (%)", "format": ".1f"}
       ]
     }
+  },
+  "columns": 3,
+  "spacing": {
+    "row": 32,
+    "column": 26
+  },
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
   }
 }
