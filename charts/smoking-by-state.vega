@@ -62,9 +62,17 @@
     {
       "mark": {"type": "point", "size": 100, "filled": true, "strokeWidth": 1.5},
       "encoding": {
-        "x": {"field": "year", "type": "ordinal"},
-        "y": {"field": "daily_smoking_percent", "type": "quantitative"},
-        "color": {"field": "state", "type": "nominal",
+        "x": {
+          "field": "year", 
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent", 
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "state", 
+          "type": "nominal",
         "scale": {
           "scheme": "tableau10"
         }
@@ -78,12 +86,22 @@
     {
       "mark": {"type": "text", "align": "left", "dx": 6, "fontSize": 9.5, "fontWeight": 600},
       "encoding": {
-        "x": {"field": "year", "type": "ordinal"},
-        "y": {"field": "daily_smoking_percent", "type": "quantitative"},
-        "text": {"field": "state"},
-        "color": {"field": "state", "type": "nominal",
+        "x": {
+          "field": "year", 
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent", 
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "state"}
+          ,
+        "color": {
+          "field": "state", 
+          "type": "nominal",
         "scale": {
-          "scheme": "tableau10"
+          "scheme": "bluegreen"
         }
       },
       "opacity": {
