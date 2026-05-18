@@ -24,13 +24,29 @@
         "bind": "legend"
       }
     ],
-      "mark": {"type": "line", "strokeWidth": 2},
+      "mark": {
+        "type": "line", 
+        "strokeWidth": 2
+      },
       "encoding": {
-        "x": {"field": "year", "type": "ordinal", "title": "Year", "axis": {"labelAngle": 0}},
-        "y": {"field": "daily_smoking_percent", "type": "quantitative", "title": "Daily Smoking (%)", "scale": {"domain": [0, 30]}},
-        "color": {"field": "state", "type": "nominal", "title": "State",
-        "scale": {"scheme": "tableau10"},
-        "legend": {"orient": "right", "labelFontSize": 10}
+        "x": {
+          "field": "year", 
+          "type": "ordinal", 
+          "title": "Year", 
+          "axis": {"labelAngle": 0}
+        },
+        "y": {
+          "field": "daily_smoking_percent", 
+          "type": "quantitative", 
+          "title": "Daily Smoking (%)", 
+          "scale": {"domain": [0, 30]}
+        },
+        "color": {
+          "field": "state", 
+          "type": "nominal", 
+          "title": "State",
+          "scale": {"scheme": "tableau10"},
+          "legend": {"orient": "right", "labelFontSize": 10}
         },
         "opacity": {
           "condition":{"param": "e", "value" : 0.9},
