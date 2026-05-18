@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Who Smokes In Australia?",
-    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "text": "Vaping has Exploded Amoung Young Australians",
+    "subtitle": "Drag slider to show the rise year-by-year | Click legend to highlight one age group",
     "fontSize": 15,
     "subtitleFontSize": 12,
     "anchor": "start"
@@ -12,8 +12,38 @@
   "data": {
   "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"
   },
-
-  "mark": {"type": "line", "point" : true},
+  "params": [
+    {
+      "name": "e",
+      "value": 2023,
+      "bind":{
+        "input": "range",
+        "min": 2016,
+        "max": 2025,
+        "step": 3,
+        "name": "Reveals up to year: "
+      }
+    },
+    {
+      "name": "a",
+      "select": {
+        "type": "point",
+        "fields": ["age_group"]
+      },
+      "bind": "legend"
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.year <= e"
+    }
+  ],
+  "mark": {"type": "line", "strokeWidth": 3,
+  "point":{
+    "size": 90,
+    "filled": true
+    }
+  },
   "encoding": {
     "x": {
       "field": "year",
@@ -29,9 +59,28 @@
     "color": {
       "field": "age_group",
       "type": "nominal",
-      "title": "Age Group"
+      "title": "Age Group",
+      "scale":{
+        "scheme": "plasma"
+      },
+      "legend": {
+        "orient": "right"
+      }
     },
-
+    "opacity":{
+        "condition":{
+        "param": "a",
+        "value": 1
+      },
+      "value": 0.1
+    },
+    "strokeWidth":{
+        "condition":{
+        "param": "a",
+        "value": 3.5
+      },
+      "value": 0.8
+    },
    "tooltip": [
       {"field": "age_group", "type": "nominal", "title": "Age Group"},
       {"field": "year", "type": "ordinal", "title": "Year"},
