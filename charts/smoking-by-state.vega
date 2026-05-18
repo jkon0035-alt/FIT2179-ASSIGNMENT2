@@ -45,7 +45,10 @@
           "field": "state", 
           "type": "nominal", 
           "title": "State",
-          "scale": {"scheme": "tableau10"},
+          "scale": {
+            "domain" : ["ACT", "NSW", "NT", "Qld", "SA", "Tas", "Vic", "WA"],
+          "range": ["#005F73","#0A9396", "#94D2BD", "#F4D35E","#EE9B00","#CA6702","#BB3E03","#AE2012"]
+        },
           "legend": {"orient": "right", "labelFontSize": 10}
         },
         "opacity": {
@@ -74,7 +77,8 @@
           "field": "state", 
           "type": "nominal",
         "scale": {
-          "scheme": "tableau10"
+          "domain" : ["ACT", "NSW", "NT", "Qld", "SA", "Tas", "Vic", "WA"],
+          "range": ["#005F73","#0A9396", "#94D2BD", "#C1B75F","#EE9B00","#CA6702","#BB3E03","#AE2012"]
         }
       },
       "opacity": {
@@ -99,10 +103,7 @@
           ,
         "color": {
           "field": "state", 
-          "type": "nominal",
-        "scale": {
-          "scheme": "bluegreen"
-        }
+          "type": "nominal"
       },
       "opacity": {
           "condition":{"param": "e", "value" : 1},
