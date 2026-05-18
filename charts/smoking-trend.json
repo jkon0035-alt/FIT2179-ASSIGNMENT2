@@ -2,13 +2,14 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "How Australia's Smoking Status Has Changed Over Time",
-    "subtitle": "Proportion of Australians aged 14+, (2001–2023)",
+    "subtitle": "Proportion of Australians aged 14+ | Drag the lower strip to zoom into any period",
     "fontSize": 15,
     "subtitleFontSize": 12,
-    "anchor": "start"
+    "anchor": "start",
+    "color":"#1a1a2e",
+    "subtitleColor": "#555"
+
   },
-  "width": 600,
-  "height": 400,
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-trend.csv"
   },
@@ -18,38 +19,85 @@
       "as": "stack_order"
     }
   ],
-  "mark": {"type": "area", "opacity": 0.8},
-  "encoding": {
-    "x": {
-      "field": "year",
-      "type": "ordinal",
-      "title": "Year",
-      "axis": {"labelAngle": 0}
-    },
-    "y": {
-      "field": "percent",
-      "type": "quantitative",
-      "stack": "normalize",
-      "title": "Proportion (%)",
-      "axis": {"format": ".0%"}
-    },
-    "color": {
-      "field": "category",
-      "type": "nominal",
-      "title": "Smoking status",
-      "scale": {
-        "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
-        "range": ["#993C1D","#E8956D","#B4B2A9","#1D9E75"]
+  "vconcat":[
+  {
+    "width": 500,
+    "height": 280,
+    "mark": {"type": "area", "opacity": 0.9},
+    "encoding": {
+      "x": {
+        "field": "year",
+        "type": "ordinal",
+        "scale": {"domain": {"param": "brush"}},
+        "title": "Year",
+        "axis": {"labelAngle": 0}
+      },
+      "y": {
+        "field": "percent",
+        "type": "quantitative",
+        "stack": "normalize",
+        "title": "Proportion (%)",
+        "axis": {"format": ".0%"}
+      },
+      "color": {
+        "field": "category",
+        "type": "nominal",
+        "title": "Smoking status",
+        "scale": {
+          "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
+          "range": ["#993C1D","#E8956D","#B4B2A9","#1D9E75"]
+        },
+        "legend": {
+          "orient": "bottom",
+          "columns": 4
+        }
+        
+      },
+      "order": {
+        "field": "so",
+        "type": "quantitative"  
+      },
+      "tooltip": [
+        {"field": "year", "type": "ordinal", "title": "Year"},
+        {"field": "category", "type": "nominal", "title": "Status"},
+        {"field": "percent", "type": "quantitative", "title": "%", "format": ".1f"}
+        ]
       }
     },
-    "order": {
-      "field": "stack_order",
-      "type": "quantitative"
-    },
-    "tooltip": [
-      {"field": "year", "type": "ordinal", "title": "Year"},
-      {"field": "category", "type": "nominal", "title": "Status"},
-      {"field": "percent", "type": "quantitative", "title": "%", "format": ".1f"}
-    ]
+    {
+      "width": 500,
+      "height": 50,
+      "params": [
+        {"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}
+      ],
+      "mark": {"type": "area", "opacity": 0.8},
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Drag here to zoom",
+          "axis": {"labelAngle": 0, "titleFontSize": 11, "titleColor": "#888"} 
+        },
+        "y": {
+          "field": "percent",
+          "type": "quantitative",
+          "stack": "normalize",
+          "axis": {"tickCount": 3, "grid": false, "title": "", "labels": false}
+        },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "title": "Smoking status",
+          "scale": {
+            "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
+            "range": ["#993C1D","#E8956D","#B4B2A9","#1D9E75"]
+          }
+        }
+      }
+    } 
+  ],
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
   }
 }
