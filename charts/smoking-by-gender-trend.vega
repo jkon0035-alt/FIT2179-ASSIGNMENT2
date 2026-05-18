@@ -1,50 +1,179 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Who Smokes In Australia?",
-    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "text": "Steady Decline in Daily Smoking for Both Genders",
+    "subtitle": "Click legend to highlight either Male or Female",
     "fontSize": 15,
     "subtitleFontSize": 12,
-    "anchor": "start"
+    "anchor": "start",
+    "color": "#1a1a2e",
+    "subtitleColor": "#555"
   },
   "width": 600,
   "height": 400,
   "data": {
-  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
   },
-
-  "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
-  "encoding": {
-    "x": {
-      "field": "year",
-      "type": "ordinal",
-      "title": "Year",
-      "axis": {"labelAngle": 0}
+  
+  "layer": [
+    {
+      "params": [
+    {
+      "name": "gender",
+      "select": {
+        "type": "point",
+        "fields": ["gender"]
+      },
+      "bind": "legend"
+    }
+  ],
+      "mark": {
+        "type": "area",
+        "opacity": 0.1
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative",
+          "title": "Daily Smoking (%)",
+          "stack": false
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Male", "Female"],
+            "range": ["#2E86AB", "#E84855"]
+          }
+        },
+        "opacity":{
+          "condition":{
+          "param": "gender",
+          "value": 0.20
+          },
+          "value": 0.05
+        }
+      } 
+    }, 
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3
+      },
+      "encoding": { 
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {
+            "labelAngle": 45
+          }
+        },
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative",
+          "title": "Daily Smoking (%)",
+          "scale": {
+            "domain": [0, 25]
+          }
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "title": "Gender",
+          "scale": {
+            "domain": ["Male", "Female"],
+            "range": ["#2E86AB", "#E84855"]
+          },
+          "legend": {
+            "orient": "top-right"
+          }
+        },
+        "opacity":{
+          "condition":{
+          "param": "gender",
+          "value": 1
+          },
+          "value": 0.15
+        },
+        "tooltip": [
+          {"field": "year","type": "ordinal","title": "Year"},
+          {"field": "gender","type": "nominal","title": "Gender"},
+          {"field": "daily_smoking_percent", "type": "quantitative","title": "Daily Smoking (%)","format": ".1f"}
+        ]
+      } 
     },
-    "y": {
-      "field": "daily_smoking_percent",
-      "type": "quantitative",
-      "title": "Daily Smoking (%)",
-      "axis": {"format": ".1f"}
-    },
-    "xOffset": {
-      "field": "gender",
-      "sort": ["Male","Female"]
-    },
-    "color": {
-      "field": "gender",
-      "type": "nominal",
-      "title": "Gender",
-      "scale": {
-        "domain": ["Male","Female"],
-        "range": ["#2E86AB", "#E84855"]
+    {
+      "mark": {
+        "type": "point",
+        "size": 65,
+        "filled": true
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "legend": null,
+          "scale":{
+            "domain": ["Male", "Female"],
+            "range": ["#2E86AB", "#E84855"]
+          }
+        },
+        "opacity":{
+          "condition":{
+          "param": "gender",
+          "value": 1
+          },
+          "value": 0.10
+        }
       }
     },
-
-   "tooltip": [
-      {"field": "year", "type": "ordinal", "title": "Year"},
-      {"field": "gender", "type": "nominal", "title": "Gender"},
-      {"field": "daily_smoking_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
-    ]
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x":{
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y":{
+          "field": "daily_smoking_percent",
+          "type":"quantitative"
+        },
+        "text": {
+          "field": "gender"
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "legend": null,
+           "scale":{
+            "domain": ["Male", "Female"],
+            "range": ["#2E86AB", "#E84855"]
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
   }
 }
