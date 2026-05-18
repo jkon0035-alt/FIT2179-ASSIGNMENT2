@@ -47,7 +47,7 @@
       "title": "Gender",
       "scale": {
         "domain": ["Male","Female"],
-        "range": ["Blue", "Red"]
+        "range": ["#336683", "#9D0910"]
       },
       "legend": {
         "orient": "top-right"
