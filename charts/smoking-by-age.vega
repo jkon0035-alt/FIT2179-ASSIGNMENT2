@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Who Smokes In Australia?",
-    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "text": "Smoking by Age Group and Gender",
+    "subtitle": "Daily smoking rate (%) | Click Legend to filter",
     "fontSize": 15,
     "subtitleFontSize": 12,
     "anchor": "start"
@@ -13,7 +13,17 @@
   "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-age.csv"
   },
 
-  "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
+      "params": [
+    {
+      "name": "e",
+      "select": {
+        "type": "point",
+        "fields": ["gender"]
+      },
+      "bind": "legend"
+    }
+  ],
+  "mark": {"type": "bar", "cornerRadius": 4},
   "encoding": {
     "x": {
       "field": "age_group",
@@ -38,9 +48,15 @@
       "scale": {
         "domain": ["Male","Female"],
         "range": ["Blue", "Red"]
+      },
+      "legend": {
+        "orient": "top-right"
       }
     },
-
+    "opacity": {
+      "condition":{"param": "e", "value" : 1},
+      "value": 0.1
+    },
    "tooltip": [
       {"field": "age_group", "type": "ordinal", "title": "Age Group"},
       {"field": "gender", "type": "nominal", "title": "Gender"},
