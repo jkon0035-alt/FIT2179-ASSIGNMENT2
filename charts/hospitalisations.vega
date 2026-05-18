@@ -3,43 +3,88 @@
   "title": {
     "text": "How Australia's Smoking Status Has Changed Over Time",
     "subtitle": "Proportion of Australians aged 14+, (2001–2023)",
-    "fontSize": 15,
+    "fontSize": 16,
     "subtitleFontSize": 12,
     "anchor": "start"
   },
-  "width": 600,
+  "width": "container",
   "height": 400,
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"
   },
-
-  "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
-  "encoding": {
-    "x": {
-      "field": "drug_group",
-      "type": "nominal",
-      "title": "Substance",
-      "sort": "-y",
-      "axis": {"labelAngle": -30}
-    },
-    "y": {
-      "field": "hospitalisations",
-      "type": "quantitative",
-      "title": "Number of Hospitalisations"
-
-    },
-    "color": {
-      "field": "drug_group",
-      "type": "nominal",
-      "title": "Drug Types",
-      "scale": {
-        "scheme": "tableau20"
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "e",
+          "select": {"type": "point", "on": "mouseover", "clear": "mouseout"}
+        }
+      ],
+      "mark": {"type": "bar", "cornerRadius": 4},
+      "encoding": {
+        "y": {
+          "field": "drug_group",
+          "type": "nominal",
+          "title": "Substance",
+          "axis": {"labelFontSize": 13},
+          "sort": ["Alcohol", "Cannabis", "Cocaine", "Meth/Stimulants", "Opioids", "Sedatives", "Other"]
+        },
+        "x": {
+          "field": "hospitalisations",
+          "type": "quantitative",
+          "title": "Number of Hospitalisations",
+          "axis": {"labelAngle": -30}
+        },
+        "color": {
+          "field": "drug_group",
+          "type": "nominal",
+          "title": "Drug Types",
+          "scale": {
+            "domain": ["Alcohol", "Meth/Stimulants", "Sedatives", "Cannabis", "Opioids", "Cocaine", "Other"],
+            "range": ["#034134", "#9FB5C2", "#355691", "#4E846D", "#2980B9", "#58B09C", "#5F5AA2"]
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "e",
+            "value": 1
+          },
+          "value": 0.2
+        },
+        "tooltip": [
+          {"field": "drug_group", "type": "nominal", "title": "Drug Group"},
+          {"field": "hospitalisations", "type": "quantitative", "title": "Hospitalisations", "format": ","}
+        ]
       }
     },
-
-    "tooltip": [
-      {"field": "drug_group", "type": "nominal", "title": "Drug Group"},
-      {"field": "hospitalisations", "type": "quantitative", "title": "Hospitalisations", "format": ","}
-    ]
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 6,
+        "fontSize": 11.5,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "y": {
+          "field": "drug_group",
+          "type": "nominal",
+          "sort": ["Alcohol", "Cannabis", "Cocaine", "Meth/Stimulants", "Opioids", "Sedatives", "Other"]
+        },
+        "x": {
+          "field": "hospitalisations",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "hospitalisations",
+          "type": "quantitative",
+          "format": ","
+        }
+      }
+    }
+  ],
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
   }
 }
