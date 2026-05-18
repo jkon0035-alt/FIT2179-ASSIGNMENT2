@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Who Smokes In Australia?",
-    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "text": "Vaping Rises When Smoking Declines",
+    "subtitle": "Left = Smoking Decline since 2001 | Right = 2023 vaping rate | Hover to compare data ",
     "fontSize": 15,
     "subtitleFontSize": 12,
     "anchor": "start"
@@ -13,20 +13,34 @@
   "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-vs-smoking-by-age.csv"
   },
 
-  "mark": {"type": "bar"},
+  "params": [
+    {
+      "name": "e",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout",
+        "fields": ["age_group"]
+      }
+    }
+  ],
+  "mark": {"type": "bar", "cornerRadius": 4},
   "encoding": {
     "y": {
       "field": "age_group",
       "type": "ordinal",
       "title": "Age Group",
-      "sort": ["14–17","18–24","25–29","30–39","40–49","50–59","60–69","70+"]
+      "axis": {"labelAngle": 0}
     },
     "x": {
       "field": "percent",
       "type": "quantitative",
-      "title": "← Smoking   |   Vaping →",
-      
-      "axis": {"labelExpr": "abs(datum.value)"}
+      "title": "<---------- Smoking Decline(%) | Vaping Rate (%) ----------> ",
+      "axis": {
+        "values": [
+          -20, -15, -10, -5, 0, 5, 10, 15, 20
+        ]
+      }
     },
     "color": {
       "field": "substance",
@@ -34,13 +48,24 @@
       "title": "Substance",
       "scale": {
         "domain": ["Smoking (daily)", "Vaping (current)"],
-        "range": ["#D85A30", "#885B9B"]
+        "range": ["#993c1d", "#2196a8"]
       }
+    },
+    "opacity":{
+        "condition":{
+        "param": "e",
+        "value": 1
+      },
+      "value": 0.30
     },
     "tooltip": [
       {"field": "age_group", "type": "ordinal", "title": "Age Group"},
       {"field": "substance", "type": "nominal", "title": "Substance"},
       {"field": "percent", "type": "quantitative", "title": "Rate (%)", "format": ".1f"}
     ]
+  },
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
   }
 }
