@@ -7,37 +7,102 @@
     "subtitleFontSize": 12,
     "anchor": "start"
   },
-  "width": 600,
-  "height": 400,
   "data": {
   "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv"
   },
 
-  "mark": "rect",
-  "encoding": {
-    "x": {
-      "field": "age_group",
-      "type": "ordinal",
-      "title": "Age Group",
-      "axis": {"labelAngle": 0}
-    },
-    "y": {
-      "field": "drug",
-      "type": "ordinal",
-      "title": "Drug Types",
-      "axis": {"format": ".1f"}
-    },
-    "color": {
-      "field": "recent_use_percent",
-      "type": "quantitative",
-      "title": "Recent Use (%)",
-      "scale": {"scheme": "blues"}
-    },
+  "params": [
+    {
+      "name": "e",
+      "select": {
+        "type": "point",
+        "fields": ["drug"]
+      }
+    }
+  ],
+  "hconcat": [
+    {
+      "title": {
+        "text": "Heatmap: Use Rate by Age x Drug",
+        "fontSize": 13
+      },
+      "width": 300,
+      "height": 250,
 
-   "tooltip": [
-      {"field": "age_group", "type": "ordinal", "title": "Age Group"},
-      {"field": "drug", "type": "nominal", "title": "Drug Type"},
-      {"field": "recent_use_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
-    ]
-  }
+      "mark": {"type": "rect", "cornerRadius": 2},
+      "encoding": {
+        "x": {
+          "field": "age_group",
+          "type": "ordinal",
+          "title": "Age Group",
+          "axis": {"labelAngle": 35}
+        },
+        "y": {
+          "field": "drug",
+          "type": "ordinal",
+          "title": "Drug Types"
+        },
+        "color": {
+          "field": "recent_use_percent",
+          "type": "quantitative",
+          "title": "Recent Use (%)",
+          "scale": {"scheme": "orangered", "domain": [0,25]},
+          "legend": {"orient": "bottom", "gradientLength": 220}
+        },
+        "opacity":{
+            "condition":{
+            "param": "e",
+            "value": 1
+          },
+        "value": 0.2
+        },
+      "tooltip": [
+          {"field": "age_group", "type": "ordinal", "title": "Age Group"},
+          {"field": "drug", "type": "nominal", "title": "Drug Type"},
+          {"field": "recent_use_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "title": {
+        "text": "Bar: Rate by Age (Click a drug row to filter)",
+        "fontSize": 13
+      },
+      "width": 300,
+      "height": 250,
+      "transform": [
+        {
+          "filter":{"param": "e"}
+        }
+      ],
+
+      "mark": {"type": "bar", "cornerRadius": 2},
+      "encoding": {
+        "x": {
+          "field": "recent_use_percent",
+          "type": "quantitative",
+          "title": "Use Rate (%)"
+        },
+        "y": {
+          "field": "age_group",
+          "type": "nominal",
+          "title": "Age Group",
+          "axis": {"labelFontSize": 11}
+        },
+        "color": {
+          "field": "drug",
+          "type": "nominal",
+          "title": "Drug Types",
+          "scale": {"scheme": "tableau10"},
+          "legend": {"orient": "bottom", "labelFontSize": 11}
+        },
+
+      "tooltip": [
+          {"field": "age_group", "type": "ordinal", "title": "Age Group"},
+          {"field": "drug", "type": "nominal", "title": "Drug Type"},
+          {"field": "recent_use_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+        ]
+      }
+    }
+  ]
 }
