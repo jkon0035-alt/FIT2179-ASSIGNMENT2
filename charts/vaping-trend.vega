@@ -7,7 +7,7 @@
     "subtitleFontSize": 12,
     "anchor": "start"
   },
-  "width": "container",
+  "width": 600,
   "height": 400,
   "data": {
   "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"
@@ -60,9 +60,104 @@
       "field": "age_group",
       "type": "nominal",
       "title": "Age Group",
-      "scale":{
-        "scheme": "plasma"
+       "scale": {
+          "domain": ["14-17", "18-24", "25-29", "30-39","40-49","50-59","60-69","70+"],
+          "range": ["#005F73","#0A9396", "#94D2BD", "#C1B75F","#EE9B00","#CA6702","#BB3E03","#AE2012"]
+        },
+      "legend": {
+        "orient": "right"
+      }
+    },
+    "opacity":{
+        "condition":{
+        "param": "a",
+        "value": 1
       },
+      "value": 0.1
+    },
+    "strokeWidth":{
+        "condition":{
+        "param": "a",
+        "value": 3.5
+      },
+      "value": 0.8
+    },
+   "tooltip": [
+      {"field": "age_group", "type": "nominal", "title": "Age Group"},
+      {"field": "year", "type": "ordinal", "title": "Year"},
+      {"field": "vaping_percent", "type": "quantitative", "title": "Vaping Rate (%)", "format": ".1f"}
+    ]
+  },
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
+  }
+}{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Vaping has Exploded Amoung Young Australians",
+    "subtitle": "Drag slider to show the rise year-by-year | Click legend to highlight one age group",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"
+  },
+  "params": [
+    {
+      "name": "e",
+      "value": 2023,
+      "bind":{
+        "input": "range",
+        "min": 2016,
+        "max": 2025,
+        "step": 3,
+        "name": "Reveals up to year: "
+      }
+    },
+    {
+      "name": "a",
+      "select": {
+        "type": "point",
+        "fields": ["age_group"]
+      },
+      "bind": "legend"
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.year <= e"
+    }
+  ],
+  "mark": {"type": "line", "strokeWidth": 3,
+  "point":{
+    "size": 90,
+    "filled": true
+    }
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {"labelAngle": 0}
+    },
+    "y": {
+      "field": "vaping_percent",  
+      "type": "quantitative",
+      "title": "Vaping Rate (%)"
+    },
+    "color": {
+      "field": "age_group",
+      "type": "nominal",
+      "title": "Age Group",
+       "scale": {
+          "domain": ["14-17", "18-24", "25-29", "30-39","40-49","50-59","60-69","70+"],
+          "range": ["#005F73","#0A9396", "#94D2BD", "#C1B75F","#EE9B00","#CA6702","#BB3E03","#AE2012"]
+        },
       "legend": {
         "orient": "right"
       }
