@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Who Smokes In Australia?",
-    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
+    "text": "Every State Daily Smoking Decline (2007 - 2023)",
+    "subtitle": "Slope steepness = speed of decline | Click legend to highlight data",
     "fontSize": 15,
     "subtitleFontSize": 12,
     "anchor": "start"
@@ -14,11 +14,28 @@
   },
     "layer": [
     {
-      "mark": {"type": "line", "point": true},
+      "params": [
+      {
+        "name": "e",
+        "select": {
+          "type": "point",
+          "fields": ["state"]
+        },
+        "bind": "legend"
+      }
+    ],
+      "mark": {"type": "line", "strokeWidth": 2},
       "encoding": {
         "x": {"field": "year", "type": "ordinal", "title": "Year", "axis": {"labelAngle": 0}},
         "y": {"field": "daily_smoking_percent", "type": "quantitative", "title": "Daily Smoking (%)", "scale": {"domain": [0, 30]}},
-        "color": {"field": "state", "type": "nominal", "title": "State"},
+        "color": {"field": "state", "type": "nominal", "title": "State",
+        "scale": {"scheme": "tableau10"},
+        "legend": {"orient": "right", "labelFontSize": 10}
+        },
+        "opacity": {
+          "condition":{"param": "e", "value" : 0.9},
+          "value": 0.1
+        },
         "tooltip": [
           {"field": "state", "type": "nominal", "title": "State"},
           {"field": "year", "type": "ordinal", "title": "Year"},
@@ -26,15 +43,42 @@
         ]
       }
     },
-{
-      "mark": {"type": "text", "align": "left", "dx": 5, "fontSize": 11},
-      "transform": [{"filter": "datum.year === 2023"}],
+    {
+      "mark": {"type": "point", "size": 100, "filled": true, "strokeWidth": 1.5},
       "encoding": {
         "x": {"field": "year", "type": "ordinal"},
         "y": {"field": "daily_smoking_percent", "type": "quantitative"},
-        "text": {"field": "state", "type": "nominal"},
-        "color": {"field": "state", "type": "nominal"}
+        "color": {"field": "state", "type": "nominal",
+        "scale": {
+          "scheme": "tableau10"
+        }
+      },
+      "opacity": {
+          "condition":{"param": "e", "value" : 1},
+          "value": 0.1
+        }
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 6, "fontSize": 9.5, "fontWeight": 600},
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"field": "daily_smoking_percent", "type": "quantitative"},
+        "text": {"field": "state"},
+        "color": {"field": "state", "type": "nominal",
+        "scale": {
+          "scheme": "tableau10"
+        }
+      },
+      "opacity": {
+          "condition":{"param": "e", "value" : 1},
+          "value": 0.15
+        }
       }
     }
-  ]
+  ],
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
+  }
 }
