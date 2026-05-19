@@ -29,25 +29,25 @@
       "width": 300,
       "height": 250,
 
-      "mark": {"type": "rect", "cornerRadius": 2},
+      "mark": {"type": "rect", "cornerRadius": 3},
       "encoding": {
-        "x": {
+        "y": {
           "field": "age_group",
           "type": "ordinal",
-          "title": "Age Group",
-          "axis": {"labelAngle": 35}
+          "title": "Age Group"
         },
-        "y": {
+        "x": {
           "field": "drug",
           "type": "ordinal",
-          "title": "Drug Types"
+          "title": "Drug Types",
+          "axis": {"labelAngle": 35}
         },
         "color": {
           "field": "recent_use_percent",
           "type": "quantitative",
           "title": "Recent Use (%)",
-          "scale": {"scheme": "orangered", "domain": [0,25]},
-          "legend": {"orient": "bottom", "gradientLength": 220}
+          "scale": {"scheme": "blues", "domain": [0,25]},
+          "legend": {"orient": "bottom", "gradientLength": 300}
         },
         "opacity":{
             "condition":{
@@ -93,7 +93,7 @@
           "field": "drug",
           "type": "nominal",
           "title": "Drug Types",
-          "scale": {"scheme": "tableau10"},
+          "scale": {"scheme":"blues"},
           "legend": {"orient": "bottom", "labelFontSize": 11}
         },
 
