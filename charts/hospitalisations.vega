@@ -41,7 +41,7 @@
           "title": "Drug Types",
           "scale": {
             "domain": ["Alcohol", "Meth/Stimulants", "Sedatives", "Cannabis", "Opioids", "Cocaine", "Other"],
-            "range": ["#034134", "#9FB5C2", "#355691", "#4E846D", "#2980B9", "#58B09C", "#5F5AA2"]
+            "range": ["#1E7D32", "#BBDDEC", "#355691", "#225D0D", "#2980B9", "#C8ECBB", "#8D9AA0"]
           }
         },
         "opacity": {
