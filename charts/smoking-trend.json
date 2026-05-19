@@ -13,12 +13,7 @@
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-trend.csv"
   },
-  "transform": [
-    {
-      "calculate": "datum.category === 'Smoke Daily' ? 1 : datum.category === 'Currently Smoke' ? 2 : datum.category === 'Smoked Previously' ? 3 : 4",
-      "as": "stack_order"
-    }
-  ],
+
   "vconcat":[
   {
     "width": 500,
@@ -45,7 +40,7 @@
         "title": "Smoking status",
         "scale": {
           "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
-          "range": ["##79B791","#ABD1B5","#51291E", "#301014"]
+          "range": ["#EFF1C5", "#A2A77F","#79B791","#ABD1B5"]
         },
         "legend": {
           "orient": "bottom",
@@ -90,7 +85,7 @@
           "title": "Smoking status",
           "scale": {
             "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
-            "range": ["#A3C9A8","#84B59F","#69A297", "#50808E"]
+            "range": ["#EFF1C5", "#A2A77F","#79B791","#ABD1B5"]
           }
         }
       }
