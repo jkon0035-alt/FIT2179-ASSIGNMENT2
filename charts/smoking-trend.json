@@ -40,7 +40,7 @@
         "title": "Smoking status",
         "scale": {
           "domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
-          "range": ["#EFF1C5", "#A2A77F","#79B791","#ABD1B5"]
+          "range": ["#87513A", "#CED4DA","#ADB5BD","#E15D1F"]
         },
         "legend": {
           "orient": "bottom",
