@@ -1,23 +1,1338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smoke, Vape, Use</title>
-  <link rel="stylesheet" href="page_design.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smoke, Vape, Use — Australia's Substance Landscape</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── RESET ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:   #f5ebe0;
+      --cream2:  #ede0d4;
+      --brown:   #7f5539;
+      --dark:    #1a1a2e;
+      --smoke:   #993C1D;
+      --vape:    #2196A8;
+      --drug:    #d4a017;
+      --text:    #2c2c2c;
+      --muted:   #6b6b6b;
+      --border:  #d4bfa8;
+      --white:   #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ─── NAV ────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(26,26,46,0.97);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center;
+      padding: 0 2.5rem; height: 52px;
+      border-bottom: 3px solid var(--smoke);
+      gap: 0;
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      color: #fff; margin-right: auto;
+      letter-spacing: 0.03em;
+    }
+    nav a {
+      color: #aab4c4; text-decoration: none;
+      font-size: 0.74rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0 1rem; height: 52px;
+      display: flex; align-items: center;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -3px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    nav a:hover { color: #fff; border-color: var(--smoke); }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, #1a1a2e 0%, #162032 55%, #0d2640 100%);
+      color: #fff;
+      padding: 6rem 2rem 5rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--cream));
+    }
+    .hero-inner { position: relative; max-width: 800px; margin: 0 auto; }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(153,60,29,0.85);
+      color: #fff; font-size: 0.68rem;
+      font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 1.1rem; border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 900; line-height: 1.08;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    }
+    .hero h1 span { color: #f7c948; }
+    .hero-sub {
+      font-size: 1.1rem; color: #b8c8de;
+      max-width: 580px; margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; max-width: 780px; margin: 0 auto;
+    }
+    @media (max-width: 700px) { .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+    .kpi {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px; padding: 1.4rem 1rem;
+      transition: transform 0.25s, background 0.25s;
+    }
+    .kpi:hover { transform: translateY(-5px); background: rgba(255,255,255,0.13); }
+    .kpi-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 900;
+      line-height: 1; margin-bottom: 0.4rem;
+    }
+    .kpi-lbl { font-size: 0.74rem; color: #8fa4be; line-height: 1.4; }
+    .k1 { color: #f87565; }
+    .k2 { color: #4ecfdc; }
+    .k3 { color: #f7c948; }
+    .k4 { color: #f09ab5; }
+
+    /* ─── LAYOUT ─────────────────────────────────────── */
+    .page { max-width: 1060px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ─── CHAPTER HEADER ─────────────────────────────── */
+    .chapter-header {
+      padding: 4rem 0 0.5rem;
+    }
+    .chapter-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--smoke); margin-bottom: 0.5rem;
+    }
+    .chapter-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 2px;
+      background: var(--smoke);
+    }
+    .chapter-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+      font-weight: 700; color: var(--dark);
+      line-height: 1.2; margin-bottom: 0.8rem;
+    }
+    .chapter-intro {
+      font-size: 1rem; color: var(--muted);
+      max-width: 700px; line-height: 1.85;
+      border-left: 3px solid var(--border);
+      padding-left: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ─── CARDS ──────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(127,85,57,0.08);
+      padding: 2rem 2rem 1.5rem;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .card:hover { box-shadow: 0 8px 40px rgba(127,85,57,0.14); transform: translateY(-2px); }
+    .card-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--brown); margin-bottom: 0.4rem;
+    }
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 0.9rem; color: var(--muted);
+      max-width: 680px; margin-bottom: 1.2rem;
+      line-height: 1.75;
+    }
+    .card-desc strong { color: var(--dark); }
+    .chart-area { width: 100%; }
+    .insight {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      background: #fdf6ec; border: 1px solid #e8d5b4;
+      border-radius: 10px; padding: 0.8rem 1rem;
+      margin-top: 1rem; max-width: 720px;
+    }
+    .insight-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .insight p { font-size: 0.85rem; color: #5a3a1a; line-height: 1.6; }
+    .insight p strong { color: #993C1D; }
+    .source {
+      font-size: 0.73rem; color: #aaa;
+      margin-top: 0.75rem; font-style: italic;
+    }
+
+    /* ─── GRID ───────────────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* ─── DIVIDER ────────────────────────────────────── */
+    .divider {
+      height: 1px; background: var(--border);
+      margin: 1rem 0; opacity: 0.6;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: #7a8a9a;
+      padding: 3rem 2.5rem;
+      margin-top: 4rem;
+      line-height: 2;
+    }
+    .footer-inner { max-width: 1060px; margin: 0 auto; }
+    footer h4 {
+      font-family: 'Playfair Display', serif;
+      color: #fff; font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    footer a { color: #5bc8d5; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-note { margin-top: 1.5rem; color: #4a5a6a; font-size: 0.8rem; }
+
+    /* ─── SCROLL ANIMATION ───────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade { opacity: 0; }
+    .fade.visible { animation: fadeUp 0.6s ease forwards; }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.6); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .kpi:nth-child(1) .kpi-num { animation: popIn 0.5s 0.1s cubic-bezier(0.34,1.56,0.64,1) both; }
+    .kpi:nth-child(2) .kpi-num { animation: popIn 0.5s 0.25s cubic-bezier(0.34,1.56,0.64,1) both; }
+    .kpi:nth-child(3) .kpi-num { animation: popIn 0.5s 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
+    .kpi:nth-child(4) .kpi-num { animation: popIn 0.5s 0.55s cubic-bezier(0.34,1.56,0.64,1) both; }
+  </style>
 </head>
 <body>
 
-  <h1>Smoke, Vape, Use</h1>
-  <p>Australia's shifting substance habits — tobacco, vaping, and illicit drugs.</p>
+<!-- ── NAV ── -->
+<nav>
+  <span class="nav-brand">🇦🇺 Smoke, Vape, Use</span>
+  <a href="#ch1">Smoking</a>
+  <a href="#ch2">Vaping</a>
+  <a href="#ch3">Drugs</a>
+  <a href="#ch4">Geography</a>
+  <a href="#ch5">States</a>
+</nav>
 
-  <h2>Chapter 1 — The Last Generation of Smokers?</h2>
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">FIT2179 · Data Visualisation · AIHW 2022–23</div>
+    <h1>Australia's<br/><span>Substance Use</span><br/>Landscape</h1>
+    <p class="hero-sub">Smoking is at an all-time low. Vaping has tripled. Illicit drug use persists across every demographic. Explore three interlocking public health stories through data.</p>
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-num k1">8.3%</div>
+        <div class="kpi-lbl">Australians smoke daily — lowest ever recorded</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num k2">10.8%</div>
+        <div class="kpi-lbl">Currently vaping — tripled since 2016</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num k3">17.5%</div>
+        <div class="kpi-lbl">Used an illicit drug in the past year</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num k4">116k+</div>
+        <div class="kpi-lbl">Drug-related hospitalisations per year</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <div class="chart-container" id="chart1"></div>
-  <script>vegaEmbed('#chart1', 'charts/chart1.json');</script>
+<!-- ════════════════════════════════════ -->
+<!--  CHAPTER 1 — SMOKING               -->
+<!-- ════════════════════════════════════ -->
+<div class="page">
+  <div id="ch1" class="chapter-header fade">
+    <div class="chapter-tag">Chapter 01 · Tobacco</div>
+    <h2>The Last Generation of Smokers?</h2>
+    <p class="chapter-intro">
+      Australia's plain-packaging laws and excise taxes are among the world's toughest. Since 2001, daily smoking has nearly halved — from 19.4% to 8.3%. But who is still smoking, and where? The data reveals a habit increasingly concentrated in older age groups, regional areas, and certain states.
+    </p>
+  </div>
 
+  <!-- Chart 1 -->
+  <div class="card fade">
+    <div class="card-label">Chart 01 · Stacked Area + Brushing</div>
+    <h3>How Australia's Smoking Status Has Changed Over Time</h3>
+    <p class="card-desc">The proportion of Australians in each smoking category from 2001–2023. <strong>Drag the lower strip to zoom into any time period</strong> — a Week 10 overview+detail interaction.</p>
+    <div class="chart-area" id="c1"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> In 2001, roughly 1 in 4 Australians smoked. By 2023 it was fewer than 1 in 10 — a generational shift driven by policy, price, and cultural change.</p>
+    </div>
+    <p class="source">Source: AIHW National Drug Strategy Household Survey 2022–23</p>
+  </div>
+
+  <!-- Chart 2 + 4 side by side -->
+  <div class="grid-2">
+    <div class="card fade">
+      <div class="card-label">Chart 02 · Line Chart</div>
+      <h3>Both Genders Are Quitting — But Men Started Higher</h3>
+      <p class="card-desc">Daily smoking by gender 2001–2023. <strong>Click legend to highlight one gender.</strong></p>
+      <div class="chart-area" id="c2"></div>
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <p><strong>Key insight:</strong> Men fell from 23.1% to 9.0%. Women fell from 18.0% to 7.7%. The gap has nearly closed.</p>
+      </div>
+      <p class="source">Source: AIHW NDSHS 2022–23</p>
+    </div>
+    <div class="card fade">
+      <div class="card-label">Chart 04 · Heatmap</div>
+      <h3>Middle-Aged Australians Smoke the Most</h3>
+      <p class="card-desc">Daily smoking rate (%) by age group and gender. Darker = higher rate.</p>
+      <div class="chart-area" id="c4"></div>
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <p><strong>Key insight:</strong> The 50–59 age group records the highest rates — the generation that started smoking before major reforms.</p>
+      </div>
+      <p class="source">Source: AIHW NDSHS 2022–23</p>
+    </div>
+  </div>
+
+  <!-- Chart 3 -->
+  <div class="card fade">
+    <div class="card-label">Chart 03 · Dumbbell Chart</div>
+    <h3>Every State Has Cut Daily Smoking — But Not Equally</h3>
+    <p class="card-desc">Each dumbbell shows a state's smoking rate in 2007 (red dot) vs 2023 (blue dot). The longer the bar, the bigger the drop. Hover dots for exact values.</p>
+    <div class="chart-area" id="c3"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> The ACT achieved the lowest rate of any state at 4.8%. The NT at 13.1% remains nearly three times higher — a persistent geographic inequality.</p>
+    </div>
+    <p class="source">Source: AIHW NDSHS 2022–23</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!--  CHAPTER 2 — VAPING                -->
+<!-- ════════════════════════════════════ -->
+<div class="page">
+  <div id="ch2" class="chapter-header fade">
+    <div class="chapter-tag">Chapter 02 · E-Cigarettes</div>
+    <h2>The Vaping Surge — A Crisis Among the Young</h2>
+    <p class="chapter-intro">
+      While smoking fell, vaping exploded. Between 2016 and 2023 the proportion of Australians who currently vape tripled. The rise is sharpest among 18–24 year olds, raising serious concerns that a new generation is becoming addicted to nicotine through a different device.
+    </p>
+  </div>
+
+  <!-- Chart 5 -->
+  <div class="card fade">
+    <div class="card-label">Chart 05 · Bubble Matrix + Year Slider</div>
+    <h3>Vaping Exploded Among Young Australians After 2016</h3>
+    <p class="card-desc">Each bubble = vaping rate for one age group in one year. Size and colour intensity = rate. <strong>Click legend to isolate an age group.</strong> The 18–24 bubble is unmistakeable.</p>
+    <div class="chart-area" id="c5"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> Vaping among 18–24 year olds jumped from 2.8% in 2016 to 20.6% in 2023 — a sevenfold increase in just seven years.</p>
+    </div>
+    <p class="source">Source: AIHW NDSHS 2022–23</p>
+  </div>
+
+  <!-- Chart 6 + 12 -->
+  <div class="grid-2">
+    <div class="card fade">
+      <div class="card-label">Chart 06 · Diverging Bar</div>
+      <h3>Vaping Rises Exactly Where Smoking Has Fallen</h3>
+      <p class="card-desc">Left bars = smoking decline since 2001. Right bars = 2023 vaping rate. Hover to compare age groups.</p>
+      <div class="chart-area" id="c6"></div>
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <p><strong>Key insight:</strong> 18–24 year olds cut smoking by 10+ points — but now lead all age groups in vaping at 20.6%. Substitution, not cessation.</p>
+      </div>
+      <p class="source">Source: AIHW NDSHS 2022–23</p>
+    </div>
+    <div class="card fade">
+      <div class="card-label">Chart 12 · Choropleth Map</div>
+      <h3>NSW Records the Highest Vaping Rate of Any State</h3>
+      <p class="card-desc">Darker blue = higher vaping prevalence. Hover a state for its exact rate.</p>
+      <div class="chart-area" id="c12"></div>
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <p><strong>Key insight:</strong> Tasmania at 3.7% is less than half of NSW's 7.9% — a striking geographic divide.</p>
+      </div>
+      <p class="source">Source: AIHW NDSHS 2022–23</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!--  CHAPTER 3 — DRUGS                 -->
+<!-- ════════════════════════════════════ -->
+<div class="page">
+  <div id="ch3" class="chapter-header fade">
+    <div class="chapter-tag">Chapter 03 · Illicit Drugs</div>
+    <h2>Cannabis Dominates, Cocaine Surges</h2>
+    <p class="chapter-intro">
+      Around 1 in 6 Australians used an illicit drug in the past year. Cannabis remains the most widely used substance, but cocaine use has nearly quadrupled since 2001. Drug use peaks sharply in the 20s and varies dramatically by substance — and the hospitalisations tell a particularly stark story about alcohol.
+    </p>
+  </div>
+
+  <!-- Chart 8 -->
+  <div class="card fade">
+    <div class="card-label">Chart 08 · Coordinated Heatmap + Bar (Week 10)</div>
+    <h3>Drug Use Peaks in the 20s — Each Substance Has Its Own Profile</h3>
+    <p class="card-desc">The heatmap shows use rates by age × drug. <strong>Click any drug row</strong> to filter the bar chart on the right. This is a Week 10 coordinated multi-view interaction.</p>
+    <div class="chart-area" id="c8"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> Cocaine and ecstasy are heavily concentrated in the 20–29 bracket. Cannabis use is more evenly spread across age groups.</p>
+    </div>
+    <p class="source">Source: AIHW NDSHS 2022–23</p>
+  </div>
+
+  <!-- Chart 13 + 9 -->
+  <div class="grid-2">
+    <div class="card fade">
+      <div class="card-label">Chart 13 · Donut Chart</div>
+      <h3>Cannabis Accounts for the Majority of All Illicit Drug Use</h3>
+      <p class="card-desc">Relative size of recent use rates for each drug. <strong>Click legend to highlight a segment.</strong></p>
+      <div class="chart-area" id="c13" style="display:flex;justify-content:center;"></div>
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <p><strong>Key insight:</strong> Cannabis at 11.5% accounts for nearly half of all illicit use. Cocaine at 4.5% has now overtaken ecstasy for the first time.</p>
+      </div>
+      <p class="source">Source: AIHW NDSHS 2022–23</p>
+    </div>
+    <div class="card fade">
+      <div class="card-label">Chart 09 · Lollipop Chart</div>
+      <h3>Alcohol Causes More Hospitalisations Than All Other Drugs Combined</h3>
+      <p class="card-desc">Annual drug-related hospitalisations by substance. Hover for exact count.</p>
+      <div class="chart-area" id="c9"></div>
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <p><strong>Key insight:</strong> Alcohol caused 80,439 hospitalisations — more than 6× the next substance (meth at 13,909).</p>
+      </div>
+      <p class="source">Source: AIHW AODT Services 2022–23</p>
+    </div>
+  </div>
+
+  <!-- Chart 10 -->
+  <div class="card fade">
+    <div class="card-label">Chart 10 · Animated Bar + Year Slider (Week 10)</div>
+    <h3>Cocaine Has Nearly Quadrupled Since 2001</h3>
+    <p class="card-desc"><strong>Drag the slider</strong> to watch how each drug's use rate changed across survey years. Watch cocaine's bar grow while ecstasy shrinks — two very different trajectories.</p>
+    <div class="chart-area" id="c10"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> Cocaine rose from 1.3% in 2001 to 4.5% in 2023 — a 246% increase. No other drug has grown as fast.</p>
+    </div>
+    <p class="source">Source: AIHW NDSHS 2022–23</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!--  CHAPTER 4 — GEOGRAPHY             -->
+<!-- ════════════════════════════════════ -->
+<div class="page">
+  <div id="ch4" class="chapter-header fade">
+    <div class="chapter-tag">Chapter 04 · Geography</div>
+    <h2>Where You Live Shapes Your Substance Risk</h2>
+    <p class="chapter-intro">
+      Substance use is not evenly spread across Australia. Remote communities record smoking rates nearly three times higher than major cities. Drug use also rises with remoteness. Interestingly, vaping runs the opposite pattern — higher in cities. This map tells a public health equity story: two different crises unfolding in two different Australias.
+    </p>
+  </div>
+
+  <!-- Chart 7 -->
+  <div class="card fade">
+    <div class="card-label">Chart 07 · Symbol Map + Radio Buttons + Legend Filter</div>
+    <h3>How Remoteness Shapes Substance Use Across Australia</h3>
+    <p class="card-desc"><strong>Click a radio button</strong> to switch between smoking, vaping and drug use rates. <strong>Click a legend item</strong> to highlight that remoteness category. Bubble size = rate. Hover for all three values at once.</p>
+    <div class="chart-area" id="c7"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> Remote/Very Remote Australians smoke at 20.4% — nearly 3× the 7.0% in Major Cities. For vaping it reverses: cities vape more (3.9%) than remote areas (3.7%). Two very different crises, two different geographies.</p>
+    </div>
+    <p class="source">Source: AIHW NDSHS 2022–23, Table S3.5 — Smoking and drug use by remoteness area</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!--  CHAPTER 5 — STATES                -->
+<!-- ════════════════════════════════════ -->
+<div class="page">
+  <div id="ch5" class="chapter-header fade">
+    <div class="chapter-tag">Chapter 05 · State Comparison</div>
+    <h2>The Northern Territory Leads Every State on All Three Substances</h2>
+    <p class="chapter-intro">
+      Breaking substance use down by state reveals stark divides. The ACT consistently records the lowest rates. The NT records the highest across all three categories. The small multiples and scatter below let you compare every state simultaneously — and find which states are outliers.
+    </p>
+  </div>
+
+  <!-- Chart 11 -->
+  <div class="card fade">
+    <div class="card-label">Chart 11 · Small Multiples + Cross-Filter (Week 10)</div>
+    <h3>Substance Use Side-by-Side Across All States</h3>
+    <p class="card-desc">Three panels — smoking, vaping, and drug use. <strong>Click any bar</strong> to highlight that state across all three panels simultaneously. This is a Week 10 small-multiples interaction.</p>
+    <div class="chart-area" id="c11"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> NT leads all three: 13.1% smoking, 6.6% vaping, 25.2% drug use. ACT is lowest on all three: 4.8%, 5.7%, 14.1%.</p>
+    </div>
+    <p class="source">Source: AIHW NDSHS 2022–23</p>
+  </div>
+
+  <!-- Chart 14 -->
+  <div class="card fade">
+    <div class="card-label">Chart 14 · Scatter Plot + Brush + Regression</div>
+    <h3>States That Smoke More Also Tend to Use More Drugs</h3>
+    <p class="card-desc">Each bubble = one state. X = smoking rate, Y = drug use rate, size = vaping rate. Dashed line = trend. <strong>Drag to select states</strong> or click legend to highlight one.</p>
+    <div class="chart-area" id="c14"></div>
+    <div class="insight">
+      <span class="insight-icon">💡</span>
+      <p><strong>Key insight:</strong> The NT sits alone in the top-right corner — far above every other state on both smoking and drug use. The ACT is isolated in the bottom-left. The trend line shows a clear positive relationship between the two.</p>
+    </div>
+    <p class="source">Source: AIHW NDSHS 2022–23</p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <h4>Data Sources</h4>
+    <p>1. <a href="https://www.aihw.gov.au/reports/illicit-use-of-drugs/national-drug-strategy-household-survey" target="_blank">AIHW — National Drug Strategy Household Survey 2022–23</a></p>
+    <p>2. <a href="https://www.aihw.gov.au/reports/alcohol/alcohol-tobacco-other-drugs-australia" target="_blank">AIHW — Alcohol, Tobacco and Other Drugs in Australia 2023</a></p>
+    <p>3. <a href="https://www.abs.gov.au/statistics/health/health-conditions-and-risks/smoking/latest-release" target="_blank">ABS — National Health Survey: Smoking 2022</a></p>
+    <p class="footer-note">Map boundaries from Natural Earth Data (naturalearthdata.com) via mapshaper.org · Built with Vega-Lite v5 · FIT2179 Data Visualisation Assignment 2</p>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.animationDelay = (i * 0.05) + 's';
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+// ── Config ────────────────────────────────────────────────────────────────────
+const B   = 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/';
+const RAW = 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/';
+const CHARTS = 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/charts/';
+const FIT = 'https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson';
+const STA = B + 'ne_10m_admin_1_states_provinces.json';
+const OPT = { actions: false, renderer: 'svg' };
+
+const CFG = {
+  font: 'Inter, sans-serif',
+  background: 'transparent',
+  view: { stroke: null },
+  axis: { domain: false, labelFontSize: 11, titleFontSize: 12, gridColor: '#eee' },
+  legend: { labelFontSize: 11, titleFontSize: 12 }
+};
+
+
+const mapBg = {
+  data: { url: FIT, format: { type: 'topojson', feature: 'ne_110m_admin_0_countries' } },
+  transform: [{ filter: "datum.properties.NAME == 'Australia'" }],
+  mark: { type: 'geoshape', fill: '#f5f0e8', stroke: '#ccc', strokeWidth: 0.8 }
+};
+const stateBorders = {
+  data: { url: STA, format: { type: 'topojson', feature: 'aus_states' } },
+  mark: { type: 'geoshape', fill: 'transparent', stroke: '#c8bfb0', strokeWidth: 0.7 }
+};
+
+vegaEmbed('#c1', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  data: { url: RAW + 'smoking-trend.csv' },
+  transform: [{ calculate: "datum.category=='Smoke Daily'?1:datum.category=='Currently Smoke'?2:datum.category=='Smoked Previously'?3:4", as: 'so' }],
+  vconcat: [
+    {
+      width: 'container', height: 260,
+      mark: { type: 'area', opacity: 0.88, line: { strokeWidth: 0.5, color: 'white' } },
+      encoding: {
+        x: { field: 'year', type: 'ordinal', scale: { domain: { param: 'brush' } }, axis: { title: '', labelAngle: 0, grid: false } },
+        y: { field: 'percent', type: 'quantitative', stack: 'normalize', title: 'Proportion', axis: { format: '.0%', grid: true } },
+        color: {
+          field: 'category', type: 'nominal', title: 'Status',
+          scale: { domain: ['Smoke Daily','Currently Smoke','Smoked Previously','Never Smoked'], range: ['#993C1D','#E8956D','#B4B2A9','#1D9E75'] },
+          legend: { orient: 'bottom', columns: 2 }
+        },
+        order: { field: 'so' },
+        tooltip: [{ field: 'year', type: 'ordinal', title: 'Year' }, { field: 'category', type: 'nominal', title: 'Status' }, { field: 'percent', type: 'quantitative', title: 'Rate (%)', format: '.1f' }]
+      }
+    },
+    {
+      width: 'container', height: 48,
+      params: [{ name: 'brush', select: { type: 'interval', encodings: ['x'] } }],
+      mark: { type: 'area', opacity: 0.5 },
+      encoding: {
+        x: { field: 'year', type: 'ordinal', title: '← Drag here to zoom →', axis: { labelAngle: 0, titleFontSize: 10, titleColor: '#999' } },
+        y: { field: 'percent', type: 'quantitative', stack: 'normalize', axis: { tickCount: 2, grid: false, title: '', labels: false } },
+        color: { field: 'category', type: 'nominal', legend: null, scale: { domain: ['Smoke Daily','Currently Smoke','Smoked Previously','Never Smoked'], range: ['#993C1D','#E8956D','#B4B2A9','#1D9E75'] } }
+      }
+    }
+  ],
+  resolve: { scale: { y: 'independent' } }, spacing: 5, config: CFG
+}, OPT);
+
+vegaEmbed('#c2', {
+ 
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Steady Decline in Daily Smoking for Both Genders",
+    "subtitle": "Click legend to highlight either Male or Female",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "color": "#1a1a2e",
+    "subtitleColor": "#555"
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
+  },
+  
+  "layer": [
+    {
+      "params": [
+    {
+      "name": "gender",
+      "select": {
+        "type": "point",
+        "fields": ["gender"]
+      },
+      "bind": "legend"
+    }
+  ],
+      "mark": {
+        "type": "area",
+        "opacity": 0.1
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative",
+          "title": "Daily Smoking (%)",
+          "stack": false
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Male", "Female"],
+            "range": ["#2E86AB", "#E84855"]
+          }
+        },
+        "opacity":{
+          "condition":{
+          "param": "gender",
+          "value": 0.20
+          },
+          "value": 0.05
+        }
+      } 
+    }, 
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3
+      },
+      "encoding": { 
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {
+            "labelAngle": 45
+          }
+        },
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative",
+          "title": "Daily Smoking (%)",
+          "scale": {
+            "domain": [0, 25]
+          }
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "title": "Gender",
+          "scale": {
+            "domain": ["Male", "Female"],
+            "range": ["#2E86AB", "#E84855"]
+          },
+          "legend": {
+            "orient": "top-right"
+          }
+        },
+        "opacity":{
+          "condition":{
+          "param": "gender",
+          "value": 1
+          },
+          "value": 0.15
+        },
+        "tooltip": [
+          {"field": "year","type": "ordinal","title": "Year"},
+          {"field": "gender","type": "nominal","title": "Gender"},
+          {"field": "daily_smoking_percent", "type": "quantitative","title": "Daily Smoking (%)","format": ".1f"}
+        ]
+      } 
+    },
+    {
+      "mark": {
+        "type": "point",
+        "size": 65,
+        "filled": true
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "legend": null,
+          "scale":{
+            "domain": ["Male", "Female"],
+            "range": ["#003049", "#780000"]
+          }
+        },
+        "opacity":{
+          "condition":{
+          "param": "gender",
+          "value": 1
+          },
+          "value": 0.10
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x":{
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y":{
+          "field": "daily_smoking_percent",
+          "type":"quantitative"
+        },
+        "text": {
+          "field": "gender"
+        },
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "legend": null,
+           "scale":{
+            "domain": ["Male", "Female"],
+            "range": ["#003049", "#780000"]
+          }
+        }
+      }
+    }
+  ],
+  
+  config: CFG
+}, OPT);
+
+
+
+vegaEmbed('#c3', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Every State Daily Smoking Decline (2007 - 2023)",
+    "subtitle": "Slope steepness = speed of decline | Click legend to highlight data",
+    "fontSize": 15,
+    "subtitleFontSize": 12,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-state.csv"
+  },
+    "layer": [
+    {
+      "params": [
+      {
+        "name": "e",
+        "select": {
+          "type": "point",
+          "fields": ["state"]
+        },
+        "bind": "legend"
+      }
+    ],
+      "mark": {
+        "type": "line", 
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "year", 
+          "type": "ordinal", 
+          "title": "Year", 
+          "axis": {"labelAngle": 0}
+        },
+        "y": {
+          "field": "daily_smoking_percent", 
+          "type": "quantitative", 
+          "title": "Daily Smoking (%)", 
+          "scale": {"domain": [0, 30]}
+        },
+        "color": {
+          "field": "state", 
+          "type": "nominal", 
+          "title": "State",
+          "scale": {
+            "domain" : ["ACT", "NSW", "NT", "Qld", "SA", "Tas", "Vic", "WA"],
+          "range": ["#005F73","#0A9396", "#94D2BD", "#F4D35E","#EE9B00","#CA6702","#BB3E03","#AE2012"]
+        },
+          "legend": {"orient": "right", "labelFontSize": 10}
+        },
+        "opacity": {
+          "condition":{"param": "e", "value" : 0.9},
+          "value": 0.1
+        },
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {"field": "daily_smoking_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "point", "size": 100, "filled": true, "strokeWidth": 1.5},
+      "encoding": {
+        "x": {
+          "field": "year", 
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent", 
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "state", 
+          "type": "nominal",
+        "scale": {
+          "domain" : ["ACT", "NSW", "NT", "Qld", "SA", "Tas", "Vic", "WA"],
+          "range": ["#005F73","#0A9396", "#94D2BD", "#C1B75F","#EE9B00","#CA6702","#BB3E03","#AE2012"]
+        }
+      },
+      "opacity": {
+          "condition":{"param": "e", "value" : 1},
+          "value": 0.1
+        }
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 6, "fontSize": 9.5, "fontWeight": 600},
+      "encoding": {
+        "x": {
+          "field": "year", 
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "daily_smoking_percent", 
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "state"}
+          ,
+        "color": {
+          "field": "state", 
+          "type": "nominal"
+      },
+      "opacity": {
+          "condition":{"param": "e", "value" : 1},
+          "value": 0.15
+        }
+      }
+    }
+  ],
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
+  },
+  config: CFG
+}, OPT);
+
+
+vegaEmbed('#c4', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: "container", height: 300,
+  data: { url: RAW + 'smoking-by-age.csv' },
+  mark: { type: 'rect', cornerRadius: 2 },
+  encoding: {
+    x: { field: 'age_group', type: 'nominal', title: 'Age Group', sort: ['14–17','18–24','25–29','30–39','40–49','50–59','60–69','70+'], axis: { labelAngle: 0, grid: false } },
+    y: { field: 'gender', type: 'nominal', title: null, axis: { labelFontSize: 13, grid: false } },
+    color: { field: 'percent', type: 'quantitative', title: 'Smoking Rate (%)', scale: { scheme: 'reds', domain: [0, 14] }, legend: { orient: 'bottom', gradientLength: 150 } },
+    tooltip: [{ field: 'age_group', type: 'nominal', title: 'Age Group' }, { field: 'gender', type: 'nominal', title: 'Gender' }, { field: 'percent', type: 'quantitative', title: 'Rate (%)', format: '.1f' }]
+  },
+  config: CFG
+}, OPT);
+
+vegaEmbed('#c5', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: 'container', height: 300,
+  data: { url: RAW + 'vaping-trend.csv' },
+  params: [{ name: 'ag', select: { type: 'point', fields: ['age_group'] }, bind: 'legend' }],
+  mark: { type: 'circle', stroke: 'white', strokeWidth: 1 },
+  encoding: {
+    x: { field: 'year', type: 'ordinal', title: 'Year', axis: { labelAngle: 0, grid: false } },
+    y: { field: 'age_group', type: 'nominal', title: 'Age Group', sort: ['14–17','18–24','25–29','30–39','40–49','50–59','60–69','70+'], axis: { grid: false } },
+    size: { field: 'vaping_percent', type: 'quantitative', title: 'Vaping Rate (%)', scale: { range: [80, 3200] }, legend: { orient: 'right', values: [2, 5, 10, 15, 20] } },
+    color: { field: 'vaping_percent', type: 'quantitative', title: 'Vaping (%)', scale: { scheme: 'orangered', domain: [0, 22] }, legend: { orient: 'bottom', gradientLength: 200 } },
+    opacity: { condition: { param: 'ag', value: 0.9 }, value: 0.15 },
+    tooltip: [{ field: 'age_group', type: 'nominal', title: 'Age Group' }, { field: 'year', type: 'ordinal', title: 'Year' }, { field: 'vaping_percent', type: 'quantitative', title: 'Vaping Rate (%)', format: '.1f' }]
+  },
+  config: CFG
+}, OPT);
+
+vegaEmbed('#c6', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: 'container', height: 280,
+  data: { url: RAW + 'vaping-vs-smoking-by-age.csv' },
+  layer: [
+    {
+      params: [{ name: 'ah', select: { type: 'point', on: 'mouseover', clear: 'mouseout', fields: ['age_group'] } }],
+      mark: { type: 'bar', cornerRadius: 3 },
+      encoding: {
+        y: { field: 'age_group', type: 'nominal', sort: ['14–17','18–24','25–29','30–39','40–49','50–59','60–69','70+'], title: 'Age Group', axis: { grid: false } },
+        x: { field: 'percent', type: 'quantitative', title: '← Smoking decline (%) | Vaping rate (%) →', axis: { grid: true, values: [-15,-10,-5,0,5,10,15,20] } },
+        color: { field: 'substance', type: 'nominal', title: null, scale: { domain: ['Smoking (daily)','Vaping (current)'], range: ['#993C1D','#2196A8'] }, legend: { orient: 'bottom', labelFontSize: 12 } },
+        opacity: { condition: { param: 'ah', value: 1 }, value: 0.5 },
+        tooltip: [{ field: 'age_group', type: 'nominal', title: 'Age Group' }, { field: 'substance', type: 'nominal', title: 'Substance' }, { field: 'percent', type: 'quantitative', title: 'Rate (%)', format: '.1f' }]
+      }
+    },
+    { mark: { type: 'rule', color: '#333', strokeWidth: 1.5 }, encoding: { x: { datum: 0 } } }
+  ],
+  config: CFG
+}, OPT);
+
+vegaEmbed('#c7', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: '', height: 440,
+  projection: { type: 'mercator', center: [134, -28], scale: 650 },
+  params: [
+    {
+      name: 'sub', value: 'drug_percent',
+      bind: { input: 'radio', options: ['smoking_percent','vaping_percent','drug_percent'], labels: ['Daily Smoking','Daily Vaping','Illicit Drug Use'], name: 'Show substance: ' }
+    },
+    { name: 'rem_sel', select: { type: 'point', fields: ['remoteness'] }, bind: 'legend' }
+  ],
+  layer: [
+    mapBg,
+    stateBorders,
+    {
+      data: { url: RAW + 'remoteness.csv' },
+      transform: [
+        { calculate: "sub == 'smoking_percent' ? datum.smoking_percent : sub == 'vaping_percent' ? datum.vaping_percent : datum.drug_percent", as: 'rate' },
+        { calculate: "sub == 'smoking_percent' ? 'Daily Smoking' : sub == 'vaping_percent' ? 'Daily Vaping' : 'Illicit Drug Use'", as: 'label' }
+      ],
+      mark: { type: 'circle', stroke: 'white', strokeWidth: 2, opacity: 0.85 },
+      encoding: {
+        longitude: { field: 'longitude', type: 'quantitative' },
+        latitude: { field: 'latitude', type: 'quantitative' },
+        size: { field: 'rate', type: 'quantitative', scale: { range: [3000, 18000] }, legend: null },
+        color: {
+          field: 'remoteness', type: 'nominal', title: 'Remoteness',
+          scale: { domain: ['Major Cities','Inner Regional','Outer Regional','Remote/Very Remote'], range: ['#2196A8','#5AA76D','#E8A838','#C0392B'] },
+          legend: { orient: 'bottom-left', labelFontSize: 11, symbolSize: 200 }
+        },
+        opacity: { condition: { param: 'rem_sel', empty: true, value: 0.85 }, value: 0.15 },
+        tooltip: [
+          { field: 'remoteness', type: 'nominal', title: 'Remoteness' },
+          { field: 'label', type: 'nominal', title: 'Showing' },
+          { field: 'rate', type: 'quantitative', title: 'Rate (%)', format: '.1f' },
+          { field: 'smoking_percent', type: 'quantitative', title: 'Smoking (%)', format: '.1f' },
+          { field: 'vaping_percent', type: 'quantitative', title: 'Vaping (%)', format: '.1f' },
+          { field: 'drug_percent', type: 'quantitative', title: 'Drug Use (%)', format: '.1f' }
+        ]
+      }
+    }
+  ],
+  config: { ...CFG, view: { stroke: null } }
+}, OPT);
+
+
+vegaEmbed('#c8', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv"
+  },
+
+  "params": [
+    {
+      "name": "e",
+      "select": {
+        "type": "point",
+        "fields": ["drug"]
+      }
+    }
+  ],
+  "hconcat": [
+    {
+      "title": {
+        "text": "Heatmap: Use Rate by Age x Drug",
+        "fontSize": 13
+      },
+      "width": 300,
+      "height": 250,
+
+      "mark": {"type": "rect", "cornerRadius": 3},
+      "encoding": {
+        "y": {
+          "field": "age_group",
+          "type": "ordinal",
+          "title": "Age Group"
+        },
+        "x": {
+          "field": "drug",
+          "type": "ordinal",
+          "title": "Drug Types",
+          "axis": {"labelAngle": 35}
+        },
+        "color": {
+          "field": "recent_use_percent",
+          "type": "quantitative",
+          "title": "Recent Use (%)",
+          "scale": {"scheme": "orangered", "domain": [0,25]},
+          "legend": {"orient": "bottom", "gradientLength": 300}
+        },
+        "opacity":{
+            "condition":{
+            "param": "e",
+            "value": 1
+          },
+        "value": 0.2
+        },
+      "tooltip": [
+          {"field": "age_group", "type": "ordinal", "title": "Age Group"},
+          {"field": "drug", "type": "nominal", "title": "Drug Type"},
+          {"field": "recent_use_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "title": {
+        "text": "Bar: Rate by Age (Click a drug row to filter)",
+        "fontSize": 13
+      },
+      "width": 300,
+      "height": 250,
+      "transform": [
+        {
+          "filter":{"param": "e"}
+        }
+      ],
+
+      "mark": {"type": "bar", "cornerRadius": 2},
+      "encoding": {
+        "x": {
+          "field": "recent_use_percent",
+          "type": "quantitative",
+          "title": "Use Rate (%)"
+        },
+        "y": {
+          "field": "age_group",
+          "type": "nominal",
+          "title": "Age Group",
+          "axis": {"labelFontSize": 11}
+        },
+        color: { field: 'drug', type: 'nominal', scale: { scheme: 'tableau10' }, legend: { orient: 'bottom' } },
+
+      "tooltip": [
+          {"field": "age_group", "type": "ordinal", "title": "Age Group"},
+          {"field": "drug", "type": "nominal", "title": "Drug Type"},
+          {"field": "recent_use_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+        ]
+      }
+    }
+  ],
+  "config": {
+  "background": "transparent",
+  "view": {"stroke": null}
+  },
+  spacing: 50, config: CFG
+}, OPT);
+
+
+vegaEmbed('#c9', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: 'container', height: 260,
+  data: { values: [
+    { g: 'Alcohol', h: 80439 }, { g: 'Meth/Stimulants', h: 13909 },
+    { g: 'Sedatives', h: 8584 }, { g: 'Cannabis', h: 6503 },
+    { g: 'Opioids', h: 5614 }, { g: 'Cocaine', h: 985 }, { g: 'Other', h: 881 }
+  ]},
+  layer: [
+    {
+      mark: { type: 'rule', strokeWidth: 2 },
+      encoding: {
+        y: { field: 'g', type: 'nominal', sort: '-x', title: null, axis: { labelFontSize: 12, grid: false } },
+        x: { field: 'h', type: 'quantitative', title: 'Hospitalisations', axis: { grid: true, format: ',d' } },
+        x2: { datum: 0 },
+        color: { field: 'g', type: 'nominal', legend: null, scale: { domain: ['Alcohol','Meth/Stimulants','Sedatives','Cannabis','Opioids','Cocaine','Other'], range: ['#C0392B','#E67E22','#F1C40F','#27AE60','#2980B9','#8E44AD','#7F8C8D'] } }
+      }
+    },
+    {
+      mark: { type: 'point', filled: true, size: 120 },
+      encoding: {
+        y: { field: 'g', type: 'nominal', sort: '-x' },
+        x: { field: 'h', type: 'quantitative', axis: { grid: true, format: ',d' } },
+        color: { field: 'g', type: 'nominal', legend: null, scale: { domain: ['Alcohol','Meth/Stimulants','Sedatives','Cannabis','Opioids','Cocaine','Other'], range: ['#C0392B','#E67E22','#F1C40F','#27AE60','#2980B9','#8E44AD','#7F8C8D'] } },
+        tooltip: [{ field: 'g', type: 'nominal', title: 'Drug Group' }, { field: 'h', type: 'quantitative', title: 'Hospitalisations', format: ',' }]
+      }
+    },
+    {
+      mark: { type: 'text', align: 'left', dx: 8, fontSize: 11, fontWeight: 'bold' },
+      encoding: {
+        y: { field: 'g', type: 'nominal', sort: '-x' },
+        x: { field: 'h', type: 'quantitative',axis: { grid: true, format: ',d' } },
+        text: { field: 'h', type: 'quantitative', format: ',' },
+        color: { value: '#333' }
+      }
+    }
+  ],
+  config: CFG
+}, OPT);
+
+
+vegaEmbed('#c10', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: 'container', height: 260,
+  data: { url: RAW + 'drug-trends.csv' },
+  params: [{ name: 'yr', value: 2023, bind: { input: 'range', min: 2001, max: 2024, step: 3, name: 'Survey year: ' } }],
+  transform: [{ filter: 'datum.year == yr' }],
+  mark: { type: 'bar', cornerRadius: 4 },
+  encoding: {
+    y: { field: 'drug', type: 'nominal', sort: '-x', title: null, axis: { labelFontSize: 13, grid: false } },
+    x: { field: 'recent_use_percent', type: 'quantitative', title: 'Recent Use (%)', scale: { domain: [0, 14] }, axis: { grid: true } },
+    color: { field: 'drug', type: 'nominal', scale: { scheme: 'tableau10' }, legend: null },
+    tooltip: [{ field: 'drug', type: 'nominal', title: 'Drug' }, { field: 'year', type: 'ordinal', title: 'Year' }, { field: 'recent_use_percent', type: 'quantitative', title: 'Recent Use (%)', format: '.1f' }]
+  },
+  config: CFG
+}, OPT);
+
+vegaEmbed('#c11', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  data: { url: RAW + 'substances-by-state-long.csv' },
+  params: [{ name: 'sp', select: { type: 'point', fields: ['state'] } }],
+  facet: {
+    field: 'substance', type: 'nominal', title: null,
+    sort: ['Smoking','Vaping','Drugs'],
+    header: { labelFontSize: 13, labelFontWeight: 'bold', labelColor: '#1a1a2e', labelOrient: 'top' }
+  },
+  spec: {
+    width: 230, height: 230,
+    mark: { type: 'bar', cornerRadius: 3 },
+    encoding: {
+      y: { field: 'state', type: 'nominal', sort: '-x', title: null, axis: { labelFontSize: 11, grid: false } },
+      x: { field: 'percent', type: 'quantitative', title: 'Rate (%)', scale: { domain: [0, 30] }, axis: { grid: true } },
+      color: { field: 'substance', type: 'nominal', scale: { domain: ['Smoking','Vaping','Drugs'], range: ['#993C1D','#2196A8','#E8A838'] }, legend: null },
+      opacity: { condition: { param: 'sp', value: 1 }, value: 0.2 },
+      tooltip: [{ field: 'state_full', type: 'nominal', title: 'State' }, { field: 'substance', type: 'nominal', title: 'Substance' }, { field: 'percent', type: 'quantitative', title: 'Rate (%)', format: '.1f' }]
+    }
+  },
+  columns: 3, spacing:  { row: 25, column: 20 },
+  config: { ...CFG, view: { stroke: '#eee' } }
+}, OPT);
+
+vegaEmbed('#c12', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: 'container', height: 280,
+  projection: { type: 'mercator', center: [134, -28], scale: 430 },
+  layer: [
+    mapBg,
+    {
+      data: { url: STA, format: { type: 'topojson', feature: 'aus_states' } },
+      transform: [{
+        lookup: 'properties.name',
+        from: { data: { url: RAW + 'vaping-by-state.csv' }, key: 'state_full', fields: ['vaping_percent','state'] }
+      }],
+      mark: { type: 'geoshape', stroke: 'white', strokeWidth: 1 },
+      encoding: {
+        color: { field: 'vaping_percent', type: 'quantitative', title: 'Vaping Rate (%)', scale: { scheme: 'blues', domain: [0, 9] }, legend: { orient: 'bottom-left', gradientLength: 150 } },
+        tooltip: [{ field: 'properties.name', type: 'nominal', title: 'State' }, { field: 'vaping_percent', type: 'quantitative', title: 'Vaping Rate (%)', format: '.1f' }]
+      }
+    },
+    {
+      data: { values: [
+        { state: 'NSW', latitude: -32.5, longitude: 147.5 }, { state: 'VIC', latitude: -37.2, longitude: 144.9 },
+        { state: 'QLD', latitude: -22.5, longitude: 144.0 }, { state: 'WA',  latitude: -26.0, longitude: 121.5 },
+        { state: 'SA',  latitude: -30.0, longitude: 135.5 }, { state: 'TAS', latitude: -42.0, longitude: 146.5 },
+        { state: 'ACT', latitude: -35.5, longitude: 149.1 }, { state: 'NT',  latitude: -19.5, longitude: 133.5 }
+      ]},
+      mark: { type: 'text', fontSize: 11, fontWeight: 'bold', fill: '#1a1a2e' },
+      encoding: {
+        longitude: { field: 'longitude', type: 'quantitative' },
+        latitude:  { field: 'latitude',  type: 'quantitative' },
+        text:      { field: 'state',     type: 'nominal' }
+      }
+    }
+  ],
+  config: { ...CFG, view: { stroke: null } }
+}, OPT);
+
+// ── 13 · DONUT CHART ─────────────────────────────────────────────────────────
+vegaEmbed('#c13', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  width: "container", height: "container",
+  data: { url: RAW + 'drug-types.csv'},
+  params: [{ name: 'dpt', select: { type: 'point', fields: ['drug'] }, bind: 'legend' }],
+  layer: [
+    {
+      mark: { type: 'arc', innerRadius: 70, outerRadius: 130, padAngle: 0.02, cornerRadius: 4 },
+      encoding: {
+        theta: { field: 'recent_use_percent', type: 'quantitative', stack: true },
+        color: { field: 'drug', type: 'nominal', title: 'Drug', scale: { scheme: 'tableau10' }, legend: { orient: 'right', labelFontSize: 11 } },
+        opacity: { condition: { param: 'dpt', value: 1 }, value: 0.2 },
+        tooltip: [{ field: 'drug', type: 'nominal', title: 'Drug' }, { field: 'recent_use_percent', type: 'quantitative', title: 'Recent Use (%)', format: '.1f' }]
+      }
+    },
+    {
+      mark: { type: 'text', radius: 155, fontSize: 11, fontWeight: 600 },
+      transform: [{ filter: 'datum.recent_use_percent >= 1.0' }],
+      encoding: {
+        theta: { field: 'recent_use_percent', type: 'quantitative', stack: true },
+        text: { field: 'drug', type: 'nominal' },
+        color: { value: '#333' },
+        opacity: { condition: { param: 'dpt', value: 1 }, value: 0.2 }
+      }
+    }
+  ],
+  config: CFG
+}, OPT);
+
+// ── 14 · SCATTER + REGRESSION ────────────────────────────────────────────────
+vegaEmbed('#c14', {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+
+  width: 'container',
+  height: 340,
+
+  data: {
+    url: RAW + 'all-substances-by-state.csv'
+  },
+
+  params: [
+    {
+      name: 'br',
+      select: { type: 'interval' }
+    },
+    {
+      name: 'sl',
+      select: { type: 'point', fields: ['state_full'] },
+      bind: 'legend'
+    }
+  ],
+
+  layer: [
+
+    {
+      mark: { type: 'point', filled: true, size: 160, stroke: 'white', strokeWidth: 1.5 },
+      encoding: {
+        x: { field: 'smoking', type: 'quantitative', title: 'Smoking Rate (%)', axis: { grid: true } },
+        y: { field: 'drugs', type: 'quantitative', title: 'Drug Use Rate (%)', axis: { grid: true } },
+        size: { field: 'vaping', type: 'quantitative', title: 'Vaping Rate (%)', legend: { orient: 'bottom-right' } },
+        color: { field: 'state_full', type: 'nominal', title: 'State', scale: { scheme: 'tableau10' }, legend: { orient: 'right' } },
+        opacity: {
+          condition: { param: 'sl', value: 1 },
+          value: 0.25
+        },
+        tooltip: [
+          { field: 'state_full', type: 'nominal', title: 'State' },
+          { field: 'smoking', type: 'quantitative', title: 'Smoking (%)', format: '.1f' },
+          { field: 'vaping', type: 'quantitative', title: 'Vaping (%)', format: '.1f' },
+          { field: 'drugs', type: 'quantitative', title: 'Drug Use (%)', format: '.1f' }
+        ]
+      }
+    },
+
+    {
+      mark: { type: 'text', dy: -16, fontSize: 11, fontWeight: 'bold' },
+      encoding: {
+        x: { field: 'smoking', type: 'quantitative' },
+        y: { field: 'drugs', type: 'quantitative' },
+        text: { field: 'state' }
+      }
+    },
+
+    {
+      mark: {
+        type: 'line',
+        color: '#bbb',
+        strokeDash: [4, 3]
+      },
+      transform: [
+        { regression: 'drugs', on: 'smoking' }
+      ],
+      encoding: {
+        x: { field: 'smoking', type: 'quantitative' },
+        y: { field: 'drugs', type: 'quantitative' }
+      }
+    }
+  ],
+  config: CFG
+}, OPT);
+</script>
 </body>
 </html>
