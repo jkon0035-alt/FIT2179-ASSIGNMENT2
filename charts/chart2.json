@@ -1,240 +1,217 @@
 {
-  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-  "description":"Gender smoking trend in Australia",
+  "description": "Smoking trends by gender",
 
-  "width":"container",
-  "height":260,
+  "width": 600,
+  "height": 260,
 
-  "data":{
-    "url":"https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
   },
 
-  "transform":[
-    {"filter":"datum.gender != 'Persons'"}
+  "transform": [
+    {"filter": "datum.gender != 'Persons'"}
   ],
 
-  "layer":[
+  "layer": [
 
     {
-      "mark":{
-        "type":"area",
-        "interpolate":"monotone",
-        "opacity":0.14
+      "mark": {
+        "type": "line",
+        "interpolate": "monotone",
+        "strokeWidth": 3
       },
 
-      "encoding":{
+      "encoding": {
 
-        "x":{"field":"year","type":"quantitative"},
-
-        "y":{
-          "field":"daily_smoking_percent",
-          "type":"quantitative",
-          "stack":false
-        },
-
-        "color":{
-          "field":"gender",
-          "type":"nominal",
-
-          "scale":{
-            "domain":["Male","Female"],
-            "range":["#D8A07A","#E8B7CC"]
-          },
-
-          "legend":null
-        }
-      }
-    },
-
-    {
-      "mark":{
-        "type":"line",
-        "strokeWidth":3,
-        "strokeCap":"round",
-        "interpolate":"monotone"
-      },
-
-      "encoding":{
-
-        "x":{
-          "field":"year",
-          "type":"quantitative",
-
-          "title":"Year",
-
-          "axis":{
-            "format":"d",
-            "grid":false
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": "Year",
+          "axis": {
+            "format": "d",
+            "grid": false
           }
         },
 
-        "y":{
-          "field":"daily_smoking_percent",
-          "type":"quantitative",
-
-          "title":"Daily smoking (%)",
-
-          "scale":{
-            "domain":[0,26]
-          },
-
-          "axis":{
-            "grid":true
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative",
+          "title": "Daily smoking (%)",
+          "scale": {
+            "domain": [0,26]
           }
         },
 
-        "color":{
-          "field":"gender",
-          "type":"nominal",
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "title": "Gender",
 
-          "title":"Gender",
-
-          "scale":{
-            "domain":["Male","Female"],
-            "range":["#8B4513","#C25E8B"]
+          "scale": {
+            "domain": ["Male","Female"],
+            "range": ["#8B4513","#C9789B"]
           },
 
-          "legend":{
-            "orient":"top-right"
+          "legend": {
+            "orient": "top-right"
           }
         },
 
-        "tooltip":[
+        "tooltip": [
           {
-            "field":"year",
-            "type":"quantitative",
-            "title":"Year",
-            "format":"d"
+            "field": "year",
+            "type": "quantitative",
+            "format": "d",
+            "title": "Year"
           },
 
           {
-            "field":"gender",
-            "type":"nominal",
-            "title":"Gender"
+            "field": "gender",
+            "type": "nominal",
+            "title": "Gender"
           },
 
           {
-            "field":"daily_smoking_percent",
-            "type":"quantitative",
-            "title":"Daily smoking (%)",
-            "format":".1f"
+            "field": "daily_smoking_percent",
+            "type": "quantitative",
+            "title": "Smoking (%)",
+            "format": ".1f"
           }
         ]
       }
     },
 
     {
-      "mark":{
-        "type":"point",
-        "filled":true,
-        "size":70,
-        "stroke":"white",
-        "strokeWidth":1.5
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 85,
+        "stroke": "#FAF7F0",
+        "strokeWidth": 1.5
       },
 
-      "encoding":{
+      "encoding": {
 
-        "x":{
-          "field":"year",
-          "type":"quantitative"
+        "x": {
+          "field": "year",
+          "type": "quantitative"
         },
 
-        "y":{
-          "field":"daily_smoking_percent",
-          "type":"quantitative"
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative"
         },
 
-        "color":{
-          "field":"gender",
-          "type":"nominal",
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "legend": null,
 
-          "scale":{
-            "domain":["Male","Female"],
-            "range":["#8B4513","#C25E8B"]
+          "scale": {
+            "domain": ["Male","Female"],
+            "range": ["#8B4513","#C9789B"]
+          }
+        },
+
+        "tooltip": [
+          {
+            "field": "year",
+            "type": "quantitative",
+            "format": "d",
+            "title": "Year"
           },
 
-          "legend":null
-        }
+          {
+            "field": "gender",
+            "type": "nominal",
+            "title": "Gender"
+          },
+
+          {
+            "field": "daily_smoking_percent",
+            "type": "quantitative",
+            "title": "Smoking (%)",
+            "format": ".1f"
+          }
+        ]
       }
     },
 
     {
-      "transform":[
-        {"filter":"datum.year == 2023"}
-      ],
-
-      "mark":{
-        "type":"text",
-        "align":"left",
-        "dx":8,
-        "fontSize":11,
-        "fontWeight":"bold"
+      "mark": {
+        "type": "text",
+        "dx": 8,
+        "fontSize": 11,
+        "fontWeight": 700
       },
 
-      "encoding":{
+      "transform": [
+        {"filter": "datum.year == 2023"}
+      ],
 
-        "x":{
-          "field":"year",
-          "type":"quantitative"
+      "encoding": {
+
+        "x": {
+          "field": "year",
+          "type": "quantitative"
         },
 
-        "y":{
-          "field":"daily_smoking_percent",
-          "type":"quantitative"
+        "y": {
+          "field": "daily_smoking_percent",
+          "type": "quantitative"
         },
 
-        "text":{
-          "field":"gender"
+        "text": {
+          "field": "gender"
         },
 
-        "color":{
-          "field":"gender",
-          "type":"nominal",
+        "color": {
+          "field": "gender",
+          "type": "nominal",
+          "legend": null,
 
-          "scale":{
-            "domain":["Male","Female"],
-            "range":["#8B4513","#C25E8B"]
-          },
-
-          "legend":null
+          "scale": {
+            "domain": ["Male","Female"],
+            "range": ["#8B4513","#C9789B"]
+          }
         }
       }
     }
+
   ],
 
-  "config":{
+  "config": {
 
-    "background":"transparent",
+    "background": "transparent",
 
-    "font":"Lato, sans-serif",
+    "font": "Lato, sans-serif",
 
-    "view":{
-      "stroke":null,
-      "fill":"transparent"
+    "view": {
+      "stroke": null,
+      "fill": "transparent"
     },
 
-    "axis":{
-      "domain":false,
-      "ticks":false,
-      "labelFontSize":11,
-      "labelColor":"#7A6040",
-      "titleFontSize":11,
-      "titleFontWeight":700,
-      "titleColor":"#3B2A14",
-      "gridColor":"#E8DFD0"
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labelFontSize": 11,
+      "labelColor": "#7A6040",
+      "titleFontSize": 11,
+      "titleColor": "#3B2A14",
+      "gridColor": "#E8DFD0"
     },
 
-    "legend":{
-      "labelFontSize":11,
-      "labelColor":"#7A6040",
-      "titleFontSize":11,
-      "titleColor":"#3B2A14",
-      "symbolSize":100,
-      "padding":6,
-      "cornerRadius":2,
-      "fillColor":"#FAF7F0",
-      "strokeColor":"#C8B89A"
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "labelColor": "#7A6040",
+      "titleColor": "#3B2A14",
+      "fillColor": "#FAF7F0",
+      "strokeColor": "#D9C7A7",
+      "cornerRadius": 4,
+      "padding": 6
     }
   }
 }
