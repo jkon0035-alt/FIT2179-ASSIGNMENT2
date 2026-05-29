@@ -1,31 +1,128 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Heatmap — smoking-by-age.csv",
-  "width": "container", "height": 170,
-  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-age.csv"},
-  "params": [{"name": "ags", "select": {"type": "point", "fields": ["age_group"], "toggle": true}}],
-  "mark": {"type": "rect", "cornerRadius": 2},
-  "encoding": {
-    "x": {"field": "age_group", "type": "nominal", "title": "Age group", "axis": {"labelAngle": -20, "grid": false, "labelColor": "#7A6040"}},
-    "y": {"field": "gender", "type": "nominal", "title": null, "axis": {"labelFontSize": 12, "labelColor": "#3B2A14", "grid": false}},
-    "color": {
-      "field": "percent", "type": "quantitative", "title": "Smoking (%)",
-      "scale": {"range": ["#FAF7F0","#8B4513"], "domain": [0,14]},
-      "legend": {"orient": "right", "gradientLength": 100, "gradientThickness": 10}
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+
+  "description":"Heatmap — smoking by age and gender",
+
+  "width":"container",
+  "height":170,
+
+  "data":{
+    "url":"https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-age.csv"
+  },
+
+  "mark":{
+    "type":"rect",
+    "cornerRadius":4
+  },
+
+  "encoding":{
+
+    "x":{
+      "field":"age_group",
+      "type":"nominal",
+
+      "title":"Age group",
+
+      "axis":{
+        "labelAngle":-20,
+        "grid":false,
+        "labelColor":"#7A6040",
+        "labelFontSize":11
+      }
     },
-    "stroke": {"condition": {"param": "ags", "empty": false, "value": "#3B2A14"}, "value": "transparent"},
-    "strokeWidth": {"condition": {"param": "ags", "empty": false, "value": 2}, "value": 0},
-    "opacity": {"condition": {"param": "ags", "value": 1}, "value": 0.4},
-    "tooltip": [
-      {"field": "age_group", "type": "nominal", "title": "Age Group"},
-      {"field": "gender", "type": "nominal", "title": "Gender"},
-      {"field": "percent", "type": "quantitative", "title": "Smoking Rate (%)", "format": ".1f"}
+
+    "y":{
+      "field":"gender",
+      "type":"nominal",
+
+      "title":null,
+
+      "axis":{
+        "labelFontSize":12,
+        "labelColor":"#3B2A14",
+        "grid":false
+      }
+    },
+
+    "color":{
+      "field":"percent",
+      "type":"quantitative",
+
+      "title":"Smoking (%)",
+
+      "scale":{
+        "domain":[0,14],
+
+        "range":[
+          "#FAF7F0",
+          "#F1E3D3",
+          "#D8B08C",
+          "#B97A56",
+          "#8B4513"
+        ]
+      },
+
+      "legend":{
+        "orient":"right",
+        "gradientLength":100,
+        "gradientThickness":12
+      }
+    },
+
+    "tooltip":[
+
+      {
+        "field":"age_group",
+        "type":"nominal",
+        "title":"Age Group"
+      },
+
+      {
+        "field":"gender",
+        "type":"nominal",
+        "title":"Gender"
+      },
+
+      {
+        "field":"percent",
+        "type":"quantitative",
+        "title":"Smoking Rate (%)",
+        "format":".1f"
+      }
     ]
   },
-  "config": {
-    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
-    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleColor": "#3B2A14", "gridColor": "#E8DFD0"},
-    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
-    "rect": {"cornerRadius": 2}
+
+  "config":{
+
+    "background":"transparent",
+
+    "font":"Lato, sans-serif",
+
+    "view":{
+      "stroke":null,
+      "fill":"transparent"
+    },
+
+    "axis":{
+      "domain":false,
+      "ticks":false,
+      "labelFontSize":11,
+      "labelColor":"#7A6040",
+      "labelPadding":6,
+      "titleFontSize":11,
+      "titleColor":"#3B2A14",
+      "gridColor":"#E8DFD0"
+    },
+
+    "legend":{
+      "labelFontSize":11,
+      "labelColor":"#7A6040",
+      "titleFontSize":11,
+      "titleColor":"#3B2A14",
+      "padding":6,
+      "cornerRadius":2,
+      "fillColor":"#FAF7F0",
+      "strokeColor":"#C8B89A"
+    }
   }
 }
