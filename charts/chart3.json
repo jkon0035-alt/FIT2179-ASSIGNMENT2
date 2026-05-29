@@ -1,0 +1,31 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Streamgraph — smoking-trend.csv (category + percent columns)",
+  "width": "container", "height": 300,
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-trend.csv"},
+  "params": [{"name": "str", "select": {"type": "point", "fields": ["category"]}, "bind": "legend"}],
+  "mark": {"type": "area", "interpolate": "monotone"},
+  "encoding": {
+    "x": {"field": "year", "type": "quantitative", "title": "Survey year", "axis": {"format": "d", "grid": false}},
+    "y": {"field": "percent", "type": "quantitative", "title": null, "stack": "center", "axis": {"grid": true, "labels": false}},
+    "color": {
+      "field": "category", "type": "nominal", "title": "Status",
+      "sort": ["Daily Smoker","Occasional","Ex-Smoker","Never Smoked"],
+      "scale": {"domain": ["Daily Smoker","Occasional","Ex-Smoker","Never Smoked"], "range": ["#8B4513","#D2691E","#C8B89A","#4A7C59"]},
+      "legend": {"orient": "bottom", "columns": 4}
+    },
+    "opacity": {"condition": {"param": "str", "value": 0.9}, "value": 0.15},
+    "order": {"field": "category", "sort": ["Daily Smoker","Occasional","Ex-Smoker","Never Smoked"]},
+    "tooltip": [
+      {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
+      {"field": "category", "type": "nominal", "title": "Category"},
+      {"field": "percent", "type": "quantitative", "title": "Share (%)", "format": ".1f"}
+    ]
+  },
+  "config": {
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleColor": "#3B2A14", "gridColor": "#E8DFD0"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
+    "area": {"opacity": 0.8}
+  }
+}
