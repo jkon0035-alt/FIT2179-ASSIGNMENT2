@@ -1,91 +1,74 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Vaping has Exploded Amoung Young Australians",
-    "subtitle": "Drag slider to show the rise year-by-year | Click legend to highlight one age group",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": "container",
-  "height": 400,
-  "data": {
-  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"
-  },
+  "description": "Multi-series area — vaping-trend.csv",
+  "width": "container", "height": 380,
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"},
   "params": [
-    {
-      "name": "e",
-      "value": 2023,
-      "bind":{
-        "input": "range",
-        "min": 2016,
-        "max": 2025,
-        "step": 3,
-        "name": "Reveals up to year: "
-      }
-    },
-    {
-      "name": "a",
-      "select": {
-        "type": "point",
-        "fields": ["age_group"]
-      },
-      "bind": "legend"
-    }
+    {"name": "ag",  "select": {"type": "point", "fields": ["age_group"]}, "bind": "legend"},
+    {"name": "hv5", "select": {"type": "point", "nearest": true, "on": "mouseover", "encodings": ["x"], "clear": "mouseout"}}
   ],
-  "transform": [
+  "layer": [
     {
-      "filter": "datum.year <= e"
-    }
-  ],
-  "mark": {"type": "area"},
-  "encoding": {
-    "x": {
-      "field": "year",
-      "type": "quantitative",
-      "title": "Year",
-      "scale": {"domain": [2016, 2023]},
-      "axis": {"format": "d", "labelAngle": 0, "grid": false}
-    },
-    "y": {
-      "field": "vaping_percent",  
-      "type": "quantitative",
-      "title": "Vaping Rate (%)"
-    },
-    "color": {
-      "field": "age_group",
-      "type": "nominal",
-      "title": "Age Group",
-       "scale": {
-          "domain": ["14-17", "18-24", "25-29", "30-39","40-49","50-59","60-69","70+"],
-          "range": ["#005F73","#0A9396", "#94D2BD", "#C1B75F","#EE9B00","#CA6702","#BB3E03","#AE2012"]
+      "mark": {"type": "area", "opacity": 0.18, "interpolate": "monotone"},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative", "title": "Survey year", "scale": {"domain": [2015,2023]}, "axis": {"values": [2016,2019,2022], "format": "d", "grid": false, "labelFontSize": 12}},
+        "y": {"field": "vaping_percent", "type": "quantitative", "title": "Vaped past 12 months (%)", "scale": {"domain": [0,22]}, "stack": false, "axis": {"grid": true}},
+        "color": {
+          "field": "age_group", "type": "nominal", "title": "Age group",
+          "scale": {"scheme": "oranges"},
+          "legend": {"orient": "right"}
         },
-      "legend": {
-        "orient": "right"
+        "opacity": {"condition": {"param": "ag", "value": 0.22}, "value": 0.04}
       }
     },
-    "opacity":{
-        "condition":{
-        "param": "a",
-        "value": 1
-      },
-      "value": 0.05
+    {
+      "mark": {"type": "line", "strokeWidth": 2.5, "interpolate": "monotone", "strokeCap": "round"},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "vaping_percent", "type": "quantitative", "stack": false},
+        "color": {"field": "age_group", "type": "nominal", "legend": null, "scale": {"scheme": "oranges"}},
+        "strokeWidth": {"condition": {"param": "ag", "empty": false, "value": 3.5}, "value": 2.5},
+        "opacity": {"condition": {"param": "ag", "value": 1}, "value": 0.12}
+      }
     },
-    "strokeWidth":{
-        "condition":{
-        "param": "a",
-        "value": 3.5
-      },
-      "value": 0.8
+    {
+      "mark": {"type": "rule", "strokeDash": [3,3], "color": "#C8B89A", "strokeWidth": 1},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "opacity": {"condition": {"param": "hv5", "empty": false, "value": 1}, "value": 0}
+      }
     },
-   "tooltip": [
-      {"field": "age_group", "type": "nominal", "title": "Age Group"},
-      {"field": "year", "type": "ordinal", "title": "Year"},
-      {"field": "vaping_percent", "type": "quantitative", "title": "Vaping Rate (%)", "format": ".1f"}
-    ]
-  },
+    {
+      "mark": {"type": "point", "filled": true, "stroke": "#FAF7F0", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "vaping_percent", "type": "quantitative", "stack": false},
+        "color": {"field": "age_group", "type": "nominal", "legend": null, "scale": {"scheme": "oranges"}},
+        "size": {"condition": {"param": "hv5", "empty": false, "value": 160}, "value": 55},
+        "opacity": {"condition": {"param": "ag", "value": 1}, "value": 0.1},
+        "tooltip": [
+          {"field": "age_group", "type": "nominal", "title": "Age Group"},
+          {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
+          {"field": "vaping_percent", "type": "quantitative", "title": "Vaping (%)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 8, "fontSize": 10.5, "fontWeight": 700},
+      "transform": [{"filter": "datum.year == 2022"}],
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "vaping_percent", "type": "quantitative", "stack": false},
+        "text": {"field": "age_group", "type": "nominal"},
+        "color": {"field": "age_group", "type": "nominal", "legend": null, "scale": {"scheme": "oranges"}},
+        "opacity": {"condition": {"param": "ag", "value": 1}, "value": 0.1}
+      }
+    }
+  ],
   "config": {
-  "background": "transparent",
-  "view": {"stroke": null}
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
+    "line": {"strokeWidth": 2.5}, "point": {"strokeWidth": 1.5}, "area": {"opacity": 0.8}
   }
 }
