@@ -1,80 +1,43 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Substance Use Across Australia's States",
-    "subtitle": "Smoking, vaping and drug use by state, 2022–23",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "data": {
-    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/substances-by-state-long.csv"
-  },
-  "params": [
-    {
-      "name": "e",
-      "select": {
-        "type": "point",
-        "fields": ["state"]
-      }
-    }
-  ],
+  "description": "Small multiples cross-filter — substances-by-state-long.csv",
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/substances-by-state-long.csv"},
+  "params": [{"name": "sp", "select": {"type": "point", "fields": ["state"]}}],
   "facet": {
-    "field": "substance",
-    "type": "nominal",
-    "title": null,
+    "field": "substance", "type": "nominal", "title": null,
+    "sort": ["Smoking","Vaping","Drugs"],
     "header": {
-      "labelFontSize": 14,
-      "labelFontWeight": "bold",
-      "labelColor": "#1a1a2e",
-      "labelOrient": "top"
+      "labelFontSize": 13, "labelFontWeight": 700,
+      "labelFont": "Playfair Display, Georgia, serif",
+      "labelColor": "#3B2A14", "labelOrient": "top", "labelPadding": 10
     }
   },
   "spec": {
-    "width": 280,
-    "height": 250,
-    "mark": {"type": "bar", "cornerRadius": 3},
+    "width": 240, "height": 230,
+    "mark": {"type": "bar", "cornerRadius": 2},
     "encoding": {
-      "y": {
-        "field": "state",
-        "type": "nominal",
-        "title": null
-      },
-      "x": {
-        "field": "percent",
-        "type": "quantitative",
-        "title": "Rate (%)",
-        "scale": {"domain": [0, 30]}
-      },
+      "y": {"field": "state", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 11, "labelColor": "#3B2A14", "grid": false}},
+      "x": {"field": "percent", "type": "quantitative", "title": "Rate (%)", "scale": {"domain": [0,30]}, "axis": {"grid": true}},
       "color": {
-        "field": "substance",
-        "type": "nominal",
-        "scale": {
-          "domain": ["Smoking", "Vaping", "Drugs"],
-          "range": ["#035E7B","#002E2C", "#A2A77F"]
-        }
+        "field": "substance", "type": "nominal",
+        "scale": {"domain": ["Smoking","Vaping","Drugs"], "range": ["#8B4513","#4A7C8B","#4A7C59"]},
+        "legend": null
       },
-      "opacity": {
-        "condition": {
-          "param": "e",
-          "value": 1
-        },
-        "value": 0.2
-      },
+      "opacity": {"condition": {"param": "sp", "value": 1}, "value": 0.15},
       "tooltip": [
-        {"field": "state", "type": "nominal", "title": "State"},
-        {"field": "substance", "type": "nominal", "title": "Substance"},
-        {"field": "percent", "type": "quantitative", "title": "Rate (%)", "format": ".1f"}
+        {"field": "state_full", "type": "nominal",      "title": "State"},
+        {"field": "substance",  "type": "nominal",      "title": "Substance"},
+        {"field": "percent",    "type": "quantitative", "title": "Rate (%)", "format": ".1f"}
       ]
     }
   },
   "columns": 3,
-  "spacing": {
-    "row": 32,
-    "column": 26
-  },
+  "spacing": {"row": 28, "column": 20},
   "config": {
-  "background": "transparent",
-  "view": {"stroke": null}
+    "background": "transparent", "font": "Lato, sans-serif",
+    "view": {"stroke": "#C8B89A", "strokeWidth": 1, "fill": "transparent"},
+    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
+    "bar": {"cornerRadius": 2}
   }
 }
