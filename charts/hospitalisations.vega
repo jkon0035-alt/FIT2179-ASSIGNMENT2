@@ -1,90 +1,41 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "How Australia's Smoking Status Has Changed Over Time",
-    "subtitle": "Proportion of Australians aged 14+, (2001–2023)",
-    "fontSize": 16,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": "container",
-  "height": 400,
-  "data": {
-    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"
-  },
+  "description": "Hospitalisation bar — hospitalisations.csv",
+  "width": "container", "height": 260,
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"},
+  "params": [{"name": "hh", "select": {"type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["substance"]}}],
   "layer": [
     {
-      "params": [
-        {
-          "name": "e",
-          "select": {"type": "point", "on": "mouseover", "clear": "mouseout"}
-        }
-      ],
-      "mark": {"type": "bar", "cornerRadius": 4},
+      "mark": {"type": "bar", "cornerRadius": 2},
       "encoding": {
-        "y": {
-          "field": "drug_group",
-          "type": "nominal",
-          "title": "Substance",
-          "axis": {"labelFontSize": 13},
-          "sort": ["Alcohol", "Cannabis", "Cocaine", "Meth/Stimulants", "Opioids", "Sedatives", "Other"]
-        },
-        "x": {
-          "field": "hospitalisations",
-          "type": "quantitative",
-          "title": "Number of Hospitalisations",
-          "axis": {"labelAngle": -30}
-        },
+        "y": {"field": "substance", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 12, "labelColor": "#3B2A14", "grid": false}},
+        "x": {"field": "hospitalisations", "type": "quantitative", "title": "Annual hospitalisations", "axis": {"grid": true, "format": ","}},
         "color": {
-          "field": "drug_group",
-          "type": "nominal",
-          "title": "Drug Types",
-          "scale": {
-            "domain": ["Alcohol", "Meth/Stimulants", "Sedatives", "Cannabis", "Opioids", "Cocaine", "Other"],
-            "range": ["#1E7D32", "#BBDDEC", "#355691", "#225D0D", "#2980B9", "#C8ECBB", "#8D9AA0"]
-          }
+          "field": "substance", "type": "nominal", "legend": null,
+          "scale": {"scheme": "browns"}
         },
-        "opacity": {
-          "condition": {
-            "param": "e",
-            "value": 1
-          },
-          "value": 0.2
-        },
+        "opacity": {"condition": {"param": "hh", "value": 1}, "value": 0.4},
         "tooltip": [
-          {"field": "drug_group", "type": "nominal", "title": "Drug Group"},
-          {"field": "hospitalisations", "type": "quantitative", "title": "Hospitalisations", "format": ","}
+          {"field": "substance",       "type": "nominal",      "title": "Substance"},
+          {"field": "hospitalisations","type": "quantitative", "title": "Hospitalisations", "format": ","}
         ]
       }
     },
     {
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 6,
-        "fontSize": 11.5,
-        "fontWeight": "bold"
-      },
+      "mark": {"type": "text", "align": "left", "dx": 6, "fontSize": 11, "fontWeight": 700},
       "encoding": {
-        "y": {
-          "field": "drug_group",
-          "type": "nominal",
-          "sort": ["Alcohol", "Cannabis", "Cocaine", "Meth/Stimulants", "Opioids", "Sedatives", "Other"]
-        },
-        "x": {
-          "field": "hospitalisations",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "hospitalisations",
-          "type": "quantitative",
-          "format": ","
-        }
+        "y": {"field": "substance", "type": "nominal", "sort": "-x"},
+        "x": {"field": "hospitalisations", "type": "quantitative"},
+        "text": {"field": "hospitalisations", "type": "quantitative", "format": ","},
+        "color": {"field": "substance", "type": "nominal", "legend": null, "scale": {"scheme": "browns"}},
+        "opacity": {"condition": {"param": "hh", "value": 1}, "value": 0.4}
       }
     }
   ],
   "config": {
-  "background": "transparent",
-  "view": {"stroke": null}
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
+    "bar": {"cornerRadius": 2}
   }
 }
