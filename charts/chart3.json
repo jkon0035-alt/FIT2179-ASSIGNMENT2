@@ -10,12 +10,12 @@
     "y": {"field": "percent", "type": "quantitative", "title": null, "stack": "center", "axis": {"grid": true, "labels": false}},
     "color": {
       "field": "category", "type": "nominal", "title": "Status",
-      "sort": ["Daily Smoker","Occasional","Ex-Smoker","Never Smoked"],
-      "scale": {"domain": ["Daily Smoker","Occasional","Ex-Smoker","Never Smoked"], "range": ["#8B4513","#D2691E","#C8B89A","#4A7C59"]},
+      "sort": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"],
+      "scale": {"domain": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"], "range": ["#8B4513","#D2691E","#C8B89A","#4A7C59"]},
       "legend": {"orient": "bottom", "columns": 4}
     },
     "opacity": {"condition": {"param": "str", "value": 0.9}, "value": 0.15},
-    "order": {"field": "category", "sort": ["Daily Smoker","Occasional","Ex-Smoker","Never Smoked"]},
+    "order": {"field": "category", "sort": ["Smoke Daily","Currently Smoke","Smoked Previously","Never Smoked"]},
     "tooltip": [
       {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
       {"field": "category", "type": "nominal", "title": "Category"},
