@@ -1,70 +1,31 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Smoking by Age Group and Gender",
-    "subtitle": "Daily smoking rate (%) | Click Legend to filter",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": 600,
-  "height": 400,
-  "data": {
-  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-age.csv"
-  },
-
-      "params": [
-    {
-      "name": "e",
-      "select": {
-        "type": "point",
-        "fields": ["gender"]
-      },
-      "bind": "legend"
-    }
-  ],
-  "mark": {"type": "bar", "cornerRadius": 4},
+  "description": "Heatmap — smoking-by-age.csv",
+  "width": "container", "height": 170,
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-age.csv"},
+  "params": [{"name": "ags", "select": {"type": "point", "fields": ["age_group"], "toggle": true}}],
+  "mark": {"type": "rect", "cornerRadius": 2},
   "encoding": {
-    "x": {
-      "field": "age_group",
-      "type": "ordinal",
-      "title": "Age Group",
-      "axis": {"labelAngle": 0}
-    },
-    "y": {
-      "field": "percent",
-      "type": "quantitative",
-      "title": "Proportion (%)",
-      "axis": {"format": ".1f"}
-    },
-    "xOffset": {
-      "field": "gender",
-      "sort": ["Male","Female"]
-    },
+    "x": {"field": "age_group", "type": "nominal", "title": "Age group", "axis": {"labelAngle": -20, "grid": false, "labelColor": "#7A6040"}},
+    "y": {"field": "gender", "type": "nominal", "title": null, "axis": {"labelFontSize": 12, "labelColor": "#3B2A14", "grid": false}},
     "color": {
-      "field": "gender",
-      "type": "nominal",
-      "title": "Gender",
-      "scale": {
-        "domain": ["Male","Female"],
-        "range": ["#336683", "#9D0910"]
-      },
-      "legend": {
-        "orient": "top-right"
-      }
+      "field": "percent", "type": "quantitative", "title": "Smoking (%)",
+      "scale": {"range": ["#FAF7F0","#8B4513"], "domain": [0,14]},
+      "legend": {"orient": "right", "gradientLength": 100, "gradientThickness": 10}
     },
-    "opacity": {
-      "condition":{"param": "e", "value" : 1},
-      "value": 0.1
-    },
-   "tooltip": [
-      {"field": "age_group", "type": "ordinal", "title": "Age Group"},
+    "stroke": {"condition": {"param": "ags", "empty": false, "value": "#3B2A14"}, "value": "transparent"},
+    "strokeWidth": {"condition": {"param": "ags", "empty": false, "value": 2}, "value": 0},
+    "opacity": {"condition": {"param": "ags", "value": 1}, "value": 0.4},
+    "tooltip": [
+      {"field": "age_group", "type": "nominal", "title": "Age Group"},
       {"field": "gender", "type": "nominal", "title": "Gender"},
-      {"field": "percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+      {"field": "percent", "type": "quantitative", "title": "Smoking Rate (%)", "format": ".1f"}
     ]
   },
   "config": {
-  "background": "transparent",
-  "view": {"stroke": null}
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleColor": "#3B2A14", "gridColor": "#E8DFD0"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
+    "rect": {"cornerRadius": 2}
   }
 }
