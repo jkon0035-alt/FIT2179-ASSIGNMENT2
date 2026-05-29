@@ -1,50 +1,51 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "The Further From a City, The More You Smoke",
-    "subtitle": "Substance use by remoteness area, 2022–23",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": 600,
-  "height": 400,
-  "projection": {"type": "mercator"},
+  "description": "Symbol map — remoteness.csv",
+  "width": "container", "height": 460,
+  "projection": {"type": "mercator", "center": [134,-28], "scale": 700},
+  "params": [
+    {
+      "name": "sub", "value": "smoking_percent",
+      "bind": {"input": "radio", "options": ["smoking_percent","vaping_percent","drug_percent"], "labels": ["Daily Smoking","Daily Vaping","Illicit Drug Use"], "name": "Show: "}
+    },
+    {"name": "rem_sel", "select": {"type": "point", "fields": ["remoteness"]}, "bind": "legend"}
+  ],
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/remoteness.csv"},
+  "transform": [
+    {"calculate": "sub==='smoking_percent'?datum.smoking_percent:sub==='vaping_percent'?datum.vaping_percent:datum.drug_percent", "as": "rate"},
+    {"calculate": "sub==='smoking_percent'?'Daily Smoking':sub==='vaping_percent'?'Daily Vaping':'Illicit Drug Use'", "as": "label"}
+  ],
   "layer": [
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
-        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
-      },
-      "transform": [{"filter": "datum.properties.NAME === 'Australia'"}],
-      "mark": {"type": "geoshape", "fill": "#e8e8e8", "stroke": "white"}
+      "data": {"url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson", "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}},
+      "transform": [{"filter": "datum.properties.NAME=='Australia'"}],
+      "mark": {"type": "geoshape", "fill": "#F0EBE0", "stroke": "#C8B89A", "strokeWidth": 0.8}
     },
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/remoteness.csv"
-      },
-      "mark": {"type": "circle", "opacity": 0.8},
+      "mark": {"type": "circle", "stroke": "#FAF7F0", "strokeWidth": 1.5},
       "encoding": {
         "longitude": {"field": "longitude", "type": "quantitative"},
-        "latitude": {"field": "latitude", "type": "quantitative"},
-        "size": {
-          "field": "smoking_percent",
-          "type": "quantitative",
-          "title": "Smoking Rate (%)",
-          "scale": {"range": [100, 2000]}
-        },
+        "latitude":  {"field": "latitude",  "type": "quantitative"},
+        "size":  {"field": "rate", "type": "quantitative", "scale": {"range": [2000,18000]}, "legend": null},
         "color": {
-          "field": "drug_percent",
-          "type": "quantitative",
-          "title": "Drug Use (%)",
-          "scale": {"scheme": "oranges"}
+          "field": "remoteness", "type": "nominal", "title": "Remoteness",
+          "scale": {"domain": ["Major Cities","Inner Regional","Outer Regional","Remote/Very Remote"], "range": ["#4A7C8B","#4A7C59","#D2691E","#8B4513"]},
+          "legend": {"orient": "bottom-left", "symbolSize": 200}
         },
+        "opacity": {"condition": {"param": "rem_sel", "empty": true, "value": 0.88}, "value": 0.08},
         "tooltip": [
-          {"field": "remoteness", "type": "nominal", "title": "Area"},
-          {"field": "smoking_percent", "type": "quantitative", "title": "Smoking Rate (%)", "format": ".1f"},
-          {"field": "drug_percent", "type": "quantitative", "title": "Drug Use (%)", "format": ".1f"}
+          {"field": "remoteness",     "type": "nominal",      "title": "Remoteness"},
+          {"field": "label",          "type": "nominal",      "title": "Showing"},
+          {"field": "rate",           "type": "quantitative", "title": "Rate (%)",     "format": ".1f"},
+          {"field": "smoking_percent","type": "quantitative", "title": "Smoking (%)",  "format": ".1f"},
+          {"field": "vaping_percent", "type": "quantitative", "title": "Vaping (%)",   "format": ".1f"},
+          {"field": "drug_percent",   "type": "quantitative", "title": "Drug Use (%)", "format": ".1f"}
         ]
       }
     }
-  ]
+  ],
+  "config": {
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"}
+  }
 }
