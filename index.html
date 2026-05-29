@@ -402,10 +402,12 @@ const OPT    = { actions: false, renderer: 'svg' };
 
 // ── Load all charts from /charts/ on GitHub ──────────────────
 // chart8 uses Vega schema (radar) — vegaEmbed handles both automatically
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].forEach(n => {
- // Replace the entire forEach loop with this to test:
-vegaEmbed('#c1', 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/charts/chart1.json')
-  .catch(console.error);
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14].forEach(n => {
+  vegaEmbed(
+    `#c${n}`,
+    `${CHARTS}chart${n}.json`,
+    OPT
+  ).catch(console.error);
 });
 </script>
 
