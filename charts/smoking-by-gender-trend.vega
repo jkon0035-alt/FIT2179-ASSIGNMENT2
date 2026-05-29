@@ -1,179 +1,70 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Steady Decline in Daily Smoking for Both Genders",
-    "subtitle": "Click legend to highlight either Male or Female",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start",
-    "color": "#1a1a2e",
-    "subtitleColor": "#555"
-  },
-  "width": 600,
-  "height": 400,
-  "data": {
-    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
-  },
-  
+  "description": "Gender line chart — smoking-by-gender-trend.csv",
+  "width": "container", "height": 260,
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"},
+  "transform": [{"filter": "datum.gender !== 'Persons'"}],
+  "params": [
+    {"name": "gs", "select": {"type": "point", "fields": ["gender"]}, "bind": "legend"},
+    {"name": "hv2", "select": {"type": "point", "nearest": true, "on": "mouseover", "encodings": ["x"], "clear": "mouseout"}}
+  ],
   "layer": [
     {
-      "params": [
-    {
-      "name": "gender",
-      "select": {
-        "type": "point",
-        "fields": ["gender"]
-      },
-      "bind": "legend"
-    }
-  ],
-      "mark": {
-        "type": "area",
-        "opacity": 0.1
-      },
+      "mark": {"type": "area", "opacity": 0.08, "interpolate": "monotone"},
       "encoding": {
-        "x": {
-          "field": "year",
-          "type": "ordinal"
-        },
-        "y": {
-          "field": "daily_smoking_percent",
-          "type": "quantitative",
-          "title": "Daily Smoking (%)",
-          "stack": false
-        },
-        "color": {
-          "field": "gender",
-          "type": "nominal",
-          "scale": {
-            "domain": ["Male", "Female"],
-            "range": ["#2E86AB", "#E84855"]
-          }
-        },
-        "opacity":{
-          "condition":{
-          "param": "gender",
-          "value": 0.20
-          },
-          "value": 0.05
-        }
-      } 
-    }, 
-    {
-      "mark": {
-        "type": "line",
-        "strokeWidth": 3
-      },
-      "encoding": { 
-        "x": {
-          "field": "year",
-          "type": "ordinal",
-          "title": "Year",
-          "axis": {
-            "labelAngle": 45
-          }
-        },
-        "y": {
-          "field": "daily_smoking_percent",
-          "type": "quantitative",
-          "title": "Daily Smoking (%)",
-          "scale": {
-            "domain": [0, 25]
-          }
-        },
-        "color": {
-          "field": "gender",
-          "type": "nominal",
-          "title": "Gender",
-          "scale": {
-            "domain": ["Male", "Female"],
-            "range": ["#2E86AB", "#E84855"]
-          },
-          "legend": {
-            "orient": "top-right"
-          }
-        },
-        "opacity":{
-          "condition":{
-          "param": "gender",
-          "value": 1
-          },
-          "value": 0.15
-        },
-        "tooltip": [
-          {"field": "year","type": "ordinal","title": "Year"},
-          {"field": "gender","type": "nominal","title": "Gender"},
-          {"field": "daily_smoking_percent", "type": "quantitative","title": "Daily Smoking (%)","format": ".1f"}
-        ]
-      } 
-    },
-    {
-      "mark": {
-        "type": "point",
-        "size": 65,
-        "filled": true
-      },
-      "encoding": {
-        "x": {
-          "field": "year",
-          "type": "ordinal"
-        },
-        "y": {
-          "field": "daily_smoking_percent",
-          "type": "quantitative"
-        },
-        "color": {
-          "field": "gender",
-          "type": "nominal",
-          "legend": null,
-          "scale":{
-            "domain": ["Male", "Female"],
-            "range": ["#2E86AB", "#E84855"]
-          }
-        },
-        "opacity":{
-          "condition":{
-          "param": "gender",
-          "value": 1
-          },
-          "value": 0.10
-        }
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "daily_smoking_percent", "type": "quantitative", "stack": false},
+        "color": {"field": "gender", "type": "nominal", "legend": null, "scale": {"domain": ["Male","Female"], "range": ["#8B4513","#C25E8B"]}},
+        "opacity": {"condition": {"param": "gs", "value": 0.1}, "value": 0.02}
       }
     },
     {
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 10,
-        "fontSize": 11,
-        "fontWeight": "bold"
-      },
+      "mark": {"type": "rule", "strokeDash": [3,3], "color": "#C8B89A", "strokeWidth": 1},
       "encoding": {
-        "x":{
-          "field": "year",
-          "type": "ordinal"
-        },
-        "y":{
-          "field": "daily_smoking_percent",
-          "type":"quantitative"
-        },
-        "text": {
-          "field": "gender"
-        },
-        "color": {
-          "field": "gender",
-          "type": "nominal",
-          "legend": null,
-           "scale":{
-            "domain": ["Male", "Female"],
-            "range": ["#2E86AB", "#E84855"]
-          }
-        }
+        "x": {"field": "year", "type": "quantitative"},
+        "opacity": {"condition": {"param": "hv2", "empty": false, "value": 1}, "value": 0}
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 2.5, "strokeCap": "round", "interpolate": "monotone"},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative", "title": "Year", "axis": {"format": "d", "grid": false}},
+        "y": {"field": "daily_smoking_percent", "type": "quantitative", "title": "Daily smoking (%)", "scale": {"domain": [0,26]}, "axis": {"grid": true}},
+        "color": {"field": "gender", "type": "nominal", "title": "Gender", "scale": {"domain": ["Male","Female"], "range": ["#8B4513","#C25E8B"]}, "legend": {"orient": "top-right"}},
+        "opacity": {"condition": {"param": "gs", "value": 1}, "value": 0.12},
+        "strokeWidth": {"condition": {"param": "gs", "empty": false, "value": 3.5}, "value": 2.5}
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "stroke": "#FAF7F0", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "daily_smoking_percent", "type": "quantitative"},
+        "color": {"field": "gender", "type": "nominal", "legend": null, "scale": {"domain": ["Male","Female"], "range": ["#8B4513","#C25E8B"]}},
+        "size": {"condition": {"param": "hv2", "empty": false, "value": 150}, "value": 55},
+        "opacity": {"condition": {"param": "gs", "value": 1}, "value": 0.1},
+        "tooltip": [
+          {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
+          {"field": "gender", "type": "nominal", "title": "Gender"},
+          {"field": "daily_smoking_percent", "type": "quantitative", "title": "Daily smoking (%)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 7, "fontSize": 11, "fontWeight": 700},
+      "transform": [{"filter": "datum.year == 2022"}],
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "daily_smoking_percent", "type": "quantitative"},
+        "text": {"field": "gender"},
+        "color": {"field": "gender", "type": "nominal", "legend": null, "scale": {"domain": ["Male","Female"], "range": ["#8B4513","#C25E8B"]}}
       }
     }
   ],
   "config": {
-  "background": "transparent",
-  "view": {"stroke": null}
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
+    "line": {"strokeWidth": 2.5}, "point": {"strokeWidth": 1.5}, "area": {"opacity": 0.8}
   }
 }
