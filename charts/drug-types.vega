@@ -1,38 +1,46 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "How Australia's Smoking Status Has Changed Over Time",
-    "subtitle": "Proportion of Australians aged 14+, (2001–2023)",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": 600,
-  "height": 400,
-  "data": {
-    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-types.csv"
-  },
-
-"layer": [
-  {
-    "mark": "rule",
-    "encoding": {
-      "y": {"field": "drug", "type": "ordinal", "title": "Drug Type", "sort": "-x"},
-      "x": {"field": "recent_use_percent", "type": "quantitative", "title": "Recent Use (%)"},
-      "x2": {"value": 0}
-    }
-  },
-  {
-    "mark": {"type": "point", "filled": true, "size": 120},
+  "description": "Donut chart — drug-types.csv",
+  "width": 300, "height": 300,
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-types.csv"},
+  "params": [
+    {"name": "dpt", "select": {"type": "point", "fields": ["drug"]}, "bind": "legend"},
+    {"name": "dph", "select": {"type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["drug"]}}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "arc", "padAngle": 0.025, "cornerRadius": 3},
       "encoding": {
-        "y": {"field": "drug", "type": "ordinal", "sort": "-x"},
-        "x": {"field": "recent_use_percent", "type": "quantitative"},
-        "color": {"field": "drug", "type": "nominal", "legend": null},
+        "theta": {"field": "recent_use_percent", "type": "quantitative", "stack": true},
+        "color": {
+          "field": "drug", "type": "nominal", "title": "Drug type",
+          "scale": {"domain": ["Cannabis","Cocaine","Ecstasy","Meth","Heroin","Other"], "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E","#8B4513","#C8B89A"]},
+          "legend": {"orient": "right"}
+        },
+        "innerRadius": {"condition": {"param": "dph", "empty": false, "value": 62}, "value": 72},
+        "outerRadius": {"condition": {"param": "dph", "empty": false, "value": 140}, "value": 130},
+        "opacity": {"condition": {"param": "dpt", "value": 1}, "value": 0.15},
         "tooltip": [
-          {"field": "drug", "type": "nominal", "title": "Drug"},
+          {"field": "drug",               "type": "nominal",      "title": "Drug"},
           {"field": "recent_use_percent", "type": "quantitative", "title": "Recent Use (%)", "format": ".1f"}
         ]
+      }
+    },
+    {
+      "mark": {"type": "text", "radius": 155, "fontSize": 11, "fontWeight": 700, "font": "Lato, sans-serif"},
+      "transform": [{"filter": "datum.recent_use_percent >= 1.0"}],
+      "encoding": {
+        "theta": {"field": "recent_use_percent", "type": "quantitative", "stack": true},
+        "text":  {"field": "drug", "type": "nominal"},
+        "color": {"value": "#3B2A14"},
+        "opacity": {"condition": {"param": "dpt", "value": 1}, "value": 0.15}
+      }
     }
+  ],
+  "config": {
+    "background": "transparent", "font": "Lato, sans-serif",
+    "view": {"stroke": null, "fill": "transparent"},
+    "arc": {"stroke": "#FAF7F0", "strokeWidth": 1.5},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"}
   }
-]
-  }
+}
