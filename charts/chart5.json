@@ -1,74 +1,61 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Multi-series area — vaping-trend.csv",
-  "width": "container", "height": 380,
-  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"},
-  "params": [
-    {"name": "ag",  "select": {"type": "point", "fields": ["age_group"]}, "bind": "legend"},
-    {"name": "hv5", "select": {"type": "point", "nearest": true, "on": "mouseover", "encodings": ["x"], "clear": "mouseout"}}
-  ],
+  "description": "Vaping heatmap with cream-friendly colours",
+  "width": 600,
+  "height": 380,
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-trend.csv"
+  },
+
   "layer": [
+
     {
-      "mark": {"type": "area", "opacity": 0.18, "interpolate": "monotone"},
+      "mark": { "type": "rect" },
       "encoding": {
-        "x": {"field": "year", "type": "quantitative", "title": "Survey year", "scale": {"domain": [2015,2023]}, "axis": {"values": [2016,2019,2022], "format": "d", "grid": false, "labelFontSize": 12}},
-        "y": {"field": "vaping_percent", "type": "quantitative", "title": "Vaped past 12 months (%)", "scale": {"domain": [0,22]}, "stack": false, "axis": {"grid": true}},
+        "x": { "field": "year", "type": "ordinal", "title": "Year" },
+        "y": { "field": "age_group", "type": "nominal", "title": "Age Group" },
+
         "color": {
-          "field": "age_group", "type": "nominal", "title": "Age group",
-          "scale": {"scheme": "oranges"},
-          "legend": {"orient": "right"}
+          "field": "vaping_percent",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 22],
+            "range": ["#FAF7F0", "#E8D8B0", "#C8B89A", "#8C6F4E"]
+          }
         },
-        "opacity": {"condition": {"param": "ag", "value": 0.22}, "value": 0.04}
-      }
-    },
-    {
-      "mark": {"type": "line", "strokeWidth": 2.5, "interpolate": "monotone", "strokeCap": "round"},
-      "encoding": {
-        "x": {"field": "year", "type": "quantitative"},
-        "y": {"field": "vaping_percent", "type": "quantitative", "stack": false},
-        "color": {"field": "age_group", "type": "nominal", "legend": null, "scale": {"scheme": "oranges"}},
-        "strokeWidth": {"condition": {"param": "ag", "empty": false, "value": 3.5}, "value": 2.5},
-        "opacity": {"condition": {"param": "ag", "value": 1}, "value": 0.12}
-      }
-    },
-    {
-      "mark": {"type": "rule", "strokeDash": [3,3], "color": "#C8B89A", "strokeWidth": 1},
-      "encoding": {
-        "x": {"field": "year", "type": "quantitative"},
-        "opacity": {"condition": {"param": "hv5", "empty": false, "value": 1}, "value": 0}
-      }
-    },
-    {
-      "mark": {"type": "point", "filled": true, "stroke": "#FAF7F0", "strokeWidth": 1.5},
-      "encoding": {
-        "x": {"field": "year", "type": "quantitative"},
-        "y": {"field": "vaping_percent", "type": "quantitative", "stack": false},
-        "color": {"field": "age_group", "type": "nominal", "legend": null, "scale": {"scheme": "oranges"}},
-        "size": {"condition": {"param": "hv5", "empty": false, "value": 160}, "value": 55},
-        "opacity": {"condition": {"param": "ag", "value": 1}, "value": 0.1},
+
         "tooltip": [
-          {"field": "age_group", "type": "nominal", "title": "Age Group"},
-          {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
-          {"field": "vaping_percent", "type": "quantitative", "title": "Vaping (%)", "format": ".1f"}
+          { "field": "age_group", "type": "nominal" },
+          { "field": "year", "type": "ordinal" },
+          { "field": "vaping_percent", "type": "quantitative" }
         ]
       }
     },
+
     {
-      "mark": {"type": "text", "align": "left", "dx": 8, "fontSize": 10.5, "fontWeight": 700},
-      "transform": [{"filter": "datum.year == 2022"}],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": 600,
+        "color": "#3B2A14"
+      },
       "encoding": {
-        "x": {"field": "year", "type": "quantitative"},
-        "y": {"field": "vaping_percent", "type": "quantitative", "stack": false},
-        "text": {"field": "age_group", "type": "nominal"},
-        "color": {"field": "age_group", "type": "nominal", "legend": null, "scale": {"scheme": "oranges"}},
-        "opacity": {"condition": {"param": "ag", "value": 1}, "value": 0.1}
+        "x": { "field": "year", "type": "ordinal" },
+        "y": { "field": "age_group", "type": "nominal" },
+        "text": { "field": "vaping_percent", "type": "quantitative", "format": ".1f" }
       }
     }
+
   ],
+
   "config": {
-    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
-    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
-    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
-    "line": {"strokeWidth": 2.5}, "point": {"strokeWidth": 1.5}, "area": {"opacity": 0.8}
+    "view": { "stroke": null },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "labelColor": "#7A6040",
+      "titleColor": "#3B2A14"
+    }
   }
 }
