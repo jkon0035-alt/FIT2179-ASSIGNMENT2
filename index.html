@@ -403,14 +403,9 @@ const OPT    = { actions: false, renderer: 'svg' };
 // ── Load all charts from /charts/ on GitHub ──────────────────
 // chart8 uses Vega schema (radar) — vegaEmbed handles both automatically
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].forEach(n => {
-  vegaEmbed(`#c${n}`, `${CHARTS}chart${n}.json`, OPT)
-    .catch(err => {
-      console.error(`Chart ${n} failed:`, err);
-      const el = document.getElementById(`c${n}`);
-      if (el) el.innerHTML =
-        '<p style="color:#8B4513;font-family:Lato,sans-serif;font-size:13px;padding:16px 0">' +
-        '⚠ Chart could not load. Ensure chart' + n + '.json is pushed to /charts/ on GitHub.</p>';
-    });
+ // Replace the entire forEach loop with this to test:
+vegaEmbed('#c1', 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/charts/chart1.json')
+  .catch(console.error);
 });
 </script>
 
