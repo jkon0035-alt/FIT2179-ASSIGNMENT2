@@ -1,47 +1,56 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Which States Vape the Most?",
-    "subtitle": "Current vaping rate by state and territory, 2022–23",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": 600,
-  "height": 400,
-  "projection": {"type": "mercator"},
+  "description": "Choropleth — vaping-by-state.csv",
+  "width": "container", "height": 340,
+  "projection": {"type": "mercator", "center": [134,-28], "scale": 640},
   "layer": [
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
-        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
-      },
-      "transform": [
-        {
-          "lookup": "properties.NAME",
-          "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-by-state.csv"
-            },
-            "key": "state_full",
-            "fields": ["vaping_percent"]
-          }
-        },
-        {"filter": "datum.vaping_percent != null"}
-      ],
-      "mark": {"type": "geoshape", "stroke": "white"},
+      "data": {"url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson", "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}},
+      "transform": [{"filter": "datum.properties.NAME=='Australia'"}],
+      "mark": {"type": "geoshape", "fill": "#F0EBE0", "stroke": "#C8B89A", "strokeWidth": 0.8}
+    },
+    {
+      "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/ne_10m_admin_1_states_provinces.json", "format": {"type": "topojson", "feature": "aus_states"}},
+      "transform": [{
+        "lookup": "properties.name",
+        "from": {
+          "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-by-state.csv"},
+          "key": "state_full", "fields": ["state","vaping_percent"]
+        }
+      }],
+      "params": [{"name": "sth", "select": {"type": "point", "on": "mouseover", "clear": "mouseout"}}],
+      "mark": {"type": "geoshape"},
       "encoding": {
         "color": {
-          "field": "vaping_percent",
-          "type": "quantitative",
-          "title": "Vaping Rate (%)",
-          "scale": {"scheme": "purples"}
+          "field": "vaping_percent", "type": "quantitative", "title": "Vaping (%)",
+          "scale": {"range": ["#F0EBE0","#4A7C8B"], "domain": [3,9]},
+          "legend": {"orient": "bottom-right", "gradientLength": 120, "gradientThickness": 10}
         },
+        "stroke":      {"condition": {"param": "sth", "empty": false, "value": "#3B2A14"}, "value": "#C8B89A"},
+        "strokeWidth": {"condition": {"param": "sth", "empty": false, "value": 2},        "value": 0.6},
         "tooltip": [
-          {"field": "properties.NAME", "type": "nominal", "title": "State"},
-          {"field": "vaping_percent", "type": "quantitative", "title": "Vaping Rate (%)", "format": ".1f"}
+          {"field": "properties.name",  "type": "nominal",      "title": "State"},
+          {"field": "vaping_percent",   "type": "quantitative", "title": "Vaping Rate (%)", "format": ".1f"}
         ]
       }
+    },
+    {
+      "data": {"values": [
+        {"s":"NSW","lat":-32.5,"lon":147.5},{"s":"VIC","lat":-37.2,"lon":144.9},
+        {"s":"QLD","lat":-22.5,"lon":144.0},{"s":"WA", "lat":-26.0,"lon":121.5},
+        {"s":"SA", "lat":-30.0,"lon":135.5},{"s":"TAS","lat":-42.0,"lon":146.5},
+        {"s":"ACT","lat":-35.5,"lon":149.1},{"s":"NT", "lat":-19.5,"lon":133.5}
+      ]},
+      "mark": {"type": "text", "fontSize": 11, "fontWeight": 700, "fill": "#3B2A14", "fillOpacity": 0.6, "font": "Lato, sans-serif"},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude":  {"field": "lat", "type": "quantitative"},
+        "text":      {"field": "s",   "type": "nominal"}
+      }
     }
-  ]
+  ],
+  "config": {
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"}
+  }
 }
