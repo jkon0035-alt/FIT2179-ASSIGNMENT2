@@ -1,46 +1,33 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Who Smokes In Australia?",
-    "subtitle": "Daily smoking rate by age group and gender, 2022–23",
-    "fontSize": 15,
-    "subtitleFontSize": 12,
-    "anchor": "start"
-  },
-  "width": 600,
-  "height": 400,
-  "data": {
-  "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-trends.csv"
-  },
-
-  "mark": {"type": "line", "point": true},
+  "description": "Animated bar + slider — drug-trends.csv",
+  "width": "container", "height": 260,
+  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-trends.csv"},
+  "params": [
+    {"name": "yr", "value": 2022, "bind": {"input": "range", "min": 2001, "max": 2022, "step": 3, "name": "Survey year: "}},
+    {"name": "dh", "select": {"type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["drug"]}}
+  ],
+  "transform": [{"filter": "datum.year == yr"}],
+  "mark": {"type": "bar", "cornerRadius": 3},
   "encoding": {
-    "x": {
-      "field": "year",
-      "type": "ordinal",
-      "title": "Year",
-      "axis": {"labelAngle": 0}
-    },
-    "y": {
-      "field": "recent_use_percent",
-      "type": "quantitative",
-      "title": "Drug Types",
-      "axis": {"format": ".1f"}
-    },
+    "y": {"field": "drug", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 12, "labelColor": "#3B2A14", "grid": false}},
+    "x": {"field": "recent_use_percent", "type": "quantitative", "title": "Recent use (%)", "scale": {"domain": [0,14]}, "axis": {"grid": true}},
     "color": {
-      "field": "drug",
-      "type": "nominal",
-      "title": "Drug Types",
-      "scale": {
-        "domain": ["Cannabis","Ecstasy", "Cocaine"],
-        "range": ["#378ADD","#D85A30","#885B9B"]
-      }
+      "field": "drug", "type": "nominal",
+      "scale": {"domain": ["Cannabis","Cocaine","Ecstasy","Meth"], "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E"]},
+      "legend": null
     },
-
-   "tooltip": [
-      {"field": "year", "type": "ordinal", "title": "Year"},
-      {"field": "drug", "type": "nominal", "title": "Drug Type"},
-      {"field": "recent_use_percent", "type": "quantitative", "title": "Daily Smoking (%)", "format": ".1f"}
+    "opacity": {"condition": {"param": "dh", "value": 1}, "value": 0.35},
+    "tooltip": [
+      {"field": "drug",               "type": "nominal",      "title": "Drug"},
+      {"field": "year",               "type": "quantitative", "title": "Year",           "format": "d"},
+      {"field": "recent_use_percent", "type": "quantitative", "title": "Recent Use (%)", "format": ".1f"}
     ]
+  },
+  "config": {
+    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
+    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
+    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
+    "bar": {"cornerRadius": 3}
   }
 }
