@@ -1,46 +1,60 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Donut chart — drug-types.csv",
-  "width": 300, "height": 300,
-  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-types.csv"},
-  "params": [
-    {"name": "dpt", "select": {"type": "point", "fields": ["drug"]}, "bind": "legend"},
-    {"name": "dph", "select": {"type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["drug"]}}
-  ],
-  "layer": [
-    {
-      "mark": {"type": "arc", "padAngle": 0.025, "cornerRadius": 3},
-      "encoding": {
-        "theta": {"field": "recent_use_percent", "type": "quantitative", "stack": true},
-        "color": {
-          "field": "drug", "type": "nominal", "title": "Drug type",
-          "scale": {"domain": ["Cannabis","Cocaine","Ecstasy","Meth","Heroin","Other"], "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E","#8B4513","#C8B89A"]},
-          "legend": {"orient": "right"}
-        },
-        "innerRadius": {"condition": {"param": "dph", "empty": false, "value": 62}, "value": 72},
-        "outerRadius": {"condition": {"param": "dph", "empty": false, "value": 140}, "value": 130},
-        "opacity": {"condition": {"param": "dpt", "value": 1}, "value": 0.15},
-        "tooltip": [
-          {"field": "drug",               "type": "nominal",      "title": "Drug"},
-          {"field": "recent_use_percent", "type": "quantitative", "title": "Recent Use (%)", "format": ".1f"}
+  "description": "Drug prevalence donut chart (clean version)",
+  "width": 360,
+  "height": 360,
+
+  "data": {
+    "values": [
+      {"drug": "Cannabis", "value": 11.5},
+      {"drug": "Cocaine", "value": 4.5},
+      {"drug": "Ecstasy", "value": 2.1},
+      {"drug": "Hallucinogens", "value": 2.4},
+      {"drug": "Meth/Amphetamine", "value": 1.0},
+      {"drug": "Ketamine", "value": 1.4},
+      {"drug": "Inhalants", "value": 1.4},
+      {"drug": "Heroin", "value": 0.1}
+    ]
+  },
+
+  "mark": {
+    "type": "arc",
+    "innerRadius": 70,
+    "padAngle": 0,
+    "stroke": "#FAF7F0",
+    "strokeWidth": 1
+  },
+
+  "encoding": {
+    "theta": {
+      "field": "value",
+      "type": "quantitative"
+    },
+
+    "color": {
+      "field": "drug",
+      "type": "nominal",
+      "scale": {
+        "range": [
+          "#587665",
+          "#AC6C49",
+          "#B5BD89",
+          "#EC9192",
+          "#58A4B0",
+          "#5D737E",
+          "#6F5E50",
+          "#81483E"
         ]
+      },
+      "legend": {
+        "orient": "right",
+        "title": "Drug Type"
       }
     },
-    {
-      "mark": {"type": "text", "radius": 155, "fontSize": 11, "fontWeight": 700, "font": "Lato, sans-serif"},
-      "transform": [{"filter": "datum.recent_use_percent >= 1.0"}],
-      "encoding": {
-        "theta": {"field": "recent_use_percent", "type": "quantitative", "stack": true},
-        "text":  {"field": "drug", "type": "nominal"},
-        "color": {"value": "#3B2A14"},
-        "opacity": {"condition": {"param": "dpt", "value": 1}, "value": 0.15}
-      }
-    }
-  ],
-  "config": {
-    "background": "transparent", "font": "Lato, sans-serif",
-    "view": {"stroke": null, "fill": "transparent"},
-    "arc": {"stroke": "#FAF7F0", "strokeWidth": 1.5},
-    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"}
+
+    "tooltip": [
+      {"field": "drug", "type": "nominal"},
+      {"field": "value", "type": "quantitative", "title": "Prevalence (%)"}
+    ]
   }
 }
