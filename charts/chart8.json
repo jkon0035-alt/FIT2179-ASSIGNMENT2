@@ -22,7 +22,7 @@
   },
 
   "spec": {
-    "width": "container",
+    "width": 350,
     "height": 300,
 
     "mark": {
