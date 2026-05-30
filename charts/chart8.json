@@ -1,89 +1,188 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Small multiples horizontal line chart — drug use by age group",
-
+  "description": "Small multiples — drug use by age group",
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv"
   },
-
   "transform": [
-    {
-      "calculate": "toNumber(datum.recent_use_percent)",
-      "as": "value"
-    }
+    { "calculate": "toNumber(datum.recent_use_percent)", "as": "value" }
   ],
-
   "facet": {
     "column": {
       "field": "drug",
       "type": "nominal",
-      "title": null
-    }
-  },
-
-  "spec": {
-    "width": 350,
-    "height": 300,
-
-    "mark": {
-      "type": "line",
-      "strokeWidth": 3,
-      "point": {
-        "filled": true,
-        "size": 60
+      "title": null,
+      "header": {
+        "labelFontSize": 13,
+        "labelFont": "Playfair Display, serif",
+        "labelFontWeight": "bold",
+        "labelColor": "#3B2A14",
+        "labelPadding": 12
       }
-    },
-
-    "encoding": {
-      "x": {
-        "field": "age_group",
-        "type": "ordinal",
-        "sort": ["14–19", "20–29", "30–39", "40–49", "50–59", "60+"],
-        "title": "Age Group",
-        "axis": {
-          "labelAngle": -25,
-          "labelColor": "#7A6040",
-          "grid": false
-        }
-      },
-
-      "y": {
-        "field": "value",
-        "type": "quantitative",
-        "title": "Use (%)",
-        "axis": {
-          "labelColor": "#3B2A14",
-          "gridColor": "#E8DFD0"
-        }
-      },
-
-      "color": {
-        "field": "drug",
-        "type": "nominal",
-        "legend": null,
-        "scale": {
-          "domain": ["Cannabis", "Cocaine", "Ecstasy", "Meth"],
-          "range": ["#4A7C59", "#B03030", "#4A7C8B", "#D2691E"]
-        }
-      },
-
-      "tooltip": [
-        { "field": "drug", "title": "Drug" },
-        { "field": "age_group", "title": "Age Group" },
-        { "field": "value", "title": "Use (%)" }
-      ]
     }
   },
-
+  "spec": {
+    "width": 280,
+    "height": 260,
+    "layer": [
+      {
+        "mark": {
+          "type": "area",
+          "interpolate": "monotone",
+          "opacity": 0.12
+        },
+        "encoding": {
+          "x": {
+            "field": "age_group",
+            "type": "ordinal",
+            "sort": ["14–19","20–29","30–39","40–49","50–59","60+"]
+          },
+          "y": {
+            "field": "value",
+            "type": "quantitative",
+            "stack": false
+          },
+          "color": {
+            "field": "drug",
+            "type": "nominal",
+            "legend": null,
+            "scale": {
+              "domain": ["Cannabis","Cocaine","Ecstasy","Meth"],
+              "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E"]
+            }
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "line",
+          "interpolate": "monotone",
+          "strokeWidth": 2.5,
+          "strokeCap": "round"
+        },
+        "encoding": {
+          "x": {
+            "field": "age_group",
+            "type": "ordinal",
+            "sort": ["14–19","20–29","30–39","40–49","50–59","60+"],
+            "title": "Age Group",
+            "axis": {
+              "labelAngle": -25,
+              "labelColor": "#7A6040",
+              "labelFontSize": 10,
+              "grid": false,
+              "titleColor": "#3B2A14",
+              "titleFontSize": 11,
+              "titlePadding": 10
+            }
+          },
+          "y": {
+            "field": "value",
+            "type": "quantitative",
+            "title": "Use (%)",
+            "axis": {
+              "labelColor": "#7A6040",
+              "labelFontSize": 10,
+              "gridColor": "#E8DFD0",
+              "gridDash": [2, 3],
+              "titleColor": "#3B2A14",
+              "titleFontSize": 11,
+              "tickCount": 5
+            }
+          },
+          "color": {
+            "field": "drug",
+            "type": "nominal",
+            "legend": null,
+            "scale": {
+              "domain": ["Cannabis","Cocaine","Ecstasy","Meth"],
+              "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E"]
+            }
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "size": 70,
+          "stroke": "#FAF7F0",
+          "strokeWidth": 1.5
+        },
+        "encoding": {
+          "x": {
+            "field": "age_group",
+            "type": "ordinal",
+            "sort": ["14–19","20–29","30–39","40–49","50–59","60+"]
+          },
+          "y": {
+            "field": "value",
+            "type": "quantitative"
+          },
+          "color": {
+            "field": "drug",
+            "type": "nominal",
+            "legend": null,
+            "scale": {
+              "domain": ["Cannabis","Cocaine","Ecstasy","Meth"],
+              "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E"]
+            }
+          },
+          "tooltip": [
+            { "field": "drug", "title": "Drug" },
+            { "field": "age_group", "title": "Age Group" },
+            { "field": "value", "title": "Use (%)", "format": ".1f" }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "window": [{ "op": "max", "field": "value", "as": "peak" }],
+            "groupby": ["drug"]
+          },
+          { "filter": "datum.value === datum.peak" }
+        ],
+        "mark": {
+          "type": "text",
+          "dy": -14,
+          "fontSize": 10,
+          "fontWeight": "bold",
+          "font": "Lato, sans-serif"
+        },
+        "encoding": {
+          "x": {
+            "field": "age_group",
+            "type": "ordinal",
+            "sort": ["14–19","20–29","30–39","40–49","50–59","60+"]
+          },
+          "y": { "field": "value", "type": "quantitative" },
+          "text": { "field": "value", "format": ".1f" },
+          "color": {
+            "field": "drug",
+            "type": "nominal",
+            "legend": null,
+            "scale": {
+              "domain": ["Cannabis","Cocaine","Ecstasy","Meth"],
+              "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E"]
+            }
+          }
+        }
+      }
+    ]
+  },
   "config": {
     "background": "transparent",
-    "view": { "stroke": null },
+    "font": "Lato, sans-serif",
+    "view": {
+      "stroke": "#E8DFD0",
+      "strokeWidth": 1,
+      "fill": "#FDFAF6"
+    },
     "axis": {
       "domain": false,
-      "ticks": false,
-      "labelFontSize": 11,
-      "titleFontSize": 11,
-      "labelFont": "Lato"
-    }
+      "ticks": false
+    },
+    "facet": { "spacing": 16 }
   }
 }
