@@ -41,7 +41,7 @@
           "sort": "-x",
           "axis": {
             "title": null,
-            "labelFontSize": 11,
+            "labelFontSize":15,
             "labelColor": "#3B2A14",
             "grid": false
           }
@@ -97,7 +97,7 @@
         "type": "text",
         "align": "left",
         "dx": 8,
-        "fontSize": 11,
+        "fontSize": 15,
         "color": "#3B2A14"
       },
       "encoding": {
