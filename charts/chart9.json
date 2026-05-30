@@ -1,87 +1,139 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Hospitalisation bar — cream styled bars",
-  "width": "container",
-  "height": 260,
+  "description": "Hospitalisations by substance",
+  "width": 600,
+  "height": 320,
 
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"
   },
 
-  "params": [
+  "layer": [
     {
-      "name": "hover",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout",
-        "fields": ["drug_group"]
+      "mark": {
+        "type": "bar",
+        "color": "#92A8D2",
+        "height": 2
+      },
+      "encoding": {
+        "y": {
+          "field": "drug_group",
+          "type": "nominal",
+          "sort": "-x"
+        },
+        "x": {
+          "field": "hospitalisations",
+          "type": "quantitative",
+          "scale": { "zero": true }
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "circle",
+        "size": 180
+      },
+      "encoding": {
+        "y": {
+          "field": "drug_group",
+          "type": "nominal",
+          "sort": "-x",
+          "axis": {
+            "title": null,
+            "labelFontSize": 11,
+            "labelColor": "#3B2A14",
+            "grid": false
+          }
+        },
+
+        "x": {
+          "field": "hospitalisations",
+          "type": "quantitative",
+          "title": "Annual Hospitalisations",
+          "axis": {
+            "grid": true,
+            "format": ",d"
+          }
+        },
+
+        "color": {
+          "field": "drug_group",
+          "type": "nominal",
+          "scale": {
+            "range": [
+              "#B5BD89",
+              "#587665",
+              "#AC6C49",
+              "#EC9192",
+              "#58A4B0",
+              "#6F5E50",
+              "#81483E"
+            ]
+          },
+          "legend": {
+            "title": "Drug Group"
+          }
+        },
+
+        "tooltip": [
+          {
+            "field": "drug_group",
+            "type": "nominal",
+            "title": "Substance"
+          },
+          {
+            "field": "hospitalisations",
+            "type": "quantitative",
+            "title": "Hospitalisations",
+            "format": ",d"
+          }
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 11,
+        "color": "#3B2A14"
+      },
+      "encoding": {
+        "y": {
+          "field": "drug_group",
+          "type": "nominal",
+          "sort": "-x"
+        },
+        "x": {
+          "field": "hospitalisations",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "hospitalisations",
+          "type": "quantitative",
+          "format": ",d"
+        }
       }
     }
   ],
 
-  "mark": {
-    "type": "bar",
-    "cornerRadius": 4,
-    "stroke": "white",
-    "strokeWidth": 1
-  },
-
-  "encoding": {
-    "y": {
-      "field": "drug_group",
-      "type": "nominal",
-      "sort": "-x",
-      "title": null
-    },
-
-    "x": {
-      "field": "hospitalisations",
-      "type": "quantitative",
-      "title": "Annual hospitalisations"
-    },
-
-    "color": {
-      "field": "drug_group",
-      "type": "nominal",
-      "scale": {
-        "domain": [
-          "Alcohol",
-          "Meth/Stimulants",
-          "Sedatives",
-          "Cannabis",
-          "Opioids",
-          "Cocaine",
-          "Other"
-        ],
-        "range": [
-          "#B89A5C",
-          "#7A3E34",
-          "#7B6C8E",
-          "#4F6F5D",
-          "#3E6B67",
-          "#A8643F",
-          "#9C9C9C"
-        ]
-      },
-      "legend": null
-    },
-
-    "opacity": {
-      "condition": {
-        "param": "hover",
-        "value": 0.95
-      },
-      "value": 0.75
-    },
-
-    "tooltip": [
-      {"field": "drug_group", "type": "nominal"},
-      {"field": "hospitalisations", "type": "quantitative", "format": ","}
-    ]
-  },
-
   "config": {
-    "background": "white"
+    "background": "transparent",
+    "font": "Lato, sans-serif",
+    "view": {
+      "stroke": null,
+      "fill": "transparent"
+    },
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labelColor": "#7A6040",
+      "gridColor": "#E8DFD0",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleColor": "#3B2A14"
+    }
   }
 }
