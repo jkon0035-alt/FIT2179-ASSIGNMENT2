@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Animated bar + slider — drug-trends.csv",
-  "width": 600,
+  "width": "container",
   "height": 260,
 
   "data": {
