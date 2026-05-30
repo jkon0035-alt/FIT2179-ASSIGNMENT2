@@ -1,65 +1,102 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Scatter + regression — all-substances-by-state.csv",
-  "width": "container", "height": 350,
-  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/all-substances-by-state.csv"},
+  "description": "Clean interactive scatter — smoking vs drugs with vaping intensity",
+
+  "width": "container",
+  "height": 360,
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/all-substances-by-state.csv"
+  },
+
   "params": [
     {
-      "name": "br",
-      "select": {"type": "interval", "mark": {"fill": "#4A7C8B", "fillOpacity": 0.07, "stroke": "#4A7C8B", "strokeWidth": 1}}
-    },
-    {"name": "sl",   "select": {"type": "point", "fields": ["state_full"]}, "bind": "legend"},
-    {"name": "sh14", "select": {"type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["state_full"]}}
-  ],
-  "layer": [
-    {
-      "mark": {"type": "line", "color": "#E8DFD0", "strokeDash": [5,4], "strokeWidth": 1.5},
-      "transform": [{"regression": "drugs", "on": "smoking"}],
-      "encoding": {
-        "x": {"field": "smoking", "type": "quantitative"},
-        "y": {"field": "drugs",   "type": "quantitative"}
-      }
-    },
-    {
-      "mark": {"type": "point", "filled": true, "stroke": "#FAF7F0", "strokeWidth": 2},
-      "encoding": {
-        "x": {"field": "smoking", "type": "quantitative", "title": "Daily smoking rate (%)",   "scale": {"domain": [3,16]},  "axis": {"grid": true}},
-        "y": {"field": "drugs",   "type": "quantitative", "title": "Illicit drug use rate (%)", "scale": {"domain": [10,28]}, "axis": {"grid": true}},
-        "size": {
-          "condition": {"param": "sh14", "empty": false, "value": 400},
-          "field": "vaping", "type": "quantitative", "title": "Vaping rate (%)",
-          "scale": {"range": [160,1600]},
-          "legend": {"orient": "bottom-right"}
-        },
-        "color": {
-          "field": "state_full", "type": "nominal", "title": "State",
-          "scale": {"scheme": "tableau10"},
-          "legend": {"orient": "right", "labelFontSize": 10}
-        },
-        "opacity": {"condition": {"param": "br", "value": 1}, "value": 0.15},
-        "tooltip": [
-          {"field": "state_full", "type": "nominal",      "title": "State"},
-          {"field": "smoking",    "type": "quantitative", "title": "Smoking (%)",  "format": ".1f"},
-          {"field": "vaping",     "type": "quantitative", "title": "Vaping (%)",   "format": ".1f"},
-          {"field": "drugs",      "type": "quantitative", "title": "Drug Use (%)", "format": ".1f"}
-        ]
-      }
-    },
-    {
-      "mark": {"type": "text", "dy": -14, "fontSize": 11, "fontWeight": 700, "font": "Lato, sans-serif"},
-      "encoding": {
-        "x":     {"field": "smoking",    "type": "quantitative"},
-        "y":     {"field": "drugs",      "type": "quantitative"},
-        "text":  {"field": "state",      "type": "nominal"},
-        "color": {"field": "state_full", "type": "nominal", "legend": null, "scale": {"scheme": "tableau10"}},
-        "opacity": {"condition": {"param": "br", "value": 1}, "value": 0.08}
+      "name": "hover_state",
+      "select": {
+        "type": "point",
+        "fields": ["state"],
+        "on": "pointerover",
+        "clear": "pointerout"
       }
     }
   ],
+
+  "mark": {
+    "type": "point",
+    "filled": true,
+    "stroke": "#FAF7F0",
+    "strokeWidth": 1.2
+  },
+
+  "encoding": {
+    "x": {
+      "field": "smoking",
+      "type": "quantitative",
+      "title": "Smoking (%)"
+    },
+
+    "y": {
+      "field": "drugs",
+      "type": "quantitative",
+      "title": "Drug use (%)"
+    },
+
+    "size": {
+      "field": "vaping",
+      "type": "quantitative",
+      "scale": { "range": [80, 900] },
+      "legend": { "title": "Vaping intensity (%)" }
+    },
+
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "scale": { "scheme": "tableau10" },
+      "legend": { "title": "State" }
+    },
+
+    "opacity": {
+      "condition": {
+        "param": "hover_state",
+        "value": 1
+      },
+      "value": 0.35
+    },
+
+    "strokeWidth": {
+      "condition": {
+        "param": "hover_state",
+        "value": 3
+      },
+      "value": 1
+    },
+
+    "tooltip": [
+      { "field": "state_full", "type": "nominal", "title": "State" },
+      { "field": "smoking", "type": "quantitative", "format": ".1f" },
+      { "field": "drugs", "type": "quantitative", "format": ".1f" },
+      { "field": "vaping", "type": "quantitative", "format": ".1f" }
+    ]
+  },
+
   "config": {
-    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
-    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
-    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
-    "point": {"strokeWidth": 1.5}
+    "background": "transparent",
+    "font": "Lato, sans-serif",
+
+    "view": {
+      "stroke": null,
+      "fill": "transparent"
+    },
+
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labelColor": "#7A6040",
+      "gridColor": "#E8DFD0",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleColor": "#3B2A14",
+      "titlePadding": 8
+    }
   }
 }
