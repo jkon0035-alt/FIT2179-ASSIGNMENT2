@@ -88,38 +88,57 @@
           "filter": "remoteness_select === 'All' || datum.remoteness === remoteness_select"
         }
       ],
-      "mark": {
-        "type": "circle",
-        "opacity": 0.85,
-        "stroke": "#FAF7F0",
-        "strokeWidth": 1.2
-      },
-      "encoding": {
-        "longitude": {"field": "longitude", "type": "quantitative"},
-        "latitude":  {"field": "latitude",  "type": "quantitative"},
-        "color": {
-          "field": "remoteness",
-          "type": "nominal",
-          "title": "Remoteness",
-          "scale": {
-            "domain": ["Major Cities", "Inner Regional", "Outer Regional", "Remote/Very Remote"],
-            "range":  ["#4A7C8B", "#4A7C59", "#D2691E", "#8B4513"]
+      "layer": [
+        {
+          "mark": {
+            "type": "point",
+            "shape": "M0,-1C-0.5,-1-0.85,-0.6-0.85,-0.25C-0.85,0.3 0,1 0,1C0,1 0.85,0.3 0.85,-0.25C0.85,-0.6 0.5,-1 0,-1Z",
+            "filled": true,
+            "stroke": "#FAF7F0",
+            "strokeWidth": 0.8
+          },
+          "encoding": {
+            "longitude": {"field": "longitude", "type": "quantitative"},
+            "latitude":  {"field": "latitude",  "type": "quantitative"},
+            "color": {
+              "field": "remoteness",
+              "type": "nominal",
+              "title": "Remoteness",
+              "scale": {
+                "domain": ["Major Cities", "Inner Regional", "Outer Regional", "Remote/Very Remote"],
+                "range":  ["#4A7C8B", "#4A7C59", "#D2691E", "#8B4513"]
+              }
+            },
+            "size": {
+              "field": "drug_percent",
+              "type": "quantitative",
+              "title": "Drug Use (%)",
+              "scale": {"range": [150, 900]}
+            },
+            "tooltip": [
+              {"field": "location",        "type": "nominal",      "title": "Location"    },
+              {"field": "state",           "type": "nominal",      "title": "State"       },
+              {"field": "remoteness",      "type": "nominal",      "title": "Remoteness"  },
+              {"field": "smoking_percent", "type": "quantitative", "title": "Smoking (%)" },
+              {"field": "drug_percent",    "type": "quantitative", "title": "Drug Use (%)" }
+            ]
           }
         },
-        "size": {
-          "field": "drug_percent",
-          "type": "quantitative",
-          "title": "Drug Use (%)",
-          "scale": {"range": [40, 700]}
-        },
-        "tooltip": [
-          {"field": "location",        "type": "nominal",      "title": "Location"    },
-          {"field": "state",           "type": "nominal",      "title": "State"       },
-          {"field": "remoteness",      "type": "nominal",      "title": "Remoteness"  },
-          {"field": "smoking_percent", "type": "quantitative", "title": "Smoking (%)" },
-          {"field": "drug_percent",    "type": "quantitative", "title": "Drug Use (%)" }
-        ]
-      }
+        {
+          "mark": {
+            "type": "point",
+            "shape": "circle",
+            "filled": true,
+            "yOffset": -8
+          },
+          "encoding": {
+            "longitude": {"field": "longitude", "type": "quantitative"},
+            "latitude":  {"field": "latitude",  "type": "quantitative"},
+            "color": {"value": "#FAF7F0"},
+            "size":  {"value": 18}
+          }
+        }
+      ]
     }
   ],
 
