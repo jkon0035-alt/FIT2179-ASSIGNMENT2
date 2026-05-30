@@ -1,59 +1,44 @@
 {
   "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
-
   "description":"Smoking Rates in Australia 2001–2023",
-
   "width":"container",
   "height":340,
-
   "data":{"url":"https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-trend.csv"},
-
   "transform":[
     {"pivot":"category","value":"percent","groupby":["year"]}
   ],
-
   "layer":[
-
     {
       "mark":{"type":"area","interpolate":"monotone","color":"#E89B6B","opacity":0.35},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "y":{"field":"Currently Smoke","type":"quantitative","scale":{"domain":[0,30]}},
         "y2":{"datum":0}
       }
     },
-
     {
       "mark":{"type":"area","interpolate":"monotone","color":"#7B4B2A","opacity":0.18},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "y":{"field":"Currently Smoke","type":"quantitative"},
         "y2":{"field":"Smoke Daily"}
       }
     },
-
     {
       "mark":{"type":"rule","strokeDash":[4,3],"color":"#B8A080","strokeWidth":1},
-
       "data":{"values":[{"year":2013}]},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"}
       }
     },
     {
       "mark":{"type":"text","align":"left","dx":5,"dy":-45,"fontSize":10,"fontStyle":"italic","color":"#8F7355"},
-
       "data":{"values":[{"year":2013,"label":"Plain packaging era"}]},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "text":{"field":"label"}
       }
     },
-
     {
       "params":[
         {
@@ -61,7 +46,6 @@
           "select":{"type":"point","nearest":true,"on":"mouseover","encodings":["x"],"clear":"mouseout"}
         }
       ],
-
       "mark":{"type":"point","opacity":0,"size":200},
 
       "encoding":{
@@ -72,7 +56,6 @@
 
     {
       "mark":{"type":"rule","strokeDash":[3,3],"color":"#C8B89A"},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "opacity":{"condition":{"param":"hover","empty":false,"value":0.8},"value":0}
@@ -81,10 +64,8 @@
 
     {
       "mark":{"type":"line","color":"#D2691E","strokeWidth":3,"interpolate":"monotone"},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative","title":"Year","axis":{"format":"d","grid":false}},
-
         "y":{
           "field":"Currently Smoke",
           "type":"quantitative",
@@ -94,25 +75,19 @@
         }
       }
     },
-
     {
       "mark":{"type":"line","color":"#5C3317","strokeWidth":3,"interpolate":"monotone"},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "y":{"field":"Smoke Daily","type":"quantitative"}
       }
     },
-
     {
       "mark":{"type":"point","filled":true,"color":"#D2691E","stroke":"white","strokeWidth":1.5},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "y":{"field":"Currently Smoke","type":"quantitative"},
-
         "size":{"condition":{"param":"hover","empty":false,"value":220},"value":70},
-
         "tooltip":[
           {"field":"year","type":"quantitative","title":"Year","format":"d"},
           {"field":"Currently Smoke","type":"quantitative","title":"Current Smokers (%)","format":".1f"},
@@ -120,35 +95,26 @@
         ]
       }
     },
-
     {
       "mark":{"type":"point","filled":true,"color":"#5C3317","stroke":"white","strokeWidth":1.5},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "y":{"field":"Smoke Daily","type":"quantitative"},
-
         "size":{"condition":{"param":"hover","empty":false,"value":220},"value":70}
       }
     },
-
     {
       "transform":[{"filter":"datum.year == 2023"}],
-
       "mark":{"type":"text","align":"left","dx":8,"fontWeight":"bold","fontSize":11,"color":"#D2691E"},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "y":{"field":"Currently Smoke","type":"quantitative"},
         "text":{"value":"Current"}
       }
     },
-
     {
       "transform":[{"filter":"datum.year == 2023"}],
-
       "mark":{"type":"text","align":"left","dx":8,"fontWeight":"bold","fontSize":11,"color":"#5C3317"},
-
       "encoding":{
         "x":{"field":"year","type":"quantitative"},
         "y":{"field":"Smoke Daily","type":"quantitative"},
@@ -156,21 +122,9 @@
       }
     }
   ],
-
   "config":{
-
-    "background":"transparent",
-
+    "background":"transparent", 
     "view":{"stroke":null},
-
-    "axis":{
-      "domain":false,
-      "ticks":false,
-      "labelColor":"#7A6040",
-      "titleColor":"#3B2A14",
-      "gridColor":"#E8DFD0",
-      "labelFontSize":11,
-      "titleFontSize":11
-    }
+    "axis":{"domain":false,"ticks":false,"labelColor":"#7A6040","titleColor":"#3B2A14","gridColor":"#E8DFD0","labelFontSize":11,"titleFontSize":11}
   }
 }
