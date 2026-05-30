@@ -1,113 +1,89 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Radar chart — drug-by-age.csv",
-  "width": 460, "height": 400,
-  "padding": {"top": 20, "bottom": 30, "left": 80, "right": 180},
-  "background": "transparent",
-  "data": [
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Small multiples horizontal line chart — drug use by age group",
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv"
+  },
+
+  "transform": [
     {
-      "name": "table",
-      "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv",
-      "format": {"type": "csv"}
-    },
-    {"name": "keys", "values": ["14-19","20-29","30-39","40-49","50-59","60+"]},
-    {
-      "name": "ext",
-      "source": "table",
-      "transform": [
-        {"type": "formula", "expr": "['14-19','20-29','30-39','40-49','50-59','60+'].indexOf(datum.age_group)", "as": "idx"},
-        {"type": "formula", "expr": "(datum.idx / 6) * 2 * PI", "as": "angle"},
-        {"type": "formula", "expr": "datum.recent_use_percent / 22", "as": "rn"}
-      ]
+      "calculate": "toNumber(datum.recent_use_percent)",
+      "as": "value"
     }
   ],
-  "scales": [
-    {
-      "name": "col", "type": "ordinal",
-      "domain": ["Cannabis","Cocaine","Ecstasy","Meth"],
-      "range": ["#4A7C59","#B03030","#4A7C8B","#D2691E"]
+
+  "facet": {
+    "column": {
+      "field": "drug",
+      "type": "nominal",
+      "title": null
     }
-  ],
-  "signals": [
-    {"name": "cx", "update": "width / 2"},
-    {"name": "cy", "update": "height / 2"},
-    {"name": "radius", "update": "min(width,height) / 2 - 24"},
-    {"name": "tip", "value": {}, "on": [{"events": "symbol:mouseover", "update": "datum"}, {"events": "symbol:mouseout", "update": "{}"}]}
-  ],
-  "marks": [
-    {
-      "type": "rule", "from": {"data": "keys"},
-      "encode": {"enter": {
-        "x":  {"signal": "cx"}, "y": {"signal": "cy"},
-        "x2": {"signal": "cx + radius * cos((indexof(['14-19','20-29','30-39','40-49','50-59','60+'], datum.value) / 6) * 2 * PI - PI/2)"},
-        "y2": {"signal": "cy + radius * sin((indexof(['14-19','20-29','30-39','40-49','50-59','60+'], datum.value) / 6) * 2 * PI - PI/2)"},
-        "stroke": {"value": "#C8B89A"}, "strokeWidth": {"value": 1}
-      }}
+  },
+
+  "spec": {
+    "width": 180,
+    "height": 180,
+
+    "mark": {
+      "type": "line",
+      "strokeWidth": 3,
+      "point": {
+        "filled": true,
+        "size": 60
+      }
     },
-    {"type": "arc", "encode": {"enter": {"x": {"signal": "cx"}, "y": {"signal": "cy"}, "startAngle": {"value": 0}, "endAngle": {"value": 6.283}, "innerRadius": {"value": 0}, "outerRadius": {"signal": "radius * 0.25"}, "fill": {"value": "transparent"}, "stroke": {"value": "#E8DFD0"}, "strokeWidth": {"value": 0.8}}}},
-    {"type": "arc", "encode": {"enter": {"x": {"signal": "cx"}, "y": {"signal": "cy"}, "startAngle": {"value": 0}, "endAngle": {"value": 6.283}, "innerRadius": {"value": 0}, "outerRadius": {"signal": "radius * 0.5"},  "fill": {"value": "transparent"}, "stroke": {"value": "#E8DFD0"}, "strokeWidth": {"value": 0.8}}}},
-    {"type": "arc", "encode": {"enter": {"x": {"signal": "cx"}, "y": {"signal": "cy"}, "startAngle": {"value": 0}, "endAngle": {"value": 6.283}, "innerRadius": {"value": 0}, "outerRadius": {"signal": "radius * 0.75"}, "fill": {"value": "transparent"}, "stroke": {"value": "#E8DFD0"}, "strokeWidth": {"value": 0.8}}}},
-    {"type": "arc", "encode": {"enter": {"x": {"signal": "cx"}, "y": {"signal": "cy"}, "startAngle": {"value": 0}, "endAngle": {"value": 6.283}, "innerRadius": {"value": 0}, "outerRadius": {"signal": "radius"},       "fill": {"value": "transparent"}, "stroke": {"value": "#C8B89A"}, "strokeWidth": {"value": 1}}}},
-    {
-      "type": "text", "from": {"data": "keys"},
-      "encode": {"enter": {
-        "x": {"signal": "cx + (radius+20) * cos((indexof(['14-19','20-29','30-39','40-49','50-59','60+'],datum.value)/6)*2*PI-PI/2)"},
-        "y": {"signal": "cy + (radius+20) * sin((indexof(['14-19','20-29','30-39','40-49','50-59','60+'],datum.value)/6)*2*PI-PI/2)"},
-        "text": {"field": "value"}, "align": {"value": "center"}, "baseline": {"value": "middle"},
-        "fill": {"value": "#7A6040"}, "fontSize": {"value": 11}, "font": {"value": "Lato, sans-serif"}
-      }}
-    },
-    {
-      "type": "group",
-      "from": {"facet": {"data": "ext", "name": "dd", "groupby": "drug"}},
-      "marks": [
-        {
-          "type": "line", "from": {"data": "dd"},
-          "encode": {"enter": {
-            "x": {"signal": "cx + (datum.rn * radius) * cos(datum.angle - PI/2)"},
-            "y": {"signal": "cy + (datum.rn * radius) * sin(datum.angle - PI/2)"},
-            "stroke": {"scale": "col", "field": "drug"}, "strokeWidth": {"value": 2.5},
-            "fill": {"scale": "col", "field": "drug"}, "fillOpacity": {"value": 0.1},
-            "interpolate": {"value": "linear-closed"}
-          }}
-        },
-        {
-          "type": "symbol", "from": {"data": "dd"},
-          "encode": {
-            "enter": {
-              "x": {"signal": "cx + (datum.rn * radius) * cos(datum.angle - PI/2)"},
-              "y": {"signal": "cy + (datum.rn * radius) * sin(datum.angle - PI/2)"},
-              "size": {"value": 55}, "fill": {"scale": "col", "field": "drug"},
-              "stroke": {"value": "#FAF7F0"}, "strokeWidth": {"value": 1.5},
-              "tooltip": {"signal": "{'Drug': datum.drug, 'Age Group': datum.age_group, 'Use Rate (%)': datum.recent_use_percent}"}
-            },
-            "update": {"size": {"value": 55}},
-            "hover": {"size": {"value": 180}, "cursor": {"value": "pointer"}}
-          }
+
+    "encoding": {
+      "x": {
+        "field": "age_group",
+        "type": "ordinal",
+        "sort": ["14–19", "20–29", "30–39", "40–49", "50–59", "60+"],
+        "title": "Age Group",
+        "axis": {
+          "labelAngle": -25,
+          "labelColor": "#7A6040",
+          "grid": false
         }
-      ]
-    },
-    {
-      "type": "group", "encode": {"enter": {"x": {"signal": "width + 16"}, "y": {"value": 50}}},
-      "marks": [
-        {"type": "text", "encode": {"enter": {"text": {"value": "Drug"}, "fill": {"value": "#7A6040"}, "fontSize": {"value": 11}, "fontWeight": {"value": 700}, "y": {"value": 0}, "font": {"value": "Lato, sans-serif"}}}},
-        {"type": "symbol", "encode": {"enter": {"x": {"value": 0}, "y": {"value": 22}, "fill": {"value": "#4A7C59"}, "size": {"value": 80}, "stroke": {"value": "#FAF7F0"}, "strokeWidth": {"value": 1}}}},
-        {"type": "text",   "encode": {"enter": {"x": {"value": 16}, "y": {"value": 22}, "text": {"value": "Cannabis"}, "fill": {"value": "#7A6040"}, "fontSize": {"value": 11}, "baseline": {"value": "middle"}, "font": {"value": "Lato, sans-serif"}}}},
-        {"type": "symbol", "encode": {"enter": {"x": {"value": 0}, "y": {"value": 46}, "fill": {"value": "#B03030"}, "size": {"value": 80}, "stroke": {"value": "#FAF7F0"}, "strokeWidth": {"value": 1}}}},
-        {"type": "text",   "encode": {"enter": {"x": {"value": 16}, "y": {"value": 46}, "text": {"value": "Cocaine"},  "fill": {"value": "#7A6040"}, "fontSize": {"value": 11}, "baseline": {"value": "middle"}, "font": {"value": "Lato, sans-serif"}}}},
-        {"type": "symbol", "encode": {"enter": {"x": {"value": 0}, "y": {"value": 70}, "fill": {"value": "#4A7C8B"}, "size": {"value": 80}, "stroke": {"value": "#FAF7F0"}, "strokeWidth": {"value": 1}}}},
-        {"type": "text",   "encode": {"enter": {"x": {"value": 16}, "y": {"value": 70}, "text": {"value": "Ecstasy"},  "fill": {"value": "#7A6040"}, "fontSize": {"value": 11}, "baseline": {"value": "middle"}, "font": {"value": "Lato, sans-serif"}}}},
-        {"type": "symbol", "encode": {"enter": {"x": {"value": 0}, "y": {"value": 94}, "fill": {"value": "#D2691E"}, "size": {"value": 80}, "stroke": {"value": "#FAF7F0"}, "strokeWidth": {"value": 1}}}},
-        {"type": "text",   "encode": {"enter": {"x": {"value": 16}, "y": {"value": 94}, "text": {"value": "Meth"},     "fill": {"value": "#7A6040"}, "fontSize": {"value": 11}, "baseline": {"value": "middle"}, "font": {"value": "Lato, sans-serif"}}}},
-        {
-          "type": "text",
-          "encode": {"update": {
-            "text": {"signal": "tip.drug ? tip.drug + ' · ' + tip.age_group + ': ' + tip.recent_use_percent + '%' : ''"},
-            "x": {"value": 0}, "y": {"value": 140},
-            "fill": {"value": "#3B2A14"}, "fontSize": {"value": 11}, "font": {"value": "Lato, sans-serif"}, "limit": {"value": 160}
-          }}
+      },
+
+      "y": {
+        "field": "value",
+        "type": "quantitative",
+        "title": "Use (%)",
+        "axis": {
+          "labelColor": "#3B2A14",
+          "gridColor": "#E8DFD0"
         }
+      },
+
+      "color": {
+        "field": "drug",
+        "type": "nominal",
+        "legend": null,
+        "scale": {
+          "domain": ["Cannabis", "Cocaine", "Ecstasy", "Meth"],
+          "range": ["#4A7C59", "#B03030", "#4A7C8B", "#D2691E"]
+        }
+      },
+
+      "tooltip": [
+        { "field": "drug", "title": "Drug" },
+        { "field": "age_group", "title": "Age Group" },
+        { "field": "value", "title": "Use (%)" }
       ]
     }
-  ]
+  },
+
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": null },
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "labelFont": "Lato"
+    }
+  }
 }
