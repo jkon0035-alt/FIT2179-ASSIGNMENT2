@@ -1,41 +1,87 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Hospitalisation bar — hospitalisations.csv",
-  "width": "container", "height": 260,
-  "data": {"url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"},
-  "params": [{"name": "hh", "select": {"type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["substance"]}}],
-  "layer": [
+  "description": "Hospitalisation bar — cream styled bars",
+  "width": "container",
+  "height": 260,
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"
+  },
+
+  "params": [
     {
-      "mark": {"type": "bar", "cornerRadius": 2},
-      "encoding": {
-        "y": {"field": "substance", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 12, "labelColor": "#3B2A14", "grid": false}},
-        "x": {"field": "hospitalisations", "type": "quantitative", "title": "Annual hospitalisations", "axis": {"grid": true, "format": ","}},
-        "color": {
-          "field": "substance", "type": "nominal", "legend": null,
-          "scale": {"scheme": "browns"}
-        },
-        "opacity": {"condition": {"param": "hh", "value": 1}, "value": 0.4},
-        "tooltip": [
-          {"field": "substance",       "type": "nominal",      "title": "Substance"},
-          {"field": "hospitalisations","type": "quantitative", "title": "Hospitalisations", "format": ","}
-        ]
-      }
-    },
-    {
-      "mark": {"type": "text", "align": "left", "dx": 6, "fontSize": 11, "fontWeight": 700},
-      "encoding": {
-        "y": {"field": "substance", "type": "nominal", "sort": "-x"},
-        "x": {"field": "hospitalisations", "type": "quantitative"},
-        "text": {"field": "hospitalisations", "type": "quantitative", "format": ","},
-        "color": {"field": "substance", "type": "nominal", "legend": null, "scale": {"scheme": "browns"}},
-        "opacity": {"condition": {"param": "hh", "value": 1}, "value": 0.4}
+      "name": "hover",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout",
+        "fields": ["drug_group"]
       }
     }
   ],
+
+  "mark": {
+    "type": "bar",
+    "cornerRadius": 4,
+    "stroke": "#E8DFD0",
+    "strokeWidth": 1
+  },
+
+  "encoding": {
+    "y": {
+      "field": "drug_group",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null
+    },
+
+    "x": {
+      "field": "hospitalisations",
+      "type": "quantitative",
+      "title": "Annual hospitalisations"
+    },
+
+    "color": {
+      "field": "drug_group",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Alcohol",
+          "Meth/Stimulants",
+          "Sedatives",
+          "Cannabis",
+          "Opioids",
+          "Cocaine",
+          "Other"
+        ],
+        "range": [
+          "#B89A5C",
+          "#7A3E34",
+          "#7B6C8E",
+          "#4F6F5D",
+          "#3E6B67",
+          "#A8643F",
+          "#9C9C9C"
+        ]
+      },
+      "legend": null
+    },
+
+    "opacity": {
+      "condition": {
+        "param": "hover",
+        "value": 0.95
+      },
+      "value": 0.75
+    },
+
+    "tooltip": [
+      {"field": "drug_group", "type": "nominal"},
+      {"field": "hospitalisations", "type": "quantitative", "format": ","}
+    ]
+  },
+
   "config": {
-    "background": "transparent", "font": "Lato, sans-serif", "view": {"stroke": null, "fill": "transparent"},
-    "axis": {"domain": false, "ticks": false, "labelFontSize": 11, "labelColor": "#7A6040", "labelPadding": 6, "titleFontSize": 11, "titleFontWeight": 700, "titleColor": "#3B2A14", "titlePadding": 10, "gridColor": "#E8DFD0"},
-    "legend": {"labelFontSize": 11, "labelColor": "#7A6040", "titleFontSize": 11, "titleColor": "#3B2A14", "symbolSize": 100, "padding": 6, "cornerRadius": 2, "fillColor": "#FAF7F0", "strokeColor": "#C8B89A"},
-    "bar": {"cornerRadius": 2}
+    "background": "#F5F0E6"
   }
 }
