@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Annotated line + area — Smoking Rates in Australia 2001-2022",
-  "width": 600,
+  "width": "container",
   "height": 340,
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-trend.csv"
