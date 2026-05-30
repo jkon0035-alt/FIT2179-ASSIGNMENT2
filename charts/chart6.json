@@ -1,65 +1,121 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Smoking decline vs vaping rate by age group",
-  "width": "container",
+  "width": 600,
   "height": 320,
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/vaping-vs-smoking-by-age.csv"
   },
   "layer": [
     {
-      "mark": {"type": "bar", "cornerRadius": 2},
+      "mark": {
+        "type": "bar",
+        "cornerRadius": 2
+      },
       "encoding": {
         "y": {
           "field": "age_group",
           "type": "nominal",
-          "sort": ["14–17","18–24","25–29","30–39","40–49","50–59","60–69","70+"],
+          "sort": [
+            "14–17",
+            "18–24",
+            "25–29",
+            "30–39",
+            "40–49",
+            "50–59",
+            "60–69",
+            "70+"
+          ],
           "title": "Age Group",
-          "axis": {"grid": false, "labelColor": "#3B2A14"}
+          "axis": {
+            "grid": false,
+            "labelColor": "#3B2A14"
+          }
         },
         "x": {
           "field": "smoking_decline",
           "type": "quantitative",
           "title": "← Smoking decline (%)  |  Vaping rate (%) →",
-          "scale": {"domain": [-15, 25]},
-          "axis": {"grid": true}
+          "scale": {
+            "domain": [
+              -15,
+              25
+            ]
+          },
+          "axis": {
+            "grid": true
+          }
         },
         "color": {
           "datum": "Smoking decline since 2001",
           "scale": {
-            "domain": ["Smoking decline since 2001", "Vaping rate 2023"],
-            "range": ["#8B4513", "#4A7C8B"]
+            "domain": [
+              "Smoking decline since 2001",
+              "Vaping rate 2023"
+            ],
+            "range": [
+              "#8B4513",
+              "#4A7C8B"
+            ]
           },
           "legend": {
             "title": null,
-            "orient": "top-left",
-            "offset": 10,
+            "orient": "bottom-right",
             "symbolType": "square",
             "labelColor": "#3B2A14",
             "labelFontSize": 11
           }
         },
         "tooltip": [
-          {"field": "age_group",       "title": "Age Group"},
-          {"field": "smoking_decline", "title": "Smoking decline (%)", "format": ".1f"},
-          {"field": "vaping_2023",     "title": "Vaping rate 2023 (%)", "format": ".1f"}
+          {
+            "field": "age_group",
+            "title": "Age Group"
+          },
+          {
+            "field": "smoking_decline",
+            "title": "Smoking decline (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "vaping_2023",
+            "title": "Vaping rate 2023 (%)",
+            "format": ".1f"
+          }
         ]
       }
     },
-
     {
-      "mark": {"type": "rule", "strokeWidth": 2, "color": "#4A7C8B", "opacity": 0.5},
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2,
+        "color": "#4A7C8B",
+        "opacity": 0.5
+      },
       "encoding": {
         "y": {
           "field": "age_group",
           "type": "nominal",
-          "sort": ["14–17","18–24","25–29","30–39","40–49","50–59","60–69","70+"]
+          "sort": [
+            "14–17",
+            "18–24",
+            "25–29",
+            "30–39",
+            "40–49",
+            "50–59",
+            "60–69",
+            "70+"
+          ]
         },
-        "x":  {"datum": 0, "type": "quantitative"},
-        "x2": {"field": "vaping_2023", "type": "quantitative"}
+        "x": {
+          "datum": 0,
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "vaping_2023",
+          "type": "quantitative"
+        }
       }
     },
-
     {
       "mark": {
         "type": "point",
@@ -72,24 +128,52 @@
         "y": {
           "field": "age_group",
           "type": "nominal",
-          "sort": ["14–17","18–24","25–29","30–39","40–49","50–59","60–69","70+"]
+          "sort": [
+            "14–17",
+            "18–24",
+            "25–29",
+            "30–39",
+            "40–49",
+            "50–59",
+            "60–69",
+            "70+"
+          ]
         },
-        "x": {"field": "vaping_2023", "type": "quantitative"},
+        "x": {
+          "field": "vaping_2023",
+          "type": "quantitative"
+        },
         "color": {
           "datum": "Vaping rate 2023",
           "scale": {
-            "domain": ["Smoking decline since 2001", "Vaping rate 2023"],
-            "range": ["#8B4513", "#4A7C8B"]
+            "domain": [
+              "Smoking decline since 2001",
+              "Vaping rate 2023"
+            ],
+            "range": [
+              "#8B4513",
+              "#4A7C8B"
+            ]
           }
         },
         "tooltip": [
-          {"field": "age_group",       "title": "Age Group"},
-          {"field": "smoking_decline", "title": "Smoking decline (%)", "format": ".1f"},
-          {"field": "vaping_2023",     "title": "Vaping rate 2023 (%)", "format": ".1f"}
+          {
+            "field": "age_group",
+            "title": "Age Group"
+          },
+          {
+            "field": "smoking_decline",
+            "title": "Smoking decline (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "vaping_2023",
+            "title": "Vaping rate 2023 (%)",
+            "format": ".1f"
+          }
         ]
       }
     },
-
     {
       "mark": {
         "type": "text",
@@ -103,23 +187,48 @@
         "y": {
           "field": "age_group",
           "type": "nominal",
-          "sort": ["14–17","18–24","25–29","30–39","40–49","50–59","60–69","70+"]
+          "sort": [
+            "14–17",
+            "18–24",
+            "25–29",
+            "30–39",
+            "40–49",
+            "50–59",
+            "60–69",
+            "70+"
+          ]
         },
-        "x": {"field": "vaping_2023", "type": "quantitative"},
-        "text": {"field": "vaping_2023", "format": ".1f"}
+        "x": {
+          "field": "vaping_2023",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "vaping_2023",
+          "format": ".1f"
+        }
       }
     },
-
     {
-      "mark": {"type": "rule", "color": "#7A6040", "strokeWidth": 1},
-      "encoding": {"x": {"datum": 0, "type": "quantitative"}}
+      "mark": {
+        "type": "rule",
+        "color": "#7A6040",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "datum": 0,
+          "type": "quantitative"
+        }
+      }
     }
   ],
-
   "config": {
     "background": "transparent",
     "font": "Lato, sans-serif",
-    "view": {"stroke": null, "fill": "transparent"},
+    "view": {
+      "stroke": null,
+      "fill": "transparent"
+    },
     "axis": {
       "domain": false,
       "ticks": false,
