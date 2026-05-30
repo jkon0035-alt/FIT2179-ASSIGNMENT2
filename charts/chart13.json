@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Drug prevalence donut chart (clean version)",
+  "description": "Drug prevalence donut chart (interactive version)",
   "width": 360,
   "height": 360,
 
@@ -16,6 +16,19 @@
       {"drug": "Heroin", "value": 0.1}
     ]
   },
+
+  "params": [
+    {
+      "name": "selection",
+      "select": {
+        "type": "point",
+        "fields": ["drug"],
+        "on": "click",
+        "clear": "dblclick"
+      },
+      "bind": "legend"
+    }
+  ],
 
   "mark": {
     "type": "arc",
@@ -50,6 +63,14 @@
         "orient": "right",
         "title": "Drug Type"
       }
+    },
+
+    "opacity": {
+      "condition": {
+        "param": "selection",
+        "value": 1
+      },
+      "value": 0.3
     },
 
     "tooltip": [
