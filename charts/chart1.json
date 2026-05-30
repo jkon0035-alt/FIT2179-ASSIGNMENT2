@@ -1,130 +1,487 @@
 {
-  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
-  "description":"Smoking Rates in Australia 2001–2023",
-  "width":"container",
-  "height":340,
-  "data":{"url":"https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-trend.csv"},
-  "transform":[
-    {"pivot":"category","value":"percent","groupby":["year"]}
-  ],
-  "layer":[
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Annotated line + area — Smoking Rates in Australia 2001-2022",
+  "width": 600,
+  "height": 340,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-trend.csv"
+  },
+  "layer": [
     {
-      "mark":{"type":"area","interpolate":"monotone","color":"#E89B6B","opacity":0.35},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Currently Smoke","type":"quantitative","scale":{"domain":[0,30]}},
-        "y2":{"datum":0}
+      "mark": {
+        "type": "area",
+        "opacity": 0.12,
+        "color": "#D2691E",
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "current",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              30
+            ]
+          }
+        },
+        "y2": {
+          "datum": 0
+        }
       }
     },
     {
-      "mark":{"type":"area","interpolate":"monotone","color":"#7B4B2A","opacity":0.18},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Currently Smoke","type":"quantitative"},
-        "y2":{"field":"Smoke Daily"}
+      "mark": {
+        "type": "area",
+        "opacity": 0.1,
+        "color": "#C8B89A",
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "current",
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "daily"
+        }
       }
     },
     {
-      "mark":{"type":"rule","strokeDash":[4,3],"color":"#B8A080","strokeWidth":1},
-      "data":{"values":[{"year":2013}]},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"}
+      "data": {
+        "values": [
+          {
+            "year": 2010,
+            "label": "25% excise hike",
+            "y_pos": 26,
+            "align": "left"
+          },
+          {
+            "year": 2012,
+            "label": "Plain packaging law",
+            "y_pos": 22,
+            "align": "left"
+          },
+          {
+            "year": 2013,
+            "label": "Annual 12.5% excise increases begin",
+            "y_pos": 18,
+            "align": "left"
+          },
+          {
+            "year": 2023,
+            "label": "Record low: 8.3%",
+            "y_pos": 10,
+            "align": "right"
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          4,
+          3
+        ],
+        "strokeWidth": 1.2,
+        "color": "#C8B89A",
+        "opacity": 0.8
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        }
       }
     },
     {
-      "mark":{"type":"text","align":"left","dx":5,"dy":-45,"fontSize":10,"fontStyle":"italic","color":"#8F7355"},
-      "data":{"values":[{"year":2013,"label":"Plain packaging era"}]},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "text":{"field":"label"}
+      "data": {
+        "values": [
+          {
+            "year": 2010,
+            "label": "25% excise hike",
+            "y_pos": 26,
+            "align": "left"
+          },
+          {
+            "year": 2012,
+            "label": "Plain packaging law",
+            "y_pos": 22,
+            "align": "left"
+          },
+          {
+            "year": 2013,
+            "label": "Annual 12.5% excise increases begin",
+            "y_pos": 18,
+            "align": "left"
+          },
+          {
+            "year": 2023,
+            "label": "Record low: 8.3%",
+            "y_pos": 10,
+            "align": "right"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 9.5,
+        "fontStyle": "italic",
+        "font": "Lato, sans-serif",
+        "color": "#7A6040",
+        "dy": -4
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y_pos",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        },
+        "align": {
+          "field": "align",
+          "type": "nominal"
+        }
       }
     },
     {
-      "params":[
+      "transform": [
         {
-          "name":"hover",
-          "select":{"type":"point","nearest":true,"on":"mouseover","encodings":["x"],"clear":"mouseout"}
+          "filter": "datum.year == 2010 || datum.year == 2012 || datum.year == 2013 || datum.year == 2023"
         }
       ],
-      "mark":{"type":"point","opacity":0,"size":200},
-
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Currently Smoke","type":"quantitative"}
-      }
-    },
-
-    {
-      "mark":{"type":"rule","strokeDash":[3,3],"color":"#C8B89A"},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "opacity":{"condition":{"param":"hover","empty":false,"value":0.8},"value":0}
-      }
-    },
-
-    {
-      "mark":{"type":"line","color":"#D2691E","strokeWidth":3,"interpolate":"monotone"},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative","title":"Year","axis":{"format":"d","grid":false}},
-        "y":{
-          "field":"Currently Smoke",
-          "type":"quantitative",
-          "title":"% of population (14+)",
-          "scale":{"domain":[0,30]},
-          "axis":{"grid":true}
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 70,
+        "color": "#8B4513",
+        "stroke": "#FAF7F0",
+        "strokeWidth": 1.5,
+        "opacity": 0.9
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "daily",
+          "type": "quantitative"
         }
       }
     },
     {
-      "mark":{"type":"line","color":"#5C3317","strokeWidth":3,"interpolate":"monotone"},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Smoke Daily","type":"quantitative"}
+      "params": [
+        {
+          "name": "hov",
+          "select": {
+            "type": "point",
+            "nearest": true,
+            "on": "mouseover",
+            "encodings": [
+              "x"
+            ],
+            "clear": "mouseout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "opacity": 0,
+        "size": 200
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "current",
+          "type": "quantitative"
+        }
       }
     },
     {
-      "mark":{"type":"point","filled":true,"color":"#D2691E","stroke":"white","strokeWidth":1.5},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Currently Smoke","type":"quantitative"},
-        "size":{"condition":{"param":"hover","empty":false,"value":220},"value":70},
-        "tooltip":[
-          {"field":"year","type":"quantitative","title":"Year","format":"d"},
-          {"field":"Currently Smoke","type":"quantitative","title":"Current Smokers (%)","format":".1f"},
-          {"field":"Smoke Daily","type":"quantitative","title":"Daily Smokers (%)","format":".1f"}
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          3,
+          3
+        ],
+        "color": "#C8B89A",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "opacity": {
+          "condition": {
+            "param": "hov",
+            "empty": false,
+            "value": 0.8
+          },
+          "value": 0
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5,
+        "color": "#D2691E",
+        "strokeCap": "round",
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": "Year",
+          "axis": {
+            "format": "d",
+            "grid": false
+          }
+        },
+        "y": {
+          "field": "current",
+          "type": "quantitative",
+          "title": "% of population (14+)",
+          "scale": {
+            "domain": [
+              0,
+              30
+            ]
+          },
+          "axis": {
+            "grid": true
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5,
+        "color": "#8B4513",
+        "strokeCap": "round",
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "daily",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "#D2691E",
+        "stroke": "#FAF7F0",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "current",
+          "type": "quantitative"
+        },
+        "size": {
+          "condition": {
+            "param": "hov",
+            "empty": false,
+            "value": 200
+          },
+          "value": 60
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "type": "quantitative",
+            "title": "Year",
+            "format": "d"
+          },
+          {
+            "field": "current",
+            "type": "quantitative",
+            "title": "Current smokers (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "daily",
+            "type": "quantitative",
+            "title": "Daily smokers (%)",
+            "format": ".1f"
+          }
         ]
       }
     },
     {
-      "mark":{"type":"point","filled":true,"color":"#5C3317","stroke":"white","strokeWidth":1.5},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Smoke Daily","type":"quantitative"},
-        "size":{"condition":{"param":"hover","empty":false,"value":220},"value":70}
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "#8B4513",
+        "stroke": "#FAF7F0",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "daily",
+          "type": "quantitative"
+        },
+        "size": {
+          "condition": {
+            "param": "hov",
+            "empty": false,
+            "value": 200
+          },
+          "value": 60
+        }
       }
     },
     {
-      "transform":[{"filter":"datum.year == 2023"}],
-      "mark":{"type":"text","align":"left","dx":8,"fontWeight":"bold","fontSize":11,"color":"#D2691E"},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Currently Smoke","type":"quantitative"},
-        "text":{"value":"Current"}
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 11,
+        "fontWeight": 700,
+        "font": "Lato, sans-serif"
+      },
+      "transform": [
+        {
+          "filter": "datum.year == 2023"
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "current",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Current"
+        },
+        "color": {
+          "value": "#D2691E"
+        }
       }
     },
     {
-      "transform":[{"filter":"datum.year == 2023"}],
-      "mark":{"type":"text","align":"left","dx":8,"fontWeight":"bold","fontSize":11,"color":"#5C3317"},
-      "encoding":{
-        "x":{"field":"year","type":"quantitative"},
-        "y":{"field":"Smoke Daily","type":"quantitative"},
-        "text":{"value":"Daily"}
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 11,
+        "fontWeight": 700,
+        "font": "Lato, sans-serif"
+      },
+      "transform": [
+        {
+          "filter": "datum.year == 2023"
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "daily",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Daily"
+        },
+        "color": {
+          "value": "#8B4513"
+        }
       }
     }
   ],
-  "config":{
-    "background":"transparent", 
-    "view":{"stroke":null},
-    "axis":{"domain":false,"ticks":false,"labelColor":"#7A6040","titleColor":"#3B2A14","gridColor":"#E8DFD0","labelFontSize":11,"titleFontSize":11}
-  }
+  "config": {
+    "background": "transparent",
+    "font": "Lato, sans-serif",
+    "view": {
+      "stroke": null,
+      "fill": "transparent"
+    },
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labelFontSize": 11,
+      "labelColor": "#7A6040",
+      "labelPadding": 6,
+      "titleFontSize": 11,
+      "titleFontWeight": 700,
+      "titleColor": "#3B2A14",
+      "titlePadding": 10,
+      "gridColor": "#E8DFD0"
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "labelColor": "#7A6040",
+      "titleFontSize": 11,
+      "titleColor": "#3B2A14",
+      "symbolSize": 100,
+      "padding": 6,
+      "cornerRadius": 2,
+      "fillColor": "#FAF7F0",
+      "strokeColor": "#C8B89A"
+    },
+    "line": {
+      "strokeWidth": 2.5
+    },
+    "point": {
+      "strokeWidth": 1.5
+    },
+    "area": {
+      "opacity": 0.8
+    }
+  },
+  "transform": [
+    {
+      "filter": "datum.category === 'Smoke Daily' || datum.category === 'Currently Smoke'"
+    },
+    {
+      "calculate": "datum.category === 'Smoke Daily' ? 'daily' : 'current'",
+      "as": "field_name"
+    },
+    {
+      "pivot": "field_name",
+      "value": "percent",
+      "groupby": [
+        "year"
+      ]
+    }
+  ]
 }
