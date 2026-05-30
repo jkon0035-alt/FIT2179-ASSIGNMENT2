@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Improved heatmap — drug use by age group",
 
-  "width": 600,
-  "height": 340,
+  "width": "container",
+  "height": 400,
   "padding": 20,
 
   "data": [
