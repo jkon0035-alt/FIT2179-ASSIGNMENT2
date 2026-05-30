@@ -1,102 +1,130 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Clean interactive scatter — smoking vs drugs with vaping intensity",
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Improved heatmap — drug use by age group",
 
-  "width": "container",
-  "height": 360,
+  "width": 600,
+  "height": 340,
+  "padding": 20,
 
-  "data": {
-    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/all-substances-by-state.csv"
-  },
-
-  "params": [
+  "data": [
     {
-      "name": "hover_state",
-      "select": {
-        "type": "point",
-        "fields": ["state"],
-        "on": "pointerover",
-        "clear": "pointerout"
-      }
+      "name": "table",
+      "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv",
+      "format": { "type": "csv" }
     }
   ],
 
-  "mark": {
-    "type": "point",
-    "filled": true,
-    "stroke": "#FAF7F0",
-    "strokeWidth": 1.2
-  },
-
-  "encoding": {
-    "x": {
-      "field": "smoking",
-      "type": "quantitative",
-      "title": "Smoking (%)"
+  "scales": [
+    {
+      "name": "x",
+      "type": "band",
+      "domain": ["14–19","20–29","30–39","40–49","50–59","60+"],
+      "range": "width",
+      "padding": 0.04
     },
-
-    "y": {
-      "field": "drugs",
-      "type": "quantitative",
-      "title": "Drug use (%)"
+    {
+      "name": "y",
+      "type": "band",
+      "domain": ["Cannabis","Cocaine","Ecstasy","Meth"],
+      "range": "height",
+      "padding": 0.04
     },
-
-    "size": {
-      "field": "vaping",
-      "type": "quantitative",
-      "scale": { "range": [80, 900] },
-      "legend": { "title": "Vaping intensity (%)" }
-    },
-
-    "color": {
-      "field": "state",
-      "type": "nominal",
-      "scale": { "scheme": "tableau10" },
-      "legend": { "title": "State" }
-    },
-
-    "opacity": {
-      "condition": {
-        "param": "hover_state",
-        "value": 1
-      },
-      "value": 0.35
-    },
-
-    "strokeWidth": {
-      "condition": {
-        "param": "hover_state",
-        "value": 3
-      },
-      "value": 1
-    },
-
-    "tooltip": [
-      { "field": "state_full", "type": "nominal", "title": "State" },
-      { "field": "smoking", "type": "quantitative", "format": ".1f" },
-      { "field": "drugs", "type": "quantitative", "format": ".1f" },
-      { "field": "vaping", "type": "quantitative", "format": ".1f" }
-    ]
-  },
-
-  "config": {
-    "background": "transparent",
-    "font": "Lato, sans-serif",
-
-    "view": {
-      "stroke": null,
-      "fill": "transparent"
-    },
-
-    "axis": {
-      "domain": false,
-      "ticks": false,
-      "labelColor": "#7A6040",
-      "gridColor": "#E8DFD0",
-      "labelFontSize": 11,
-      "titleFontSize": 11,
-      "titleColor": "#3B2A14",
-      "titlePadding": 8
+    {
+      "name": "color",
+      "type": "linear",
+      "domain": { "data": "table", "field": "recent_use_percent" },
+      "range": ["#FFF7ED", "#FDBA74", "#F97316", "#7C2D12"],
+      "interpolate": "hcl",
+      "zero": true
     }
-  }
+  ],
+
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "x",
+      "title": "Age Group",
+      "labelAngle": -35,
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "grid": false
+    },
+    {
+      "orient": "left",
+      "scale": "y",
+      "title": "Drug Type",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "grid": false
+    }
+  ],
+
+  "signals": [
+    {
+      "name": "hover",
+      "value": null,
+      "on": [
+        { "events": "rect:mouseover", "update": "datum" },
+        { "events": "rect:mouseout", "update": "null" }
+      ]
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "color",
+      "title": "Recent Use (%)",
+      "orient": "right",
+      "titleFontSize": 12,
+      "labelFontSize": 11,
+      "gradientLength": 180
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": { "data": "table" },
+      "encode": {
+        "enter": {
+          "x": { "scale": "x", "field": "age_group" },
+          "y": { "scale": "y", "field": "drug" },
+          "width": { "scale": "x", "band": 1 },
+          "height": { "scale": "y", "band": 1 },
+          "fill": { "scale": "color", "field": "recent_use_percent" },
+          "stroke": { "value": "#ffffff" },
+          "strokeWidth": { "value": 1 },
+          "cornerRadius": { "value": 6 }
+        },
+        "update": {
+          "stroke": [
+            {
+              "test": "hover && hover.drug === datum.drug && hover.age_group === datum.age_group",
+              "value": "#111827"
+            },
+            { "value": "#ffffff" }
+          ],
+          "strokeWidth": [
+            {
+              "test": "hover && hover.drug === datum.drug && hover.age_group === datum.age_group",
+              "value": 2
+            },
+            { "value": 1 }
+          ],
+          "opacity": [
+            {
+              "test": "hover && (hover.drug !== datum.drug || hover.age_group !== datum.age_group)",
+              "value": 0.6
+            },
+            { "value": 1 }
+          ]
+        },
+        "hover": {
+          "tooltip": {
+            "signal": "{'Drug': datum.drug, 'Age Group': datum.age_group, 'Recent Use (%)': datum.recent_use_percent}"
+          }
+        }
+      }
+    }
+  ]
 }
