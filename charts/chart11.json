@@ -18,7 +18,7 @@
     }
   ],
 
-  "width": 600,
+  "width": "container",
   "height": 340,
 
   "mark": {
