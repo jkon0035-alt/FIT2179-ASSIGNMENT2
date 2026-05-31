@@ -302,6 +302,14 @@ a      { color: var(--brown); }
   line-height: 1.5;
   flex-shrink: 0;
 }
+.text-bubble {
+    background-color: #f5f0e6; /* Matches the off-white background in your image */
+    border-radius: 15px;       /* This rounds the corners to create the bubble shape */
+    padding: 20px;             /* Adds breathing room inside the bubble */
+    margin-bottom: 20px;       /* Adds space below the bubble */
+    border: 1px solid #e0d8c8; /* Optional: A subtle border for definition */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Optional: A soft drop shadow */
+}
 
 /* ── GRID LAYOUTS ───────────────────────────────────────────── */
 .row-full { margin-bottom: 28px; }
