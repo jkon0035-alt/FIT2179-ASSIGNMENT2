@@ -1,39 +1,21 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Hospitalisations by substance",
+  "description": "Hospitalisations by substance — lollipop",
   "width": "container",
   "height": 320,
-
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/hospitalisations.csv"
   },
-
   "layer": [
     {
-      "mark": {
-        "type": "bar",
-        "color": "#92A8D2",
-        "height": 2
-      },
+      "mark": {"type": "bar", "height": 2, "color": "#C8B89A"},
       "encoding": {
-        "y": {
-          "field": "drug_group",
-          "type": "nominal",
-          "sort": "-x"
-        },
-        "x": {
-          "field": "hospitalisations",
-          "type": "quantitative",
-          "scale": { "zero": true }
-        }
+        "y": {"field": "drug_group", "type": "nominal", "sort": "-x"},
+        "x": {"field": "hospitalisations", "type": "quantitative", "scale": {"zero": true}}
       }
     },
-
     {
-      "mark": {
-        "type": "circle",
-        "size": 180
-      },
+      "mark": {"type": "circle", "size": 180},
       "encoding": {
         "y": {
           "field": "drug_group",
@@ -41,99 +23,63 @@
           "sort": "-x",
           "axis": {
             "title": null,
-            "labelFontSize":15,
+            "labelFontSize": 12,
             "labelColor": "#3B2A14",
             "grid": false
           }
         },
-
         "x": {
           "field": "hospitalisations",
           "type": "quantitative",
           "title": "Annual Hospitalisations",
-          "axis": {
-            "grid": true,
-            "format": ",d"
-          }
+          "axis": {"grid": true, "format": ",d", "gridColor": "#E8DFD0", "labelColor": "#7A6040", "titleColor": "#3B2A14"}
         },
-
         "color": {
           "field": "drug_group",
           "type": "nominal",
           "scale": {
-            "range": [
-              "#B5BD89",
-              "#587665",
-              "#AC6C49",
-              "#EC9192",
-              "#58A4B0",
-              "#6F5E50",
-              "#81483E"
-            ]
+            "domain": ["Alcohol", "Amphetamines", "Cannabis", "Opioids", "Sedatives", "Cocaine", "Other"],
+            "range":  ["#8B4513", "#B03030",      "#4A7C59", "#4A7C8B", "#D2691E",  "#B8895A", "#C8B89A"]
           },
           "legend": {
-            "title": "Drug Group"
+            "title": "Drug Group",
+            "fillColor": "#FAF7F0",
+            "strokeColor": "#D9C7A7",
+            "cornerRadius": 4,
+            "padding": 6,
+            "labelColor": "#7A6040",
+            "titleColor": "#3B2A14"
           }
         },
-
         "tooltip": [
-          {
-            "field": "drug_group",
-            "type": "nominal",
-            "title": "Substance"
-          },
-          {
-            "field": "hospitalisations",
-            "type": "quantitative",
-            "title": "Hospitalisations",
-            "format": ",d"
-          }
+          {"field": "drug_group",      "type": "nominal",      "title": "Substance"},
+          {"field": "hospitalisations","type": "quantitative", "title": "Hospitalisations", "format": ",d"}
         ]
       }
     },
-
     {
       "mark": {
         "type": "text",
         "align": "left",
         "dx": 8,
-        "fontSize": 15,
+        "fontSize": 11,
         "color": "#3B2A14"
       },
       "encoding": {
-        "y": {
-          "field": "drug_group",
-          "type": "nominal",
-          "sort": "-x"
-        },
-        "x": {
-          "field": "hospitalisations",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "hospitalisations",
-          "type": "quantitative",
-          "format": ",d"
-        }
+        "y": {"field": "drug_group",       "type": "nominal",      "sort": "-x"},
+        "x": {"field": "hospitalisations", "type": "quantitative"},
+        "text": {"field": "hospitalisations", "type": "quantitative", "format": ",d"}
       }
     }
   ],
-
   "config": {
     "background": "transparent",
     "font": "Lato, sans-serif",
-    "view": {
-      "stroke": null,
-      "fill": "transparent"
-    },
+    "view": {"stroke": null, "fill": "transparent"},
     "axis": {
-      "domain": false,
-      "ticks": false,
-      "labelColor": "#7A6040",
-      "gridColor": "#E8DFD0",
-      "labelFontSize": 11,
-      "titleFontSize": 11,
-      "titleColor": "#3B2A14"
+      "domain": false, "ticks": false,
+      "labelColor": "#7A6040", "gridColor": "#E8DFD0",
+      "labelFontSize": 11, "titleFontSize": 11, "titleColor": "#3B2A14"
     }
   }
 }
