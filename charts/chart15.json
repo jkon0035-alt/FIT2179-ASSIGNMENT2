@@ -11,8 +11,11 @@
     "font": "Playfair Display, Georgia, serif",
     "subtitleFont": "Lato, sans-serif"
   },
-  "width": "container",
+  "width": 400,
   "height": 400,
+  "padding": {
+    "left": 100
+  },
   "background": "transparent",
   "data": {"sequence": {"start": 0, "stop": 100, "as": "id"}},
   "transform": [
