@@ -1,141 +1,208 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Heatmap — drug use by age group",
-  "width": 830,
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Scatter + regression \u2014 all-substances-by-state.csv",
+  "width": 500,
   "height": 340,
-  "padding": {
-  "left": 80,
-  "right": 20,
-  "top": 20,
-  "bottom": 50
+  "data": {
+    "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/all-substances-by-state.csv"
   },
-  "background": "transparent",
-  "data": [
+  "layer": [
     {
-      "name": "table",
-      "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv",
-      "format": {"type": "csv"}
-    }
-  ],
-  "scales": [
-    {
-      "name": "x",
-      "type": "band",
-      "domain": ["14–19","20–29","30–39","40–49","50–59","60+"],
-      "range": "width",
-      "padding": 0.04
-    },
-    {
-      "name": "y",
-      "type": "band",
-      "domain": ["Cannabis","Cocaine","Ecstasy","Meth"],
-      "range": "height",
-      "padding": 0.04
-    },
-    {
-      "name": "color",
-      "type": "linear",
-      "domain": {"data": "table", "field": "recent_use_percent"},
-      "range": ["#FAF7F0", "#D2B48C", "#8B4513", "#3D1C0A"],
-      "interpolate": "hcl",
-      "zero": true
-    }
-  ],
-  "axes": [
-    {
-      "orient": "bottom",
-      "scale": "x",
-      "title": "Age Group",
-      "labelAngle": -35,
-      "labelFontSize": 11,
-      "labelColor": "#7A6040",
-      "titleFontSize": 12,
-      "titleColor": "#3B2A14",
-      "domainColor": "#C8B89A",
-      "tickColor": "#C8B89A",
-      "grid": false
-    },
-    {
-      "orient": "left",
-      "scale": "y",
-      "title": "Drug Type",
-      "labelFontSize": 11,
-      "labelColor": "#7A6040",
-      "titleFontSize": 12,
-      "titleColor": "#3B2A14",
-      "domainColor": "#C8B89A",
-      "tickColor": "#C8B89A",
-      "grid": false
-    }
-  ],
-  "signals": [
-    {
-      "name": "hover",
-      "value": null,
-      "on": [
-        {"events": "rect:mouseover", "update": "datum"},
-        {"events": "rect:mouseout",  "update": "null"}
-      ]
-    }
-  ],
-  "legends": [
-    {
-      "fill": "color",
-      "title": "Recent Use (%)",
-      "orient": "right",
-      "titleFontSize": 11,
-      "titleColor": "#3B2A14",
-      "labelFontSize": 11,
-      "labelColor": "#7A6040",
-      "gradientLength": 180,
-      "gradientStrokeColor": "#C8B89A",
-      "gradientStrokeWidth": 0.5
-    }
-  ],
-  "marks": [
-    {
-      "type": "rect",
-      "from": {"data": "table"},
-      "encode": {
-        "enter": {
-          "x":           {"scale": "x", "field": "age_group"},
-          "y":           {"scale": "y", "field": "drug"},
-          "width":       {"scale": "x", "band": 1},
-          "height":      {"scale": "y", "band": 1},
-          "fill":        {"scale": "color", "field": "recent_use_percent"},
-          "stroke":      {"value": "#FAF7F0"},
-          "strokeWidth": {"value": 2},
-          "cornerRadius":{"value": 6}
+      "mark": {
+        "type": "line",
+        "color": "#C8B89A",
+        "strokeDash": [
+          6,
+          4
+        ],
+        "strokeWidth": 1.5
+      },
+      "transform": [
+        {
+          "regression": "drugs",
+          "on": "smoking"
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "smoking",
+          "type": "quantitative"
         },
-        "update": {
-          "stroke": [
-            {
-              "test": "hover && hover.drug === datum.drug && hover.age_group === datum.age_group",
-              "value": "#3B2A14"
-            },
-            {"value": "#FAF7F0"}
-          ],
-          "strokeWidth": [
-            {
-              "test": "hover && hover.drug === datum.drug && hover.age_group === datum.age_group",
-              "value": 2.5
-            },
-            {"value": 2}
-          ],
-          "opacity": [
-            {
-              "test": "hover && (hover.drug !== datum.drug || hover.age_group !== datum.age_group)",
-              "value": 0.55
-            },
-            {"value": 1}
-          ]
-        },
-        "hover": {
-          "tooltip": {
-            "signal": "{'Drug': datum.drug, 'Age Group': datum.age_group, 'Recent Use (%)': datum.recent_use_percent}"
+        "y": {
+          "field": "drugs",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "stroke": "#FAF7F0",
+        "strokeWidth": 2,
+        "opacity": 0.85
+      },
+      "encoding": {
+        "x": {
+          "field": "smoking",
+          "type": "quantitative",
+          "title": "Daily smoking rate (%)",
+          "scale": {
+            "domain": [
+              4,
+              15
+            ]
+          },
+          "axis": {
+            "grid": true
           }
+        },
+        "y": {
+          "field": "drugs",
+          "type": "quantitative",
+          "title": "Illicit drug use rate (%)",
+          "scale": {
+            "domain": [
+              13,
+              27
+            ]
+          },
+          "axis": {
+            "grid": true
+          }
+        },
+        "size": {
+          "field": "vaping",
+          "type": "quantitative",
+          "title": "Vaping rate (%)",
+          "scale": {
+            "range": [
+              80,
+              600
+            ]
+          },
+          "legend": {
+            "orient": "bottom-right",
+            "titleFontSize": 10,
+            "labelFontSize": 10,
+            "values": [
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        },
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State",
+          "scale": {
+            "domain": [
+              "ACT",
+              "NSW",
+              "NT",
+              "Qld",
+              "SA",
+              "Tas",
+              "Vic",
+              "WA"
+            ],
+            "range": [
+              "#4A7C8B",
+              "#D2691E",
+              "#B03030",
+              "#4A7C59",
+              "#C25E8B",
+              "#E0A030",
+              "#8B4513",
+              "#7B68EE"
+            ]
+          },
+          "legend": {
+            "orient": "right",
+            "titleFontSize": 11,
+            "labelFontSize": 11
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state_full",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "smoking",
+            "type": "quantitative",
+            "title": "Smoking (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "vaping",
+            "type": "quantitative",
+            "title": "Vaping (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "drugs",
+            "type": "quantitative",
+            "title": "Drug Use (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -14,
+        "fontSize": 11,
+        "fontWeight": 700,
+        "font": "Lato, sans-serif"
+      },
+      "encoding": {
+        "x": {
+          "field": "smoking",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "drugs",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "state",
+          "type": "nominal"
+        },
+        "color": {
+          "value": "#3B2A14"
         }
       }
     }
-  ]
+  ],
+  "config": {
+    "background": "transparent",
+    "font": "Lato, sans-serif",
+    "view": {
+      "stroke": null,
+      "fill": "transparent"
+    },
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labelColor": "#7A6040",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleColor": "#3B2A14",
+      "titlePadding": 8,
+      "gridColor": "#E8DFD0"
+    },
+    "legend": {
+      "labelColor": "#7A6040",
+      "titleColor": "#3B2A14",
+      "padding": 6,
+      "fillColor": "#FAF7F0",
+      "strokeColor": "#C8B89A"
+    }
+  }
 }
