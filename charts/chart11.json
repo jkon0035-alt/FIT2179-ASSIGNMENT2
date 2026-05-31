@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Chart 11 - safe interactive stacked bar",
+  "description": "Chart 11 - Clickable Bars by State",
 
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/substances-by-state-long.csv"
@@ -8,16 +8,15 @@
 
   "params": [
     {
-      "name": "substance_click",
+      "name": "bar_click",
       "select": {
         "type": "point",
-        "fields": ["substance"]
-      },
-      "bind": "legend"
+        "fields": ["state"] 
+      }
     }
   ],
 
-  "width": 600,
+  "width": "container",
   "height": 340,
 
   "mark": {
@@ -66,7 +65,7 @@
 
     "fillOpacity": {
       "condition": {
-        "param": "substance_click",
+        "param": "bar_click",
         "value": 1
       },
       "value": 0.3
