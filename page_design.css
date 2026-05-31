@@ -310,7 +310,30 @@ a      { color: var(--brown); }
     border: 1px solid #e0d8c8; /* Optional: A subtle border for definition */
     box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Optional: A soft drop shadow */
 }
+/* Creates the side-by-side layout inside the card */
+.card-row {
+    display: flex;
+    gap: 40px;             /* Adds breathing room between the chart and text */
+    align-items: center;   /* Vertically centers the text next to the chart */
+}
 
+/* Controls the width of the two columns */
+.chart-column {
+    flex: 2;               /* Makes the chart take up roughly 2/3 of the card */
+}
+
+.text-column {
+    flex: 1;               /* Makes the text take up roughly 1/3 of the card */
+}
+
+/* Your bubble styling */
+.text-bubble {
+    background-color: #f5f0e6;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e0d8c8;
+}
 /* ── GRID LAYOUTS ───────────────────────────────────────────── */
 .row-full { margin-bottom: 28px; }
 
