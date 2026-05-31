@@ -20,6 +20,16 @@
         "options": ["All", "Major Cities", "Inner Regional", "Outer Regional", "Remote/Very Remote"],
         "name": "Filter by remoteness: "
       }
+    },
+    {
+      "name": "metric_select",
+      "value": "drug_percent",
+      "bind": {
+        "input": "radio",
+        "options": ["drug_percent", "smoking_percent"],
+        "labels": ["Drug use rate", "Smoking rate"],
+        "name": "Pin size shows: "
+      }
     }
   ],
 
@@ -86,6 +96,10 @@
       "transform": [
         {
           "filter": "remoteness_select === 'All' || datum.remoteness === remoteness_select"
+        },
+        {
+          "calculate": "metric_select === 'drug_percent' ? datum.drug_percent : datum.smoking_percent",
+          "as": "selected_metric"
         }
       ],
       "layer": [
@@ -105,36 +119,24 @@
               "type": "nominal",
               "title": "Remoteness",
               "scale": {
-                "domain": [
-                  "Major Cities",
-                  "Inner Regional",
-                  "Outer Regional",
-                  "Remote/Very Remote"
-                ],
-                "range": [
-                  "#4A7C8B",
-                  "#4A7C59",
-                  "#D2691E",
-                  "#8B4513"
-                ]
+                "domain": ["Major Cities", "Inner Regional", "Outer Regional", "Remote/Very Remote"],
+                "range":  ["#4A7C8B", "#4A7C59", "#D2691E", "#8B4513"]
               },
-              "legend": {
-                "orient": "left",
-                "direction": "vertical"
-              }
+              "legend": {"orient": "left", "direction": "vertical"}
             },
             "size": {
-              "field": "drug_percent",
+              "field": "selected_metric",
               "type": "quantitative",
-              "title": "Drug Use (%)",
-              "scale": {"range": [150, 900]}
+              "title": "Rate (%)",
+              "scale": {"range": [150, 900]},
+              "legend": {"orient": "bottom-left", "direction": "horizontal"}
             },
             "tooltip": [
-              {"field": "location",        "type": "nominal",      "title": "Location"    },
-              {"field": "state",           "type": "nominal",      "title": "State"       },
-              {"field": "remoteness",      "type": "nominal",      "title": "Remoteness"  },
-              {"field": "smoking_percent", "type": "quantitative", "title": "Smoking (%)" },
-              {"field": "drug_percent",    "type": "quantitative", "title": "Drug Use (%)" }
+              {"field": "location",        "type": "nominal",      "title": "Location"   },
+              {"field": "state",           "type": "nominal",      "title": "State"      },
+              {"field": "remoteness",      "type": "nominal",      "title": "Remoteness" },
+              {"field": "smoking_percent", "type": "quantitative", "title": "Smoking (%)", "format": ".1f"},
+              {"field": "drug_percent",    "type": "quantitative", "title": "Drug Use (%)", "format": ".1f"}
             ]
           }
         },
@@ -164,8 +166,6 @@
     "background": "transparent",
     "view": {"stroke": null, "fill": "transparent"},
     "legend": {
-      "orient": "bottom-left",
-      "direction": "horizontal",
       "labelFontSize": 11,
       "titleFontSize": 11,
       "labelColor": "#7A6040",
