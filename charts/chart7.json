@@ -2,13 +2,13 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Symbol map — remoteness, smoking and drug use in Australia",
 
-  "width": "container",
+  "width": 600,
   "height": 480,
 
   "projection": {
     "type": "mercator",
-    "center": [133, -29],
-    "scale": 700
+    "center": [135, -29],
+    "scale": 750
   },
 
   "params": [
