@@ -57,23 +57,44 @@
     </div>
 
        <!-- Chart 15 — Waffle -->
-    <div class="row-tc fade">
+    <!-- Chart 15 — Waffle (Side-by-Side Inside Card) -->
+<div class="wrap fade">
+  
+  <!-- The main card now uses flexbox (card-row) -->
+  <div class="card tb card-row">
+
+    <!-- LEFT SIDE: The Chart -->
+    <div class="chart-column">
+      <p class="ey">Chart 15 · Waffle Chart</p>
+      <p class="ct">Out of 100 Australians — Who Is Affected?</p>
+      <p class="cs">Each square = 1 person in 100. Colour encodes substance category. <strong>Hover</strong> any square to see its category.</p>
       
-      <!-- The main white card now holds everything -->
-      <div class="card tb">
-    
-        <!-- BUBBLE 1: The KPI -->
-        <div class="text-bubble">
-          <span class="big">32</span>
-          <span class="blab">in every 100 Australians affected by tobacco, vaping or drugs</span>
-        </div>
-    
-        <!-- BUBBLE 2: The Context -->
-        <div class="text-bubble">
-          <h3>Almost one in three Australians uses a substance</h3>
-          <p>When smoking, vaping and illicit drug use are combined, nearly a third of all Australians are affected. Each square below represents one person in every hundred — a reminder that these are not abstract statistics, but everyday Australians.</p>
-          <p>Daily smokers account for 8 in 100. Vapers add another 7. Illicit drug users bring the total to 32 — leaving 68 unaffected.</p>
-        </div>
+      <!-- Vega-Lite Div -->
+      <div id="c15" class="vw"></div>
+      
+      <p class="note">Source: NDSHS 2022–23. Daily smoking 8.3%, vaping 7% (adjusted to account for overlap with smoking), illicit drug use 17.5%.</p>
+    </div>
+
+    <!-- RIGHT SIDE: The Text Bubbles -->
+    <div class="text-column">
+      
+      <!-- Bubble 1 -->
+      <div class="text-bubble">
+        <span class="big" style="color: #8c513a; display: block; font-size: 2em; font-weight: bold; margin-bottom: 5px;">32</span>
+        <span class="blab">in every 100 Australians affected by tobacco, vaping or drugs</span>
+      </div>
+
+      <!-- Bubble 2 -->
+      <div class="text-bubble">
+        <h3 style="margin-top: 0;">Almost one in three Australians uses a substance</h3>
+        <p>When smoking, vaping and illicit drug use are combined, nearly a third of all Australians are affected. Each square below represents one person in every hundred — a reminder that these are not abstract statistics, but everyday Australians.</p>
+        <p>Daily smokers account for 8 in 100. Vapers add another 7. Illicit drug users bring the total to 32 — leaving 68 unaffected.</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
     
         <!-- YOUR EXISTING CHART HEADERS & VEGA-LITE DIV -->
         <p class="ey">Chart 15 · Waffle Chart</p>
