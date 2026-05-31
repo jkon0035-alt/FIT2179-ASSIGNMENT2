@@ -10,6 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   <link rel="stylesheet" href="page_design.css"/>
   <style>
+    /* ── Reversed layout: chart left, text right ── */
     .row-ct {
       display: grid;
       grid-template-columns: 1fr 300px;
@@ -21,22 +22,139 @@
     .row-ct .txt p  { font-size: 14px; color: var(--dim); line-height: 1.72; margin-bottom: 12px; }
     .row-ct .txt .big  { font-family: var(--serif); font-size: 44px; font-weight: 700; color: var(--brown); line-height: 1; display: block; margin-bottom: 4px; }
     .row-ct .txt .blab { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--faint); }
-    .chart-analysis {
+
+    /* ── Analysis styles — 5 different treatments ── */
+
+    /* 1. Pull-quote strip — full-width cream band with large quote */
+    .analysis-pull {
+      background: var(--cdark);
+      border-top: 2px solid var(--cmid);
+      border-bottom: 2px solid var(--cmid);
+      padding: 28px 40px;
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 4px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .analysis-pull::before {
+      content: '';
+      background: var(--brown);
+      border-radius: 2px;
+    }
+    .analysis-pull-text { font-size: 15px; color: var(--dim); line-height: 1.75; }
+    .analysis-pull-text strong { color: var(--text); }
+    .analysis-pull-text p { margin-bottom: 8px; }
+    .analysis-pull-text p:last-child { margin-bottom: 0; }
+
+    /* 2. Two-column split — key finding left, detail right */
+    .analysis-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 28px;
+    }
+    .analysis-split-left {
+      background: var(--brown);
+      padding: 28px 32px;
+      color: rgba(250,247,240,.85);
+    }
+    .analysis-split-left .as-num {
+      font-family: var(--serif);
+      font-size: 52px;
+      font-weight: 900;
+      color: #F0C060;
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .analysis-split-left .as-lbl {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,247,240,.5);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .analysis-split-left p { font-size: 13px; line-height: 1.7; color: rgba(250,247,240,.75); margin: 0; }
+    .analysis-split-right {
       background: #fff;
       border: 1px solid var(--cmid);
-      border-left: 4px solid var(--cmid);
+      border-left: none;
+      padding: 28px 32px;
+    }
+    .analysis-split-right h4 { font-family: var(--serif); font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .analysis-split-right p  { font-size: 13px; color: var(--dim); line-height: 1.72; margin-bottom: 8px; }
+    .analysis-split-right p:last-child { margin-bottom: 0; }
+
+    /* 3. Inline callout — sits between chart pairs, horizontal */
+    .analysis-inline {
+      background: #fff;
+      border: 1px solid var(--cmid);
+      border-left: 4px solid var(--teal);
       padding: 20px 24px;
-      margin-top: -4px;
       margin-bottom: 28px;
       font-size: 14px;
       color: var(--dim);
       line-height: 1.75;
     }
-    .chart-analysis strong { color: var(--text); }
-    .chart-analysis p { margin-bottom: 8px; }
-    .chart-analysis p:last-child { margin-bottom: 0; }
+    .analysis-inline strong { color: var(--text); }
+    .analysis-inline p { margin-bottom: 6px; }
+    .analysis-inline p:last-child { margin-bottom: 0; }
+
+    /* 4. Dark band — full-width dark background for chapter-closing insight */
+    .analysis-dark {
+      background: var(--text);
+      padding: 32px 40px;
+      margin-bottom: 28px;
+      color: rgba(250,247,240,.8);
+      font-size: 14px;
+      line-height: 1.78;
+    }
+    .analysis-dark strong { color: #F0C060; }
+    .analysis-dark p { margin-bottom: 8px; }
+    .analysis-dark p:last-child { margin-bottom: 0; }
+    .analysis-dark .ad-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(250,247,240,.3);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* 5. Three-column stat row */
+    .analysis-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 28px;
+    }
+    .analysis-stat {
+      background: #fff;
+      border: 1px solid var(--cmid);
+      padding: 22px 20px;
+      text-align: center;
+    }
+    .analysis-stat .asn {
+      font-family: var(--serif);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--brown);
+      display: block;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .analysis-stat .asn.r { color: var(--red); }
+    .analysis-stat .asn.g { color: var(--green); }
+    .analysis-stat .ast { font-size: 12px; color: var(--dim); line-height: 1.45; }
+
     footer .fg { max-width: 100%; padding: 0; }
-    @media (max-width: 980px) { .row-ct { grid-template-columns: 1fr; } }
+    @media (max-width: 980px) {
+      .row-ct, .analysis-split, .analysis-stats { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -85,14 +203,14 @@
       <div class="kp"><span class="kpn t">19,200</span><span class="kpl">Deaths linked to tobacco 2022</span></div>
     </div>
 
-    <!-- Chart 15 — Waffle -->
+    <!-- Chart 15 — Waffle: text left, chart right -->
     <div class="row-tc fade">
       <div class="txt">
         <span class="big">32</span>
         <span class="blab">in every 100 Australians affected by tobacco, vaping or drugs</span>
         <br/><br/>
         <h3>Almost one in three Australians uses a substance</h3>
-        <p>When smoking, vaping and illicit drug use are combined, nearly a third of all Australians are affected. Each square below represents one person in every hundred — a reminder that these are not abstract statistics, but everyday Australians.</p>
+        <p>When smoking, vaping and illicit drug use are combined, nearly a third of all Australians are affected. Each square below represents one person in every hundred.</p>
         <p>Daily smokers account for 8 in 100. Vapers add another 7. Illicit drug users bring the total to 32 — leaving 68 unaffected.</p>
       </div>
       <div class="card tb">
@@ -100,50 +218,60 @@
         <p class="ct">Out of 100 Australians — Who Is Affected?</p>
         <p class="cs">Each square = 1 person in 100. Colour encodes substance category. <strong>Hover</strong> any square to see its category.</p>
         <div id="c15" class="vw"></div>
-        <p class="note">Source: NDSHS 2022–23. Daily smoking 8.3%, vaping 7% (adjusted to account for overlap with smoking), illicit drug use 17.5%.</p>
+        <p class="note">Source: NDSHS 2022–23. Daily smoking 8.3%, vaping 7% (adjusted for overlap), illicit drug use 17.5%.</p>
       </div>
     </div>
 
-    <!-- Chart 1 — flipped -->
+    <!-- Chart 1 — chart left, text right -->
     <div class="row-ct fade">
       <div class="card tb">
         <p class="ey">Annotated Line + Area Chart</p>
         <p class="ct">Smoking Rates in Australia, 2001–2023</p>
-        <p class="cs">Four key policy milestones are marked on the chart: the <strong>25% excise hike (2010)</strong>, <strong>plain packaging law (2012)</strong>, and the start of <strong>annual 12.5% excise increases (2013)</strong> — each drove a visible step-down in the smoking rate. The 2023 point marks a record low of 8.3%. <strong>Hover points for exact figures.</strong></p>
+        <p class="cs">Four key policy milestones are marked on the chart: the <strong>25% excise hike (2010)</strong>, <strong>plain packaging law (2012)</strong>, and the start of <strong>annual 12.5% excise increases (2013)</strong>. The 2023 point marks a record low of 8.3%. <strong>Hover points for exact figures.</strong></p>
         <div id="c1" class="vw"></div>
-        <p class="note">Source: NDSHS 2022–23, Table 2. Aged 14+. Policy milestones: Australian Government Department of Health, <a href="https://www.health.gov.au/sites/default/files/tobacco-control-key-facts-and-figures.pdf" target="_blank">health.gov.au</a>; <a href="https://www.tobaccocontrollaws.org/legislation/australia" target="_blank">tobaccocontrollaws.org</a>.</p>
+        <p class="note">Source: NDSHS 2022–23, Table 2. Aged 14+. Policy milestones: <a href="https://www.health.gov.au/sites/default/files/tobacco-control-key-facts-and-figures.pdf" target="_blank">health.gov.au</a>; <a href="https://www.tobaccocontrollaws.org/legislation/australia" target="_blank">tobaccocontrollaws.org</a>.</p>
       </div>
       <div class="txt">
         <span class="big">8.3%</span>
         <span class="blab">Daily smokers in 2022–23</span>
         <br/><br/>
-        <h3>One of Australia's greatest public health wins</h3>
-        <p>Since 2001, a combination of price hikes, plain packaging, advertising bans, and smoke-free laws has more than halved the daily smoking rate.</p>
-        <p>The shaded area between the <strong>daily</strong> and <strong>current</strong> lines is narrowing — fewer Australians smoke only occasionally, suggesting the habit is losing its social normalcy entirely.</p>
-        <p>Each policy milestone on the chart corresponds to a visible step-down in the rate, confirming the causal link between regulation and behaviour change.</p>
+        <h3>Policy works — every milestone drove a step-down</h3>
+        <p>Each annotated line on the chart corresponds to a visible drop in the smoking rate. The shaded area between <strong>daily</strong> and <strong>current</strong> smokers is narrowing — the social smoker is disappearing.</p>
+        <p>Two-thirds of Australians have <em>never</em> smoked — a record that would have been unimaginable in 2001.</p>
       </div>
     </div>
 
-    <!-- Chart 2 + Chart 4 -->
+    <!-- Chart 2 + Chart 4 side by side -->
     <div class="row-2 fade">
       <div class="card tr">
         <p class="ey">Gender Line Chart</p>
         <p class="ct">Both Genders Are Quitting — But the Gap Has Narrowed</p>
-        <p class="cs">Daily smoking by gender 2001–2023. The gender gap has narrowed from <strong>3.0 points in 2001</strong> to just <strong>1.3 points in 2023</strong>. <strong>Click the legend</strong> to highlight one gender.</p>
+        <p class="cs">Daily smoking by gender 2001–2023. Gap narrowed from <strong>3.0 pts in 2001</strong> to <strong>1.3 pts in 2023</strong>. <strong>Click the legend</strong> to highlight one gender.</p>
         <div id="c2" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Tables 2.3 &amp; 2.4.</p>
       </div>
       <div class="card tg">
         <p class="ey">Age × Gender Heatmap</p>
         <p class="ct">Middle-Aged Australians Smoke the Most</p>
-        <p class="cs">Daily smoking rate (%) by age group and gender. Darker cells = higher rates. The 50–59 group peaks at <strong>12.1% for males</strong> — the darkest cell. <strong>Hover</strong> any cell for the exact rate.</p>
+        <p class="cs">Darker cells = higher rates. The 50–59 male group peaks at <strong>12.1%</strong> — the darkest cell. <strong>Hover</strong> any cell for the exact rate.</p>
         <div id="c4" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Tables 2.3 &amp; 2.4.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>What the gender data tells us:</strong> Men have historically smoked at higher rates, but the decline has been proportionally faster among males — the gap of 3.0 percentage points in 2001 has compressed to just 1.3 points today. This convergence suggests that policies like plain packaging and excise increases have reached both genders almost equally.</p>
-      <p><strong>Why middle age?</strong> The 50–59 age group smokes at the highest rate despite decades of public health messaging. This cohort began smoking in the 1980s and 1990s, before comprehensive advertising bans, and nicotine dependence at that stage is significantly harder to break. Younger Australians aged 18–24 now smoke at only 6.9% — the lowest of any adult age group.</p>
+
+    <!-- Analysis: two-column split after charts 2+4 -->
+    <div class="analysis-split fade">
+      <div class="analysis-split-left">
+        <span class="as-num">50–59</span>
+        <span class="as-lbl">Highest-smoking age group</span>
+        <p>This cohort began smoking in the 1980s and 90s — before comprehensive advertising bans. Nicotine dependence at this stage is significantly harder to break, making them the most stubborn remaining group despite decades of public health messaging.</p>
+      </div>
+      <div class="analysis-split-right">
+        <h4>Why the gender gap is closing</h4>
+        <p>Men have historically smoked at higher rates, but the decline has been proportionally faster among males — the 3.0 point gap in 2001 has compressed to just 1.3 points. Policies like plain packaging and excise increases appear to have reached both genders almost equally.</p>
+        <h4>The youngest adults have already moved on</h4>
+        <p>Australians aged 18–24 now smoke at just 6.9% — the lowest of any adult age group. The question is whether vaping will hold that record, or simply delay it.</p>
+      </div>
     </div>
 
     <div class="ib br fade">
@@ -154,18 +282,23 @@
       </div>
     </div>
 
-    <!-- Chart 3 — full width with analysis below -->
+    <!-- Chart 3 — full width -->
     <div class="row-full fade">
       <div class="card tb">
         <p class="ey">Streamgraph — Smoking Status Flow Over Time</p>
         <p class="ct">How Australia's Smoking Categories Have Shifted, 2001–2023</p>
-        <p class="cs">Stream width = share of population in each category. The dominant expansion of the "Never Smoked" stream and collapse of "Smoke Daily" tell a 22-year policy success story at a glance. A dashed line marks the <strong>2012 plain packaging inflection</strong>. <strong>Click a legend item</strong> to isolate a stream.</p>
+        <p class="cs">Stream width = share of population in each category. The dominant expansion of the "Never Smoked" stream and collapse of "Smoke Daily" tell a 22-year story at a glance. A dashed line marks the <strong>2012 plain packaging inflection</strong>. <strong>Click a legend item</strong> to isolate a stream.</p>
         <div id="c3" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Table 2. Estimated proportions aged 14+.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>The big picture in one chart:</strong> The streamgraph makes visible what the line charts can only imply — Australia's relationship with smoking has fundamentally changed. The "Never Smoked" stream has grown from 50.6% in 2001 to 65.4% in 2023, meaning two-thirds of Australians today have no experience with cigarettes at all. Meanwhile "Smoked Previously" has remained relatively stable, suggesting that ex-smokers are not returning to the habit. The only streams shrinking are "Smoke Daily" and "Currently Smoke" — a clear sign of a population-level shift, not just individual choice.</p>
+
+    <!-- Analysis: pull-quote after chart 3 -->
+    <div class="analysis-pull fade">
+      <div></div>
+      <div class="analysis-pull-text">
+        <p><strong>The big picture in one chart:</strong> The "Never Smoked" stream has grown from 50.6% in 2001 to 65.4% in 2023 — two-thirds of Australians today have no experience with cigarettes at all. The "Smoked Previously" stream has stayed flat, meaning ex-smokers are not returning. The only streams shrinking are the two smoking categories — a clear sign of a population-level shift, not just individual choice.</p>
+      </div>
     </div>
 
   </div>
@@ -193,19 +326,31 @@
       <div class="kp"><span class="kpn t">3×</span><span class="kpl">Vaping rate tripled since 2016</span></div>
     </div>
 
-    <!-- Chart 5 — full width with analysis below -->
+    <!-- Chart 5 — full width -->
     <div class="row-full fade">
       <div class="card tr">
         <p class="ey">Multi-Series Area Chart</p>
         <p class="ct">Vaping by Age Group Across Three Survey Waves: 2016, 2019 &amp; 2022–23</p>
-        <p class="cs">Each area series shows one age group across three survey years. The 18–24 group has more than tripled since 2016, reaching 20.6% — well above the 10.4% smoking rate for the same group. A dashed reference line marks that smoking rate. <strong>Hover any point</strong> for the exact rate.</p>
+        <p class="cs">Each area series = one age group across three survey years. The 18–24 group has more than tripled since 2016, reaching 20.6% — well above the 10.4% smoking rate for the same group. A dashed reference line marks that crossover. <strong>Hover any point</strong> for the exact rate.</p>
         <div id="c5" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Table 9. Past 12-month e-cigarette use by age group.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>A generational divide:</strong> Vaping is not evenly distributed — it is almost entirely concentrated in Australians under 30. The 18–24 cohort's rate of 20.6% in 2022–23 is nearly double the overall national average of 4.1%, and has tripled in just six years. By contrast, Australians aged 50 and over are barely represented in vaping statistics at all.</p>
-      <p><strong>The crossover moment:</strong> The dashed reference line at 10.4% marks the smoking rate for 18–24 year olds. Vaping has now doubled past it. For this age group, vaping has completely displaced smoking as the dominant nicotine behaviour — raising serious questions about long-term health outcomes given that vaping's long-term effects remain poorly understood.</p>
+
+    <!-- Analysis: 3-stat row after chart 5 -->
+    <div class="analysis-stats fade">
+      <div class="analysis-stat">
+        <span class="asn">20.6%</span>
+        <span class="ast">18–24 yr olds vaping in 2022–23 — more than tripled from 5.4% in 2016</span>
+      </div>
+      <div class="analysis-stat">
+        <span class="asn r">10.4%</span>
+        <span class="ast">Smoking rate for the same 18–24 group — vaping has now doubled past it</span>
+      </div>
+      <div class="analysis-stat">
+        <span class="asn g">50+</span>
+        <span class="ast">Age group with near-zero vaping — the habit is almost entirely a youth phenomenon</span>
+      </div>
     </div>
 
     <div class="ib rd fade">
@@ -221,7 +366,7 @@
       <div class="card tb">
         <p class="ey">Diverging Bar + Lollipop Chart</p>
         <p class="ct">Vaping Rises Exactly Where Smoking Has Fallen</p>
-        <p class="cs">Brown bars (left) = smoking decline since 2001. Teal dots (right) = 2023 vaping rate. The 18–24 group cut smoking by nearly 6 points but now leads all ages in vaping. <strong>Hover</strong> bars or dots for exact rates.</p>
+        <p class="cs">Brown bars (left) = smoking decline since 2001. Teal dots (right) = 2023 vaping rate. The 18–24 group cut smoking by nearly 6 points but leads all ages in vaping. <strong>Hover</strong> bars or dots for exact rates.</p>
         <div id="c6" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Tables 2 &amp; 3.</p>
       </div>
@@ -233,9 +378,12 @@
         <p class="note">Source: NDSHS 2022–23, Table 9b. E-cigarette use past 12 months.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>Substitution, not cessation:</strong> The diverging bar chart reveals a striking pattern — the age groups that have cut smoking the most are precisely the ones vaping the most. The 18–24 group reduced daily smoking by 5.9 points since 2001, the largest decline of any age group, yet now records the highest vaping rate at 20.6%. This is not a public health win — it is a substitution of one nicotine product for another.</p>
-      <p><strong>Geography flips:</strong> The choropleth map tells a counterintuitive story. NSW, which has among the lowest smoking rates of any state, leads the nation in vaping. Tasmania, which has relatively high smoking rates, has the lowest vaping rate. Urban coastal states are driving the vaping trend, while remote and regional areas remain more strongly associated with traditional tobacco use.</p>
+
+    <!-- Analysis: dark band — chapter-closing insight -->
+    <div class="analysis-dark fade">
+      <span class="ad-label">Key finding — Chapter Two</span>
+      <p><strong>Substitution, not cessation.</strong> The age groups that have cut smoking the most are precisely the ones vaping the most. The 18–24 group reduced daily smoking by 5.9 points since 2001 — the largest decline of any age group — yet now records the highest vaping rate at 20.6%. This is not a public health win. It is a substitution of one nicotine product for another, with the long-term health consequences of vaping still poorly understood.</p>
+      <p><strong>Geography flips.</strong> NSW leads the nation in vaping yet has among the lowest smoking rates. Tasmania has the lowest vaping rate yet relatively high smoking. Urban coastal states are driving the vaping trend; remote and regional areas remain bound to traditional tobacco — and the policy response for each requires a completely different approach.</p>
     </div>
 
   </div>
@@ -266,16 +414,20 @@
     <!-- Chart 8 — full width -->
     <div class="row-full fade">
       <div class="card tr">
-        <p class="ey">Heatmap of Drug Types and Age group</p>
+        <p class="ey">Radar / Spider Chart — Drug Use Profiles by Age</p>
         <p class="ct">Each Drug Has a Distinct Age Profile — Cannabis Is Uniquely Broad</p>
         <p class="cs">Each spoke = one age group. Each polygon = one drug. A wider polygon means that drug is more evenly spread across ages. Cannabis forms the largest polygon. Cocaine and ecstasy collapse to a narrow spike in the 20–29 bracket. <strong>Hover any point</strong> for the exact rate.</p>
         <div id="c8" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23. Past-year use by age group and substance.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>Cannabis stands apart:</strong> Unlike every other drug shown, cannabis use does not collapse after age 30. Its polygon remains wide across all age brackets — evidence that cannabis has become normalised across generations, not just among youth. This broad reach is consistent with shifting social attitudes and the expansion of medical cannabis access.</p>
-      <p><strong>Cocaine and ecstasy are youth-concentrated:</strong> Both drugs show sharply peaked polygons in the 20–29 bracket and near-zero use beyond age 40. This reflects their association with nightlife and social settings that are specific to younger Australians. Methamphetamine, by contrast, shows a more flattened profile across the 20–49 range — consistent with its presence in regional and working-age communities.</p>
+
+    <!-- Analysis: pull-quote after radar -->
+    <div class="analysis-pull fade">
+      <div></div>
+      <div class="analysis-pull-text">
+        <p><strong>Cannabis stands apart:</strong> Unlike every other drug shown, cannabis use does not collapse after age 30. Its polygon remains wide across all age brackets — evidence that cannabis has become normalised across generations. Cocaine and ecstasy show sharply peaked polygons in the 20–29 bracket and near-zero use beyond 40. Methamphetamine, by contrast, shows a flatter profile across 20–49 — consistent with its presence in working-age regional communities.</p>
+      </div>
     </div>
 
     <div class="ib gn fade">
@@ -303,9 +455,11 @@
         <p class="note">Source: AIHW AODT Services 2022–23. Principal diagnosis.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>The alcohol paradox:</strong> Alcohol does not appear in the illicit drug charts because it is legal — yet the hospitalisation data makes its true cost unmistakable. At 80,439 annual hospital admissions, alcohol causes more medical harm than cannabis, methamphetamine, opioids, and sedatives combined. This is a striking reminder that legal status and public health risk are not the same thing.</p>
-      <p><strong>Cocaine's rise in the donut:</strong> For the first time in NDSHS history, cocaine has overtaken ecstasy to become the second most commonly used illicit drug after cannabis. Its growing share of the donut reflects a genuine increase in use — not just a decline in ecstasy — consistent with greater supply availability and changing social norms in urban professional circles.</p>
+
+    <!-- Analysis: inline callout after charts 13+9 -->
+    <div class="analysis-inline fade">
+      <p><strong>The alcohol paradox:</strong> Alcohol does not appear in the illicit drug charts because it is legal — yet the hospitalisation data makes its true cost unmistakable. At 80,439 annual admissions, alcohol causes more medical harm than cannabis, methamphetamine, opioids, and sedatives <em>combined</em>. Legal status and public health risk are not the same thing.</p>
+      <p><strong>Cocaine overtakes ecstasy for the first time:</strong> For the first time in NDSHS history, cocaine has become the second most commonly used illicit drug after cannabis. Its growing share reflects a genuine increase in use — not just a decline in ecstasy — consistent with greater supply availability and changing social norms in urban professional settings.</p>
     </div>
 
     <!-- Chart 10 — full width -->
@@ -318,10 +472,30 @@
         <p class="note">Source: NDSHS 2022–23, Table 5. Past-year use, persons aged 14+.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>Two decades, two very different stories:</strong> Dragging the slider from 2001 to 2023 tells the story of cocaine's relentless rise alongside ecstasy's long decline. Cocaine grew from 1.3% in 2001 to 4.5% in 2023 — a 246% increase. Ecstasy peaked at 3.5% in 2007 and has since fallen to 2.1%. The crossover happened between 2013 and 2016, when cocaine first overtook ecstasy. The two drugs represent different social worlds — ecstasy is tied to rave culture, which peaked in the 2000s, while cocaine has become embedded in professional and social settings that have grown over the same period.</p>
+
+    <!-- Chart 14 — Drug × Age Heatmap — full width -->
+    <div class="row-full fade">
+      <div class="card tb">
+        <p class="ey">Drug × Age Group Heatmap</p>
+        <p class="ct">Cannabis Reaches Every Age Group — Cocaine and Ecstasy Don't</p>
+        <p class="cs">Each cell shows recent use (%) for one drug and one age group. Darker cells = higher rates. Cannabis is the only drug with meaningful use across all age brackets. Cocaine and ecstasy collapse sharply after 30. <strong>Hover</strong> any cell for the exact rate.</p>
+        <div id="c14" class="vw"></div>
+        <p class="note">Source: NDSHS 2022–23. Past-year use by age group and substance.</p>
+      </div>
     </div>
-  
+
+    <!-- Analysis: two-column split as chapter closer -->
+    <div class="analysis-split fade">
+      <div class="analysis-split-left">
+        <span class="as-num">246%</span>
+        <span class="as-lbl">Cocaine increase since 2001</span>
+        <p>From 1.3% in 2001 to 4.5% in 2023, cocaine's rise has been relentless. The crossover with ecstasy happened between 2013 and 2016 — drag the slider on the animated chart to watch it happen in real time.</p>
+      </div>
+      <div class="analysis-split-right">
+        <h4>Reading the heatmap</h4>
+        <p>The darkest cell in the entire chart is Cannabis × 20–29 at 23% — nearly one in four Australians in their twenties used cannabis in the past year. The cannabis row stays dark all the way to the 50–59 bracket. Cocaine and ecstasy are almost entirely light beyond the 30–39 column. Methamphetamine shows relatively even use from 20–29 through 40–49, consistent with its concentration in working-age regional communities.</p>
+      </div>
+    </div>
 
   </div>
 </div><!-- /ch3 -->
@@ -348,7 +522,7 @@
         <span class="blab">Smoking rate in Remote/Very Remote areas</span>
         <br/><br/>
         <h3>Two Australias: city and remote</h3>
-        <p>In major cities, roughly 1 in 14 people smoke daily. In very remote communities, it is nearly 1 in 5. Illicit drug use follows the same gradient — Remote and Very Remote areas consistently record higher rates across both measures.</p>
+        <p>In major cities, roughly 1 in 14 people smoke daily. In very remote communities, it is nearly 1 in 5. Illicit drug use follows the same gradient.</p>
         <p>Switch between drug use and smoking using the radio buttons to compare how the two patterns differ across the country.</p>
       </div>
       <div class="card tt">
@@ -359,9 +533,12 @@
         <p class="note">Source: NDSHS 2022–23, Table S3.5. ABS ASGS 2021 remoteness categories.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>The remoteness gradient:</strong> Switching the radio button from drug use to smoking reveals a consistent pattern — Remote and Very Remote pins are larger in both views. This is not a coincidence. Remoteness correlates with socioeconomic disadvantage, reduced access to health services, and higher rates of chronic stress, all of which are established predictors of substance use. The 20.4% smoking rate in Remote/Very Remote areas is nearly three times the 7.0% rate in Major Cities.</p>
-      <p><strong>Where vaping fits:</strong> The vaping data from Chapter 2 tells the opposite story — vaping is more prevalent in cities. This creates a policy challenge: urban areas have successfully reduced smoking but face a new vaping problem, while remote areas remain heavily dependent on traditional tobacco with fewer resources to address it.</p>
+
+    <!-- Analysis: dark band for geography chapter -->
+    <div class="analysis-dark fade">
+      <span class="ad-label">Key finding — Chapter Four</span>
+      <p><strong>The remoteness gradient is consistent across both metrics.</strong> Switching the radio button from drug use to smoking shows the same pattern — Remote and Very Remote pins are larger in both views. The 20.4% smoking rate in Remote/Very Remote areas is nearly <strong>three times</strong> the 7.0% rate in Major Cities. This is not coincidence: remoteness correlates with socioeconomic disadvantage, reduced access to health services, and higher chronic stress — all established predictors of substance use.</p>
+      <p><strong>Vaping tells the opposite story.</strong> Data from Chapter 2 shows vaping is more prevalent in cities. This creates a two-track policy challenge: urban areas have reduced smoking but face a new vaping problem, while remote communities remain bound to traditional tobacco with fewer resources to address it.</p>
     </div>
 
   </div>
@@ -399,12 +576,14 @@
         <p class="note">Source: NDSHS 2022–23, Table 9b. Persons aged 14+.</p>
       </div>
     </div>
-    <div class="chart-analysis fade">
-      <p><strong>The NT–ACT divide:</strong> No two jurisdictions better illustrate the inequality in Australia's substance use landscape than the Northern Territory and the Australian Capital Territory. Clicking the NT bar across all three panels shows it leading — often by a wide margin — in smoking, vaping, and drug use simultaneously. The ACT, home to a relatively affluent and educated workforce, sits at the opposite end in every panel. These are not random variations: they reflect deep structural differences in socioeconomic conditions, Indigenous population proportions, remoteness, and access to health services.</p>
-      <p><strong>Vaping breaks the pattern:</strong> The vaping panel is notably different from smoking and drugs — NSW leads, not the NT. This confirms the finding from Chapter 2: vaping is an urban phenomenon, concentrated in densely populated coastal states, while the NT's substance challenges remain rooted in traditional tobacco and illicit drugs.</p>
+
+    <!-- Analysis: inline callout after chart 11 -->
+    <div class="analysis-inline fade">
+      <p><strong>The NT–ACT divide:</strong> Clicking the NT bar shows it leading across all three panels — often by a wide margin. The ACT, home to a relatively affluent and educated workforce, sits at the opposite end in every panel. These are not random variations: they reflect deep structural differences in socioeconomic conditions, Indigenous population proportions, remoteness, and access to health services.</p>
+      <p><strong>Vaping breaks the pattern:</strong> The vaping panel is notably different — NSW leads, not the NT. This confirms the finding from Chapter 2: vaping is an urban phenomenon concentrated in densely populated coastal states.</p>
     </div>
 
-    <!-- Chart 16 — flipped: chart left, text right -->
+    <!-- Chart 14 scatter — chart left, text right -->
     <div class="row-ct fade">
       <div class="card tg">
         <p class="ey">Scatter Plot + Regression Line</p>
@@ -418,8 +597,8 @@
         <span class="blab">Correlation: smoking vs drug use by state</span>
         <br/><br/>
         <h3>States that smoke more also use more drugs</h3>
-        <p>The regression line confirms a <strong>strong positive relationship</strong> between a state's smoking rate and its illicit drug use rate. The NT sits alone in the top-right — the highest on both axes by a significant margin.</p>
-        <p>Bubble size encodes vaping rate. Notably, the largest bubbles (highest vaping) tend to cluster in the middle of the chart — states like NSW and WA that have moderate smoking rates but high vaping. This reinforces the substitution story from Chapter 2.</p>
+        <p>The regression line confirms a <strong>strong positive relationship</strong>. The NT sits alone in the top-right — highest on both axes by a significant margin. The ACT is isolated in the bottom-left.</p>
+        <p>The largest bubbles (highest vaping) cluster in the middle — states like NSW and WA with moderate smoking but high vaping. This reinforces the substitution story from Chapter 2.</p>
       </div>
     </div>
 
@@ -432,7 +611,6 @@
     <div>
       <h4>About this visualisation</h4>
       <p>Created for FIT2179 Data Visualisation 2, Monash University, Semester 1 2026. Data sourced from the National Drug Strategy Household Survey 2022–23 and the AIHW Alcohol, Tobacco and Other Drugs in Australia report 2022–23. All charts built with Vega-Lite v5 and Vega v5. AI tools (Claude) used to assist with code structure and grammar checking — acknowledged per Monash guidelines.</p>
-
       <p class="fauth">Author · Jared Kong Jing Le · 36060631 · May 2026</p>
     </div>
     <div>
@@ -472,7 +650,7 @@ document.querySelectorAll('.fade').forEach(el => observer.observe(el));
 const CHARTS = 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/charts/';
 const OPT    = { actions: false, renderer: 'svg' };
 
-[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].forEach(n => {
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].forEach(n => {
   vegaEmbed(`#c${n}`, `${CHARTS}chart${n}.json`, OPT)
     .catch(err => {
       console.error(`Chart ${n} failed:`, err);
