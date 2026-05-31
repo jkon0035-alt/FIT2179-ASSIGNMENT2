@@ -8,17 +8,16 @@
 
   "params": [
     {
-      "name": "hover",
+      "name": "substance_click",
       "select": {
         "type": "point",
-        "fields": ["substance"],
-        "on": "pointerover",
-        "clear": "pointerout"
-      }
+        "fields": ["substance"]
+      },
+      "bind": "legend"
     }
   ],
 
-  "width": "container",
+  "width": 600,
   "height": 340,
 
   "mark": {
@@ -67,10 +66,10 @@
 
     "fillOpacity": {
       "condition": {
-        "param": "hover",
+        "param": "substance_click",
         "value": 1
       },
-      "value": 0.5
+      "value": 0.3
     },
 
     "tooltip": [
