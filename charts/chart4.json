@@ -51,7 +51,7 @@
           "field": "gender",
           "type": "nominal",
           "scale": {
-            "range": [  "#8B4513","#B03030"]
+            "range": [  "#8B4513","#c9789b"]
           }
         },
         "detail": {
@@ -80,7 +80,7 @@
           "field": "gender",
           "type": "nominal",
           "scale": {
-            "range": ["#1F4E79", "#B03030"]
+            "range": ["#1F4E79", "#C9789B"]
           }
         },
         "tooltip": [
