@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Scatter + regression \u2014 all-substances-by-state.csv",
-  "width": 500,
+  "width": "container",
   "height": 340,
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/all-substances-by-state.csv"
