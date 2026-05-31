@@ -481,7 +481,7 @@ document.querySelectorAll('.fade').forEach(el => observer.observe(el));
 const CHARTS = 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/charts/';
 const OPT    = { actions: false, renderer: 'svg' };
 
-[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].forEach(n => {
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].forEach(n => {
   vegaEmbed(`#c${n}`, `${CHARTS}chart${n}.json`, OPT)
     .catch(err => {
       console.error(`Chart ${n} failed:`, err);
