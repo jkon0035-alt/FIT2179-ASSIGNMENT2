@@ -7,6 +7,7 @@
     "subtitleFontSize": 12,
     "anchor": "start",
     "color": "#3B2A14",
+    
     "subtitleColor": "#7A6040",
     "font": "Playfair Display, Georgia, serif",
     "subtitleFont": "Lato, sans-serif"
@@ -14,7 +15,7 @@
   "width": 400,
   "height": 400,
   "padding": {
-    "left": 190
+    "left": 215
   },
   "background": "transparent",
   "data": {"sequence": {"start": 0, "stop": 100, "as": "id"}},
@@ -24,12 +25,27 @@
     {
       "calculate": "datum.id < 8 ? 'Smokes Daily (8%)' : datum.id < 15 ? 'Vapes (7%)' : datum.id < 32 ? 'Uses Illicit Drugs (17%)' : 'Unaffected'",
       "as": "category"
+      
     }
   ],
-  "mark": {"type": "square", "size": 1200},
+  "mark": {
+    "type": "rect", 
+    "cornerRadius": 6
+  },
   "encoding": {
-    "x": {"field": "col", "type": "ordinal", "axis": null},
-    "y": {"field": "row", "type": "ordinal", "axis": null, "sort": "descending"},
+    "x": {
+      "field": "col", 
+      "type": "ordinal", 
+      "axis": null,
+      "scale": {"paddingInner": 0.15} 
+    },
+    "y": {
+      "field": "row", 
+      "type": "ordinal", 
+      "axis": null, 
+      "sort": "descending",
+      "scale": {"paddingInner": 0.15}
+    },
     "color": {
       "field": "category",
       "type": "nominal",
