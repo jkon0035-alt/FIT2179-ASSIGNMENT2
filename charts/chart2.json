@@ -1,140 +1,59 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-
   "description": "Smoking trends by gender",
-
   "width": 600,
   "height": 260,
-
   "data": {
     "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/smoking-by-gender-trend.csv"
   },
-
   "transform": [
     {"filter": "datum.gender != 'Persons'"}
   ],
-
   "layer": [
-
     {
-      "mark": {
-        "type": "line",
-        "interpolate": "monotone",
-        "strokeWidth": 3
-      },
-
+      "mark": {"type": "line","interpolate": "monotone","strokeWidth": 3},
       "encoding": {
-
-        "x": {
-          "field": "year",
-          "type": "quantitative",
-          "title": "Year",
-          "axis": {
-            "format": "d",
-            "grid": false
-          }
+        "x": {"field": "year","type": "quantitative","title": "Year",
+          "axis": {"format": "d","grid": false}
         },
-
-        "y": {
-          "field": "daily_smoking_percent",
-          "type": "quantitative",
-          "title": "Daily smoking (%)",
+        "y": {"field": "daily_smoking_percent","type": "quantitative","title": "Daily smoking (%)",
           "scale": {
             "domain": [0,26]
           }
         },
-
-        "color": {
-          "field": "gender",
-          "type": "nominal",
-          "title": "Gender",
-
+        "color": {"field": "gender","type": "nominal","title": "Gender",
           "scale": {
             "domain": ["Male","Female"],
             "range": ["#8B4513","#C9789B"]
           },
-
           "legend": {
             "orient": "top-right"
           }
         },
-
         "tooltip": [
-          {
-            "field": "year",
-            "type": "quantitative",
-            "format": "d",
-            "title": "Year"
-          },
-
-          {
-            "field": "gender",
-            "type": "nominal",
-            "title": "Gender"
-          },
-
-          {
-            "field": "daily_smoking_percent",
-            "type": "quantitative",
-            "title": "Smoking (%)",
-            "format": ".1f"
+          {"field": "year","type": "quantitative", "format": "d","title": "Year"},
+          {"field": "gender","type": "nominal","title": "Gender"},
+          {"field": "daily_smoking_percent","type": "quantitative","title": "Smoking (%)","format": ".1f"
           }
         ]
       }
     },
 
     {
-      "mark": {
-        "type": "point",
-        "filled": true,
-        "size": 85,
-        "stroke": "#FAF7F0",
-        "strokeWidth": 1.5
-      },
-
+      "mark": {"type": "point","filled": true,"size": 85,"stroke": "#FAF7F0","strokeWidth": 1.5},
       "encoding": {
-
-        "x": {
-          "field": "year",
-          "type": "quantitative"
-        },
-
-        "y": {
-          "field": "daily_smoking_percent",
-          "type": "quantitative"
-        },
-
-        "color": {
-          "field": "gender",
-          "type": "nominal",
-          "legend": null,
-
+        "x": {"field": "year","type": "quantitative"},
+        "y": {"field": "daily_smoking_percent","type": "quantitative"},
+        "color": {"field": "gender","type": "nominal","legend": null,
           "scale": {
             "domain": ["Male","Female"],
             "range": ["#8B4513","#C9789B"]
           }
         },
-
         "tooltip": [
-          {
-            "field": "year",
-            "type": "quantitative",
-            "format": "d",
-            "title": "Year"
-          },
-
-          {
-            "field": "gender",
-            "type": "nominal",
-            "title": "Gender"
-          },
-
-          {
-            "field": "daily_smoking_percent",
-            "type": "quantitative",
-            "title": "Smoking (%)",
-            "format": ".1f"
-          }
+          {"field": "year","type": "quantitative","format": "d","title": "Year"},
+          {"field": "gender","type": "nominal","title": "Gender"},
+          {"field": "daily_smoking_percent","type": "quantitative","title": "Smoking (%)","format": ".1f"}
         ]
       }
     },
@@ -174,7 +93,7 @@
 
           "scale": {
             "domain": ["Male","Female"],
-            "range": ["#8B4513","#C9789B"]
+            "range": ["#8B4513", "#B03030"]
           }
         }
       }
