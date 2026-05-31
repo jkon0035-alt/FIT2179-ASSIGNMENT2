@@ -1,19 +1,22 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Improved heatmap — drug use by age group",
-
-  "width":830,
-  "height": 450,
-  "padding": 20,
-
+  "description": "Heatmap — drug use by age group",
+  "width": 830,
+  "height": 340,
+  "padding": {
+  "left": 80,
+  "right": 20,
+  "top": 20,
+  "bottom": 50
+  },
+  "background": "transparent",
   "data": [
     {
       "name": "table",
       "url": "https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/data/drug-by-age.csv",
-      "format": { "type": "csv" }
+      "format": {"type": "csv"}
     }
   ],
-
   "scales": [
     {
       "name": "x",
@@ -32,13 +35,12 @@
     {
       "name": "color",
       "type": "linear",
-      "domain": { "data": "table", "field": "recent_use_percent" },
-      "range": ["#FFF7ED", "#FDBA74", "#F97316", "#7C2D12"],
+      "domain": {"data": "table", "field": "recent_use_percent"},
+      "range": ["#FAF7F0", "#D2B48C", "#8B4513", "#3D1C0A"],
       "interpolate": "hcl",
       "zero": true
     }
   ],
-
   "axes": [
     {
       "orient": "bottom",
@@ -46,7 +48,11 @@
       "title": "Age Group",
       "labelAngle": -35,
       "labelFontSize": 11,
+      "labelColor": "#7A6040",
       "titleFontSize": 12,
+      "titleColor": "#3B2A14",
+      "domainColor": "#C8B89A",
+      "tickColor": "#C8B89A",
       "grid": false
     },
     {
@@ -54,69 +60,74 @@
       "scale": "y",
       "title": "Drug Type",
       "labelFontSize": 11,
+      "labelColor": "#7A6040",
       "titleFontSize": 12,
+      "titleColor": "#3B2A14",
+      "domainColor": "#C8B89A",
+      "tickColor": "#C8B89A",
       "grid": false
     }
   ],
-
   "signals": [
     {
       "name": "hover",
       "value": null,
       "on": [
-        { "events": "rect:mouseover", "update": "datum" },
-        { "events": "rect:mouseout", "update": "null" }
+        {"events": "rect:mouseover", "update": "datum"},
+        {"events": "rect:mouseout",  "update": "null"}
       ]
     }
   ],
-
   "legends": [
     {
       "fill": "color",
       "title": "Recent Use (%)",
       "orient": "right",
-      "titleFontSize": 12,
+      "titleFontSize": 11,
+      "titleColor": "#3B2A14",
       "labelFontSize": 11,
-      "gradientLength": 180
+      "labelColor": "#7A6040",
+      "gradientLength": 180,
+      "gradientStrokeColor": "#C8B89A",
+      "gradientStrokeWidth": 0.5
     }
   ],
-
   "marks": [
     {
       "type": "rect",
-      "from": { "data": "table" },
+      "from": {"data": "table"},
       "encode": {
         "enter": {
-          "x": { "scale": "x", "field": "age_group" },
-          "y": { "scale": "y", "field": "drug" },
-          "width": { "scale": "x", "band": 1 },
-          "height": { "scale": "y", "band": 1 },
-          "fill": { "scale": "color", "field": "recent_use_percent" },
-          "stroke": { "value": "#ffffff" },
-          "strokeWidth": { "value": 1 },
-          "cornerRadius": { "value": 6 }
+          "x":           {"scale": "x", "field": "age_group"},
+          "y":           {"scale": "y", "field": "drug"},
+          "width":       {"scale": "x", "band": 1},
+          "height":      {"scale": "y", "band": 1},
+          "fill":        {"scale": "color", "field": "recent_use_percent"},
+          "stroke":      {"value": "#FAF7F0"},
+          "strokeWidth": {"value": 2},
+          "cornerRadius":{"value": 6}
         },
         "update": {
           "stroke": [
             {
               "test": "hover && hover.drug === datum.drug && hover.age_group === datum.age_group",
-              "value": "#111827"
+              "value": "#3B2A14"
             },
-            { "value": "#ffffff" }
+            {"value": "#FAF7F0"}
           ],
           "strokeWidth": [
             {
               "test": "hover && hover.drug === datum.drug && hover.age_group === datum.age_group",
-              "value": 2
+              "value": 2.5
             },
-            { "value": 1 }
+            {"value": 2}
           ],
           "opacity": [
             {
               "test": "hover && (hover.drug !== datum.drug || hover.age_group !== datum.age_group)",
-              "value": 0.6
+              "value": 0.55
             },
-            { "value": 1 }
+            {"value": 1}
           ]
         },
         "hover": {
