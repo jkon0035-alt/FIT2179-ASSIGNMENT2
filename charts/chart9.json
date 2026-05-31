@@ -38,7 +38,7 @@
           "field": "drug_group",
           "type": "nominal",
           "scale": {
-            "domain": ["Alcohol", "Amphetamines", "Cannabis", "Opioids", "Sedatives", "Cocaine", "Other"],
+            "domain": ["Alcohol", "Meth/Stimulants", "Cannabis", "Opioids", "Sedatives", "Cocaine", "Other"],
             "range":  ["#8B4513", "#B03030",      "#4A7C59", "#4A7C8B", "#D2691E",  "#B8895A", "#C8B89A"]
           },
           "legend": {
