@@ -12,7 +12,6 @@
 </head>
 <body>
 
-<!-- ── HERO ─────────────────────────────────────────────────── -->
 <header class="hero">
   <p class="hero-kicker">National Drug Strategy Household Survey 2022–23 · Australia · FIT2179</p>
   <h1>Australia's<br/><em>Substance Landscape</em></h1>
@@ -25,7 +24,6 @@
   </div>
 </header>
 
-<!-- ── NAV ───────────────────────────────────────────────────── -->
 <nav class="nav">
   <a href="#ch1">① Tobacco</a>
   <a href="#ch2">② Vaping</a>
@@ -34,9 +32,7 @@
   <a href="#ch5">⑤ States</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- CHAPTER 01 · TOBACCO                                        -->
-<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ CHAPTER 01 · TOBACCO ═══ -->
 <div id="ch1" class="section">
   <div class="wrap">
 
@@ -56,45 +52,32 @@
       <div class="kp"><span class="kpn t">19,200</span><span class="kpl">Deaths linked to tobacco 2022</span></div>
     </div>
 
-<!-- Chart 15 — Waffle (Side-by-Side Inside Card) -->
-<div class="row-tc fade">
-  
-  <!-- The main card now uses flexbox (card-row) -->
-  <div class="card tb card-row">
+    <!-- Chart 15 — Waffle: FIXED layout using row-2 -->
+    <div class="row-2 fade">
 
-    <!-- LEFT SIDE: The Chart -->
-    <div class="chart-column">
-      <p class="ey">Chart 15 · Waffle Chart</p>
-      <p class="ct">Out of 100 Australians — Who Is Affected?</p>
-      <p class="cs">Each square = 1 person in 100. Colour encodes substance category. <strong>Hover</strong> any square to see its category.</p>
-      
-      <!-- Vega-Lite Div -->
-      <div id="c15" class="vw"></div>
-      
-      <p class="note">Source: NDSHS 2022–23. Daily smoking 8.3%, vaping 7% (adjusted to account for overlap with smoking), illicit drug use 17.5%.</p>
-    </div>
-
-    <!-- RIGHT SIDE: The Text Bubbles -->
-    <div class="text-column">
-      
-      <!-- Bubble 1 -->
-      <div class="text-bubble">
-        <span class="big" style="color: #8c513a; display: block; font-size: 2em; font-weight: bold; margin-bottom: 5px;">32</span>
-        <span class="blab">in every 100 Australians affected by tobacco, vaping or drugs</span>
+      <div class="card tb">
+        <p class="ey">Chart 15 · Waffle Chart</p>
+        <p class="ct">Out of 100 Australians — Who Is Affected?</p>
+        <p class="cs">Each square = 1 person in 100. Colour encodes substance category. <strong>Hover</strong> any square to see its category.</p>
+        <div id="c15" class="vw"></div>
+        <p class="note">Source: NDSHS 2022–23. Daily smoking 8.3%, vaping 7% (adjusted to account for overlap with smoking), illicit drug use 17.5%.</p>
       </div>
 
-      <!-- Bubble 2 -->
-      <div class="text-bubble">
-        <h3 style="margin-top: 0;">Almost one in three Australians uses a substance</h3>
-        <p>When smoking, vaping and illicit drug use are combined, nearly a third of all Australians are affected. Each square below represents one person in every hundred — a reminder that these are not abstract statistics, but everyday Australians.</p>
-        <p>Daily smokers account for 8 in 100. Vapers add another 7. Illicit drug users bring the total to 32 — leaving 68 unaffected.</p>
+      <div style="display:flex; flex-direction:column; justify-content:center; gap:20px;">
+
+        <div class="text-bubble">
+          <span style="font-family:var(--serif); font-size:56px; font-weight:700; color:var(--brown); display:block; line-height:1; margin-bottom:8px;">32</span>
+          <span style="font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--faint);">in every 100 Australians affected by tobacco, vaping or drugs</span>
+        </div>
+
+        <div class="text-bubble">
+          <h3 style="font-family:var(--serif); font-size:17px; font-weight:700; margin-bottom:8px;">Almost one in three Australians uses a substance</h3>
+          <p style="font-size:13px; color:var(--dim); line-height:1.7; margin-bottom:10px;">When smoking, vaping and illicit drug use are combined, nearly a third of all Australians are affected. Each square represents one person in every hundred — a reminder that these are not abstract statistics, but everyday Australians.</p>
+          <p style="font-size:13px; color:var(--dim); line-height:1.7;">Daily smokers account for 8 in 100. Vapers add another 7. Illicit drug users bring the total to 32 — leaving 68 unaffected.</p>
+        </div>
+
       </div>
-
     </div>
-
-  </div>
-</div>
-
 
     <!-- Chart 1 -->
     <div class="row-tc fade">
@@ -127,7 +110,7 @@
       <div class="card tg">
         <p class="ey">Connected Dot Plot</p>
         <p class="ct">Middle-Aged Australians Smoke the Most</p>
-        <p class="cs">Daily smoking rate (%) by age group and gender. Darker cells = higher rates. <strong>Click a cell</strong> to highlight that age column. The 50–59 group peaks at 12.1% for males — the darkest cell on the chart.</p>
+        <p class="cs">Daily smoking rate (%) by age group and gender. The 50–59 group peaks at 12.1% for males — the highest of any age group. <strong>Hover</strong> any point for the exact rate.</p>
         <div id="c4" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Tables 2.3 &amp; 2.4.</p>
       </div>
@@ -146,7 +129,7 @@
       <div class="card tb">
         <p class="ey">Streamgraph — Smoking Status Flow Over Time</p>
         <p class="ct">How Australia's Smoking Categories Have Shifted, 2001–2023</p>
-        <p class="cs">Stream width = share of population in each category. The dominant expansion of the "Never Smoked" stream and collapse of "Smoke Daily" tell a 22-year policy success story at a glance. A dashed line marks the <strong>2012 plain packaging inflection</strong> — the point at which decline visibly accelerated. <strong>Click a legend item</strong> to isolate a stream.</p>
+        <p class="cs">Stream width = share of population in each category. The dominant expansion of the "Never Smoked" stream and collapse of "Smoke Daily" tell a 22-year policy success story at a glance. A dashed line marks the <strong>2012 plain packaging inflection</strong>. <strong>Click a legend item</strong> to isolate a stream.</p>
         <div id="c3" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Table 2. Estimated proportions aged 14+.</p>
       </div>
@@ -155,9 +138,7 @@
   </div>
 </div><!-- /ch1 -->
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- CHAPTER 02 · VAPING                                         -->
-<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ CHAPTER 02 · VAPING ═══ -->
 <div id="ch2" class="section section-alt">
   <div class="wrap">
 
@@ -180,9 +161,9 @@
     <!-- Chart 5 -->
     <div class="row-full fade">
       <div class="card tr">
-        <p class="ey"> Multi-Series Area Chart</p>
+        <p class="ey">Multi-Series Area Chart</p>
         <p class="ct">Vaping by Age Group Across Three Survey Waves: 2016, 2019 &amp; 2022–23</p>
-        <p class="cs">Each area series shows one age group across three survey years. The 18–24 group has more than tripled since 2016, reaching 20.6% — well above the 10.4% smoking rate for the same group. A dashed reference line marks that smoking rate so the crossover is immediately visible. <strong>Hover any point</strong> for the exact rate.</p>
+        <p class="cs">Each area series shows one age group across three survey years. The 18–24 group has more than tripled since 2016, reaching 20.6% — well above the 10.4% smoking rate for the same group. A dashed reference line marks that smoking rate so the crossover is immediately visible. <strong>Use the dropdown</strong> to filter by age group. <strong>Hover any point</strong> for the exact rate.</p>
         <div id="c5" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Table 9. Past 12-month e-cigarette use by age group.</p>
       </div>
@@ -217,9 +198,7 @@
   </div>
 </div><!-- /ch2 -->
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- CHAPTER 03 · ILLICIT DRUGS                                  -->
-<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ CHAPTER 03 · ILLICIT DRUGS ═══ -->
 <div id="ch3" class="section">
   <div class="wrap">
 
@@ -242,9 +221,9 @@
     <!-- Chart 8 -->
     <div class="row-full fade">
       <div class="card tr">
-        <p class="ey">Heatmap - Drug Use Profiles by Age</p>
+        <p class="ey">Small Multiples Line Chart — Drug Use Profiles by Age</p>
         <p class="ct">Each Drug Has a Distinct Age Profile — Cannabis Is Uniquely Broad</p>
-        <p class="cs">Each spoke = one age group. Each polygon = one drug. A wider polygon means that drug is more evenly spread across ages. Cannabis forms the largest polygon — confirming its broad reach across all age groups. Cocaine and ecstasy collapse to a narrow spike in the 20–29 bracket. <strong>Hover any point</strong> for the exact rate.</p>
+        <p class="cs">Each panel shows one drug's use rate across age groups. The peak value is labelled on each chart. Cannabis remains elevated across all ages — cocaine and ecstasy collapse sharply after 30. <strong>Hover any point</strong> for the exact rate.</p>
         <div id="c8" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23. Past-year use by age group and substance.</p>
       </div>
@@ -270,7 +249,7 @@
       <div class="card tb">
         <p class="ey">Lollipop Chart — Hospitalisations by Substance</p>
         <p class="ct">Alcohol Dwarfs Every Other Substance in Hospital Burden</p>
-        <p class="cs">Dot position = annual drug-related hospitalisations. Alcohol caused 80,439 — 5.8 times more than the next highest substance. Each dot is colour-coded by substance type. <strong>Hover</strong> any dot for the exact count.</p>
+        <p class="cs">Dot position = annual drug-related hospitalisations. Alcohol caused 80,439 — 5.8 times more than the next highest substance. <strong>Hover</strong> any dot for the exact count.</p>
         <div id="c9" class="vw"></div>
         <p class="note">Source: AIHW AODT Services 2022–23. Principal diagnosis.</p>
       </div>
@@ -281,18 +260,27 @@
       <div class="card tp">
         <p class="ey">Animated Bar + Year Slider</p>
         <p class="ct">Cocaine Has Nearly Quadrupled Since 2001</p>
-        <p class="cs"><strong>Drag the slider</strong> to watch how each drug's use rate changed across survey years. Watch cocaine's bar grow relentlessly while ecstasy shrinks. From 2016 onward, a label marks the moment cocaine overtook ecstasy — two very different trajectories across two decades. <strong>Hover</strong> any bar for the exact rate.</p>
+        <p class="cs"><strong>Drag the slider</strong> to watch how each drug's use rate changed across survey years. Watch cocaine's bar grow relentlessly while ecstasy shrinks. From 2016 onward, a label marks the moment cocaine overtook ecstasy. <strong>Hover</strong> any bar for the exact rate.</p>
         <div id="c10" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Table 5. Past-year use, persons aged 14+.</p>
+      </div>
+    </div>
+
+    <!-- Chart 14 — Drug × Age Heatmap -->
+    <div class="row-full fade">
+      <div class="card tg">
+        <p class="ey">Chart 14 · Drug × Age Group Heatmap</p>
+        <p class="ct">Cannabis Reaches Every Age Group — Cocaine and Ecstasy Don't</p>
+        <p class="cs">Each cell shows recent use (%) for one drug type and one age group. Darker cells = higher rates. Cannabis is the only drug with meaningful use across all age brackets. Cocaine and ecstasy collapse sharply after 30, while methamphetamine shows a distinct concentration in the 30–49 range. <strong>Hover</strong> any cell for the exact rate.</p>
+        <div id="c14" class="vw"></div>
+        <p class="note">Source: NDSHS 2022–23. Past-year use by age group and substance.</p>
       </div>
     </div>
 
   </div>
 </div><!-- /ch3 -->
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- CHAPTER 04 · GEOGRAPHY                                      -->
-<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ CHAPTER 04 · GEOGRAPHY ═══ -->
 <div id="ch4" class="section section-alt">
   <div class="wrap">
 
@@ -318,7 +306,7 @@
       <div class="card tt">
         <p class="ey">Chart 7 · Symbol Map + Radio Buttons + Remoteness Filter</p>
         <p class="ct">How Remoteness Shapes Substance Use Across Australia</p>
-        <p class="cs">Pin size encodes the selected rate — <strong>click the radio buttons</strong> to switch between drug use and smoking. <strong>Use the dropdown</strong> to isolate a remoteness category. Colour encodes remoteness level — notice how Remote/Very Remote pins are consistently larger across both metrics. <strong>Hover</strong> any pin for location, state, and exact rates.</p>
+        <p class="cs">Pin size encodes the selected rate — <strong>click the radio buttons</strong> to switch between drug use and smoking. <strong>Use the dropdown</strong> to isolate a remoteness category. Colour encodes remoteness level. <strong>Hover</strong> any pin for location, state, and exact rates.</p>
         <div id="c7" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Table S3.5. ABS ASGS 2021 remoteness categories.</p>
       </div>
@@ -327,9 +315,7 @@
   </div>
 </div><!-- /ch4 -->
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- CHAPTER 05 · STATE COMPARISON                               -->
-<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ CHAPTER 05 · STATE COMPARISON ═══ -->
 <div id="ch5" class="section">
   <div class="wrap">
 
@@ -354,13 +340,13 @@
       <div class="card tb">
         <p class="ey">Stacked Bar Chart</p>
         <p class="ct">Substance Use Side-by-Side Across All States &amp; Territories</p>
-        <p class="cs">Three panels — smoking, vaping, drug use — share the same state axis. The NT bar is labelled <strong>"highest"</strong> and ACT <strong>"lowest"</strong> in each panel. <strong>Hover over any bar</strong> to highlight that state across all three panels simultaneously.</p>
+        <p class="cs">Three panels — smoking, vaping, drug use — share the same state axis. The NT bar is labelled <strong>"highest"</strong> and ACT <strong>"lowest"</strong> in each panel. <strong>Hover over any bar</strong> to see the exact rate.</p>
         <div id="c11" class="vw wide"></div>
         <p class="note">Source: NDSHS 2022–23, Table 9b. Persons aged 14+.</p>
       </div>
     </div>
 
-    <!-- Chart 14 — Scatter -->
+    <!-- Chart 14 scatter moved here if it's a scatter — currently heatmap is in ch3 -->
     <div class="row-tc fade">
       <div class="txt">
         <span class="big" style="color:var(--teal)">r ≈ 0.81</span>
@@ -374,7 +360,7 @@
         <p class="ey">Scatter Plot + Regression Line</p>
         <p class="ct">States That Smoke More Also Tend to Use More Drugs</p>
         <p class="cs">Bubble size = vaping rate. Dashed line = regression trend. <strong>Drag to select</strong> a group of states, or <strong>hover</strong> any bubble for full state details including smoking, vaping and drug use rates.</p>
-        <div id="c14" class="vw"></div>
+        <div id="c16" class="vw"></div>
         <p class="note">Source: NDSHS 2022–23, Table 9b. Persons aged 14+.</p>
       </div>
     </div>
@@ -382,7 +368,7 @@
   </div>
 </div><!-- /ch5 -->
 
-<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<!-- ── FOOTER ── -->
 <footer>
   <div class="fg">
     <div>
@@ -412,7 +398,6 @@
   </div>
 </footer>
 
-<!-- ── JAVASCRIPT ─────────────────────────────────────────────── -->
 <script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -427,7 +412,7 @@ document.querySelectorAll('.fade').forEach(el => observer.observe(el));
 const CHARTS = 'https://raw.githubusercontent.com/jkon0035-alt/FIT2179-ASSIGNMENT2/main/charts/';
 const OPT    = { actions: false, renderer: 'svg' };
 
-[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].forEach(n => {
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].forEach(n => {
   vegaEmbed(`#c${n}`, `${CHARTS}chart${n}.json`, OPT)
     .catch(err => {
       console.error(`Chart ${n} failed:`, err);
