@@ -5,10 +5,15 @@
     "subtitle": "How many are affected by each substance, 2022–23",
     "fontSize": 15,
     "subtitleFontSize": 12,
-    "anchor": "start"
+    "anchor": "start",
+    "color": "#3B2A14",
+    "subtitleColor": "#7A6040",
+    "font": "Playfair Display, Georgia, serif",
+    "subtitleFont": "Lato, sans-serif"
   },
   "width": 400,
   "height": 400,
+  "background": "transparent",
   "data": {"sequence": {"start": 0, "stop": 100, "as": "id"}},
   "transform": [
     {"calculate": "datum.id % 10", "as": "col"},
@@ -18,7 +23,7 @@
       "as": "category"
     }
   ],
-  "mark": {"type": "square", "size": 350},
+  "mark": {"type": "square", "size": 1200},
   "encoding": {
     "x": {"field": "col", "type": "ordinal", "axis": null},
     "y": {"field": "row", "type": "ordinal", "axis": null, "sort": "descending"},
@@ -28,9 +33,27 @@
       "title": "Category",
       "scale": {
         "domain": ["Smokes Daily (8%)", "Vapes (7%)", "Uses Illicit Drugs (17%)", "Unaffected"],
-        "range": ["#D85A30", "#885B9B", "#378ADD", "#E8E8E8"]
+        "range":  ["#8B4513",           "#4A7C8B",   "#4A7C59",                  "#E8DFD0"]
+      },
+      "legend": {
+        "orient": "bottom",
+        "columns": 2,
+        "fillColor": "#FAF7F0",
+        "strokeColor": "#D9C7A7",
+        "cornerRadius": 4,
+        "padding": 8,
+        "labelColor": "#7A6040",
+        "titleColor": "#3B2A14",
+        "labelFontSize": 11,
+        "titleFontSize": 11,
+        "symbolSize": 150
       }
     },
     "tooltip": [{"field": "category", "type": "nominal", "title": "Category"}]
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Lato, sans-serif",
+    "view": {"stroke": null, "fill": "transparent"}
   }
 }
